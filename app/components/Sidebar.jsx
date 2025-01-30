@@ -38,9 +38,9 @@ const Sidebar = () => {
           isOpen={isOpen}
         />
         <SidebarItem
-          href="/docente"
+          href="/docentes"
           icon={<UserCheck size={20} />}
-          label="Docente"
+          label="Docentes"
           isOpen={isOpen}
         />
         <SidebarItem

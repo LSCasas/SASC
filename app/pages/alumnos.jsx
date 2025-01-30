@@ -3,9 +3,7 @@ import Sidebar from "@/components/Sidebar";
 import StudentTable from "@/components/StudentTable";
 
 export default function AlumnoPage() {
-  const handleCreateStudent = () => {
-    console.log("Crear Alumno");
-  };
+  const handleCreateStudent = () => {};
 
   return (
     <div className="flex">

@@ -1,0 +1,31 @@
+import React from "react";
+import Sidebar from "@/components/Sidebar";
+import TeacherTable from "@/components/TeacherTable";
+
+export default function AlumnoPage() {
+  const handleCreateStudent = () => {};
+
+  return (
+    <div className="flex">
+      <Sidebar />
+      <div className="flex-1 bg-gray-50 min-h-screen">
+        <div className="container mx-auto px-6 py-6">
+          <h1 className="text-2xl font-bold text-center mb-6 text-[#6C0036]">
+            Gestion de alumnos
+          </h1>
+
+          <div className="mb-4 text-right">
+            <button
+              onClick={handleCreateStudent}
+              className="w-auto py-2 px-4 bg-gradient-to-r bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
+            >
+              Agregar docente
+            </button>
+          </div>
+
+          <TeacherTable />
+        </div>
+      </div>
+    </div>
+  );
+}
