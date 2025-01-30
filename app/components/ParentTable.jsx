@@ -1,33 +1,38 @@
 import React from "react";
-import Filters from "./StudentFilters";
+import Filters from "./ParentFilters";
 import ExportButtons from "./ExportButtons";
 
-export default function StudentTable() {
-  const students = [
+export default function ParentTable() {
+  const parents = [
     {
       id: 1,
       name: "Juan Carlos Pérez Sánchez",
-      instrument: "Guitarra",
-      age: 16,
+      childName: "Pedro Pérez Martínez",
+      childContact: "5512345678",
     },
-    { id: 2, name: "Ana Sofía Gómez Herrera", instrument: "Piano", age: 18 },
+    {
+      id: 2,
+      name: "Ana Sofía Gómez Herrera",
+      childName: "Luis Gómez Hernández",
+      childContact: "5523456789",
+    },
     {
       id: 3,
       name: "Carlos Eduardo Ramírez López",
-      instrument: "Batería",
-      age: 17,
+      childName: "Martín Ramírez Torres",
+      childContact: "5534567890",
     },
     {
       id: 4,
       name: "María José Torres Martínez",
-      instrument: "Violín",
-      age: 15,
+      childName: "Andrea Torres Rodríguez",
+      childContact: "5545678901",
     },
     {
       id: 5,
       name: "Luis Fernando Fernández García",
-      instrument: "Trompeta",
-      age: 19,
+      childName: "José Fernández Ruiz",
+      childContact: "5556789012",
     },
   ];
 
@@ -40,18 +45,18 @@ export default function StudentTable() {
             <tr className="bg-gray-100 text-left">
               <th className="p-3 border-b text-black">#</th>
               <th className="p-3 border-b text-black">Nombre</th>
-              <th className="p-3 border-b text-black">Instrumento</th>
-              <th className="p-3 border-b text-black">Edad</th>
+              <th className="p-3 border-b text-black">Tutor del estudiante</th>
+              <th className="p-3 border-b text-black">Contacto</th>
             </tr>
           </thead>
           <tbody>
-            {students.length > 0 ? (
-              students.map((student) => (
-                <tr key={student.id}>
-                  <td className="p-3 border-b">{student.id}</td>
-                  <td className="p-3 border-b">{student.name}</td>
-                  <td className="p-3 border-b">{student.instrument}</td>
-                  <td className="p-3 border-b">{student.age}</td>
+            {parents.length > 0 ? (
+              parents.map((parent) => (
+                <tr key={parent.id}>
+                  <td className="p-3 border-b">{parent.id}</td>
+                  <td className="p-3 border-b">{parent.name}</td>
+                  <td className="p-3 border-b">{parent.childName}</td>
+                  <td className="p-3 border-b">{parent.childContact}</td>
                 </tr>
               ))
             ) : (
@@ -75,7 +80,7 @@ export default function StudentTable() {
       </div>
       <div className="mt-3 flex justify-center">
         <div className="w-full">
-          <ExportButtons data={students} />
+          <ExportButtons data={parents} />
         </div>
       </div>
     </div>
