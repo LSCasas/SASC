@@ -39,7 +39,6 @@ const Dashboard = () => {
     <div className="flex">
       <Sidebar />
       <div className="flex-1 p-6 bg-white">
-        <h1 className="text-2xl font-bold text-[#B0005E] mb-6">Dashboard</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {cardsData.map((card, index) => (
             <DashboardCard
