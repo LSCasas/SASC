@@ -1,5 +1,5 @@
 import React from "react";
-import Filters from "./StudentFilters";
+import TransferFilters from "./TransferFilters";
 import ExportButtons from "./ExportButtons";
 
 export default function StudentTable() {
@@ -9,41 +9,46 @@ export default function StudentTable() {
       name: "Juan Carlos Pérez Sánchez",
       instrument: "Guitarra",
       genre: "Masculino",
-      age: 16,
+      sendingLocation: "Cantera",
+      receivingLocation: "Local",
     },
     {
       id: 2,
       name: "Ana Sofía Gómez Herrera",
       instrument: "Piano",
       genre: "Femenino",
-      age: 18,
+      sendingLocation: "Sede Sur",
+      receivingLocation: "Xahuento",
     },
     {
       id: 3,
       name: "Carlos Eduardo Ramírez López",
       instrument: "Batería",
       genre: "Masculino",
-      age: 17,
+      sendingLocation: "Local",
+      receivingLocation: "Local",
     },
     {
       id: 4,
       name: "María José Torres Martínez",
       instrument: "Violín",
       genre: "Femenino",
-      age: 15,
+      sendingLocation: "Teyahualco",
+      receivingLocation: "Local",
     },
     {
       id: 5,
       name: "Luis Fernando Fernández García",
       instrument: "Trompeta",
       genre: "Masculino",
-      age: 19,
+      sendingLocation: "Sede Sur",
+      receivingLocation: "Sede Sur",
     },
   ];
 
   return (
     <div className="mt-6">
-      <Filters />
+      <TransferFilters />
       <div className="overflow-y-auto max-h-[400px]">
         <table className="min-w-full bg-white border border-gray-200 text-black">
           <thead>
@@ -52,7 +57,8 @@ export default function StudentTable() {
               <th className="p-3 border-b text-black">Nombre</th>
               <th className="p-3 border-b text-black">Instrumento</th>
               <th className="p-3 border-b text-black">Género</th>
-              <th className="p-3 border-b text-black">Edad</th>
+              <th className="p-3 border-b text-black">Sede de Envío</th>
+              <th className="p-3 border-b text-black">Sede de Recepción</th>
             </tr>
           </thead>
           <tbody>
@@ -63,12 +69,13 @@ export default function StudentTable() {
                   <td className="p-3 border-b">{student.name}</td>
                   <td className="p-3 border-b">{student.instrument}</td>
                   <td className="p-3 border-b">{student.genre}</td>
-                  <td className="p-3 border-b">{student.age}</td>
+                  <td className="p-3 border-b">{student.sendingLocation}</td>
+                  <td className="p-3 border-b">{student.receivingLocation}</td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5" className="p-3 text-center text-black">
+                <td colSpan="6" className="p-3 text-center text-black">
                   No hay registros disponibles
                 </td>
               </tr>

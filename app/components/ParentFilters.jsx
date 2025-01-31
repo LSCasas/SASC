@@ -8,6 +8,11 @@ export default function Filters() {
         placeholder="Buscar por nombre"
         className="flex-1 min-w-[150px] p-2 border rounded"
       />
+      <input
+        type="text"
+        placeholder="Buscar por estudiante"
+        className="flex-1 min-w-[150px] p-2 border rounded"
+      />
     </div>
   );
 }
