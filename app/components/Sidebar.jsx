@@ -68,7 +68,7 @@ const Sidebar = () => {
           isOpen={isOpen}
         />
         <SidebarItem
-          href="/exalumnos"
+          href="/exAlumnos"
           icon={<UserX size={20} />}
           label="Ex-Alumnos"
           isOpen={isOpen}
