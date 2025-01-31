@@ -2,18 +2,14 @@ import React from "react";
 import Sidebar from "@/components/Sidebar";
 import InstrumentCard from "@/components/InstrumentCard";
 
-export default function ParentPage() {
+export default function ClassesPage() {
   const musicClassesData = [
     {
       title: "Violín",
       instructor: "Carlos Martínez",
       gradient: "bg-gradient-to-r from-[#FF7F50] to-[#FFB74D]",
     },
-    {
-      title: "Viola",
-      instructor: "Lucía Sánchez",
-      gradient: "bg-gradient-to-r from-[#8E24AA] to-[#D81B60]",
-    },
+
     {
       title: "Flauta",
       instructor: "José García",
@@ -33,26 +29,6 @@ export default function ParentPage() {
       title: "Clarinete",
       instructor: "Marta Rodríguez",
       gradient: "bg-gradient-to-r from-[#9C27B0] to-[#D500F9]",
-    },
-    {
-      title: "Oboe",
-      instructor: "Luis González",
-      gradient: "bg-gradient-to-r from-[#3F51B5] to-[#5C6BC0]",
-    },
-    {
-      title: "Trombón",
-      instructor: "Eduardo García",
-      gradient: "bg-gradient-to-r from-[#FFEB3B] to-[#FF9800]",
-    },
-    {
-      title: "Tuba",
-      instructor: "Victoria Fernández",
-      gradient: "bg-gradient-to-r from-[#FF5722] to-[#FF7043]",
-    },
-    {
-      title: "Arpa",
-      instructor: "Carlos Pérez",
-      gradient: "bg-gradient-to-r from-[#4CAF50] to-[#81C784]",
     },
   ];
 

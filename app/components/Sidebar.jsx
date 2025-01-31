@@ -26,7 +26,7 @@ const Sidebar = () => {
       </button>
       <nav className="flex flex-col gap-4">
         <SidebarItem
-          href="/alumno"
+          href="/alumnos"
           icon={<GraduationCap size={20} />}
           label="Alumno"
           isOpen={isOpen}
