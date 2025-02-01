@@ -1,6 +1,7 @@
 import React from "react";
 import Filters from "./StudentFilters";
 import ExportButtons from "./ExportButtons";
+import Link from "next/link";
 
 export default function StudentTable() {
   const students = [
@@ -58,12 +59,25 @@ export default function StudentTable() {
           <tbody>
             {students.length > 0 ? (
               students.map((student) => (
-                <tr key={student.id}>
-                  <td className="p-3 border-b">{student.id}</td>
-                  <td className="p-3 border-b">{student.name}</td>
-                  <td className="p-3 border-b">{student.instrument}</td>
-                  <td className="p-3 border-b">{student.genre}</td>
-                  <td className="p-3 border-b">{student.age}</td>
+                <tr
+                  key={student.id}
+                  className="cursor-pointer hover:bg-gray-100"
+                >
+                  <td className="p-3 border-b">
+                    <Link href="/estudianteInfo">{student.id}</Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    <Link href="/estudianteInfo">{student.name}</Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    <Link href="/estudianteInfo">{student.instrument}</Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    <Link href="/estudianteInfo">{student.genre}</Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    <Link href="/estudianteInfo">{student.age}</Link>
+                  </td>
                 </tr>
               ))
             ) : (

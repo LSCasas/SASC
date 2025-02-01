@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 import clsx from "clsx";
 
 export default function Login() {
@@ -9,9 +10,14 @@ export default function Login() {
     formState: { errors },
   } = useForm();
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const handleShowHidePassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const onSubmit = () => {
+    router.push("/alumnos");
   };
 
   return (
@@ -19,7 +25,7 @@ export default function Login() {
       <h2 className="mb-4 text-center text-2xl font-bold text-[#B0005E]">
         Iniciar sesión
       </h2>
-      <form id="loginForm" onSubmit={handleSubmit(() => {})} method="POST">
+      <form id="loginForm" onSubmit={handleSubmit(onSubmit)} method="POST">
         <div className="mb-4">
           <label
             htmlFor="email"

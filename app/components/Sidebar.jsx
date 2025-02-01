@@ -10,6 +10,7 @@ import {
   Calendar,
   RefreshCw,
   UserX,
+  LogOut,
 } from "lucide-react";
 
 const Sidebar = () => {
@@ -17,63 +18,71 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`bg-gradient-to-r from-[#B0005E] to-[#6C0036] h-screen p-4 ${
+      className={`bg-gradient-to-r from-[#B0005E] to-[#6C0036] h-screen p-4 flex flex-col justify-between ${
         isOpen ? "w-64" : "w-20"
       } transition-all duration-300`}
     >
-      <button onClick={() => setIsOpen(!isOpen)} className="text-white mb-6">
-        <Menu size={24} />
-      </button>
-      <nav className="flex flex-col gap-4">
-        <SidebarItem
-          href="/alumnos"
-          icon={<GraduationCap size={20} />}
-          label="Alumno"
-          isOpen={isOpen}
-        />
-        <SidebarItem
-          href="/padres"
-          icon={<Users size={20} />}
-          label="Padres"
-          isOpen={isOpen}
-        />
-        <SidebarItem
-          href="/docentes"
-          icon={<UserCheck size={20} />}
-          label="Docentes"
-          isOpen={isOpen}
-        />
-        <SidebarItem
-          href="/clases"
-          icon={<BookOpen size={20} />}
-          label="Clases"
-          isOpen={isOpen}
-        />
-        <SidebarItem
-          href="/instrumentos"
-          icon={<Music size={20} />}
-          label="Instrumentos"
-          isOpen={isOpen}
-        />
-        <SidebarItem
-          href="/horarios"
-          icon={<Calendar size={20} />}
-          label="Horarios"
-          isOpen={isOpen}
-        />
-        <SidebarItem
-          href="/transferencias"
-          icon={<RefreshCw size={20} />}
-          label="Transferencias"
-          isOpen={isOpen}
-        />
-        <SidebarItem
-          href="/exAlumnos"
-          icon={<UserX size={20} />}
-          label="Ex-Alumnos"
-          isOpen={isOpen}
-        />
-      </nav>
+      <div>
+        <button onClick={() => setIsOpen(!isOpen)} className="text-white mb-6">
+          <Menu size={24} />
+        </button>
+        <nav className="flex flex-col gap-4">
+          <SidebarItem
+            href="/alumnos"
+            icon={<GraduationCap size={20} />}
+            label="Alumnos"
+            isOpen={isOpen}
+          />
+          <SidebarItem
+            href="/tutores"
+            icon={<Users size={20} />}
+            label="Tutores"
+            isOpen={isOpen}
+          />
+          <SidebarItem
+            href="/docentes"
+            icon={<UserCheck size={20} />}
+            label="Docentes"
+            isOpen={isOpen}
+          />
+          <SidebarItem
+            href="/clases"
+            icon={<BookOpen size={20} />}
+            label="Clases"
+            isOpen={isOpen}
+          />
+          <SidebarItem
+            href="/instrumentos"
+            icon={<Music size={20} />}
+            label="Instrumentos"
+            isOpen={isOpen}
+          />
+          <SidebarItem
+            href="/horarios"
+            icon={<Calendar size={20} />}
+            label="Horarios"
+            isOpen={isOpen}
+          />
+          <SidebarItem
+            href="/transferencias"
+            icon={<RefreshCw size={20} />}
+            label="Transferencias"
+            isOpen={isOpen}
+          />
+          <SidebarItem
+            href="/exAlumnos"
+            icon={<UserX size={20} />}
+            label="Ex-Alumnos"
+            isOpen={isOpen}
+          />
+        </nav>
+      </div>
+      <SidebarItem
+        href="/"
+        icon={<LogOut size={20} />}
+        label="Salir"
+        isOpen={isOpen}
+      />
     </div>
   );
 };
