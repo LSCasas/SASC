@@ -1,9 +1,14 @@
 import React from "react";
+import { useRouter } from "next/router";
 import Sidebar from "@/components/Sidebar";
 import StudentTable from "@/components/StudentTable";
 
 export default function AlumnoPage() {
-  const handleCreateStudent = () => {};
+  const router = useRouter();
+
+  const handleCreateStudent = () => {
+    router.push("/crearAlumno");
+  };
 
   return (
     <div className="flex">
