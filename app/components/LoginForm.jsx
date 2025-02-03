@@ -16,8 +16,15 @@ export default function Login() {
     setShowPassword(!showPassword);
   };
 
-  const onSubmit = () => {
-    router.push("/alumnos");
+  const onSubmit = (data) => {
+    const { email } = data;
+    if (email === "admin@xample.com") {
+      router.push("/admin");
+    } else if (email === "sede@xample.com") {
+      router.push("/alumnos");
+    } else {
+      alert("Correo no válido");
+    }
   };
 
   return (
