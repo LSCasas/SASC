@@ -153,12 +153,13 @@ const RegisterStudentForm = () => {
               {...register("documentosRequeridos")}
               defaultValue="Acta de nacimiento, CURP"
               className="w-full p-2 border rounded text-black"
+              s
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-[#6C0036] text-white py-2 rounded"
+            className="w-full sm:w-auto py-2 px-4 bg-gradient-to-r bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
           >
             Registrar Alumno
           </button>

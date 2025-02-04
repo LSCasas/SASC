@@ -1,7 +1,7 @@
 import React from "react";
 import Filters from "./ParentFilters";
 import ExportButtons from "./ExportButtons";
-
+import Link from "next/link";
 export default function ParentTable() {
   const parents = [
     {
@@ -54,7 +54,9 @@ export default function ParentTable() {
               parents.map((parent) => (
                 <tr key={parent.id}>
                   <td className="p-3 border-b">{parent.id}</td>
-                  <td className="p-3 border-b">{parent.name}</td>
+                  <td className="p-3 border-b">
+                    <Link href="/agregarTutor">{parent.name}</Link>
+                  </td>
                   <td className="p-3 border-b">{parent.childName}</td>
                   <td className="p-3 border-b">{parent.childContact}</td>
                 </tr>

@@ -7,7 +7,7 @@ export default function AlumnoPage() {
   const router = useRouter();
 
   const handleCreateStudent = () => {
-    router.push("/crearAlumno");
+    router.push("/formularioDelAlumno");
   };
 
   return (
