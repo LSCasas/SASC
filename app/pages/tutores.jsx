@@ -1,13 +1,13 @@
 import React from "react";
 import Sidebar from "@/components/Sidebar";
-import ParentTable from "@/components/ParentTable";
+import TutorTable from "@/components/TutorTable";
 import { useRouter } from "next/router";
 
 export default function ParentPage() {
   const router = useRouter();
 
   const handleCreateStudent = () => {
-    router.push("/agregarTutor");
+    router.push("/formulariodelTutor");
   };
 
   return (
@@ -29,7 +29,7 @@ export default function ParentPage() {
           </div>
 
           <div className="overflow-x-auto">
-            <ParentTable />
+            <TutorTable />
           </div>
         </div>
       </div>

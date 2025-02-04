@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-const RegisterStudentForm = () => {
+const StudentForm = () => {
   const {
     register,
     handleSubmit,
@@ -153,7 +153,6 @@ const RegisterStudentForm = () => {
               {...register("documentosRequeridos")}
               defaultValue="Acta de nacimiento, CURP"
               className="w-full p-2 border rounded text-black"
-              s
             />
           </div>
 
@@ -169,4 +168,4 @@ const RegisterStudentForm = () => {
   );
 };
 
-export default RegisterStudentForm;
+export default StudentForm;

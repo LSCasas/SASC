@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "@/components/Sidebar";
-import RegisterTutorForm from "@/components/RegisterTutorForm";
+import RegisterTutorForm from "@/components/TutorForm";
 
 export default function AddTutor() {
   return (

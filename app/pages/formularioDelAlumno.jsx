@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "@/components/Sidebar";
-import RegisterStudentForm from "@/components/RegisterStudentForm";
+import StudentForm from "@/components/StudentForm";
 
 export default function AddStudent() {
   return (
@@ -11,7 +11,7 @@ export default function AddStudent() {
           <h1 className="text-2xl font-bold text-center mb-6 text-[#6C0036]">
             Información del Alumno
           </h1>
-          <RegisterStudentForm />
+          <StudentForm />
         </div>
       </div>
     </div>
