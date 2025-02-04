@@ -64,21 +64,21 @@ export default function StudentTable() {
                   className="cursor-pointer hover:bg-gray-100"
                 >
                   <td className="p-3 border-b">
-                    <Link href="/formularioDelAlumno">{student.id}</Link>
+                    <Link href="/formularioDeAlumnos">{student.id}</Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDelAlumno">{student.name}</Link>
+                    <Link href="/formularioDeAlumnos">{student.name}</Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDelAlumno">
+                    <Link href="/formularioDeAlumnos">
                       {student.instrument}
                     </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDelAlumno">{student.genre}</Link>
+                    <Link href="/formularioDeAlumnos">{student.genre}</Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDelAlumno">{student.age}</Link>
+                    <Link href="/formularioDeAlumnos">{student.age}</Link>
                   </td>
                 </tr>
               ))

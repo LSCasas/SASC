@@ -1,38 +1,38 @@
 import React from "react";
 import TeacherFilters from "./TeacherFilters";
 import ExportButtons from "./ExportButtons";
-
+import Link from "next/link";
 export default function TeacherTable() {
   const teachers = [
     {
       id: 1,
       name: "Juan Carlos Pérez Sánchez",
       instrument: "Guitarra",
-      contact: "5551234567", // Número de contacto con 10 dígitos
+      contact: "5551234567",
     },
     {
       id: 2,
       name: "Ana Sofía Gómez Herrera",
       instrument: "Piano",
-      contact: "5552345678", // Número de contacto con 10 dígitos
+      contact: "5552345678",
     },
     {
       id: 3,
       name: "Carlos Eduardo Ramírez López",
       instrument: "Batería",
-      contact: "5553456789", // Número de contacto con 10 dígitos
+      contact: "5553456789",
     },
     {
       id: 4,
       name: "María José Torres Martínez",
       instrument: "Violín",
-      contact: "5554567890", // Número de contacto con 10 dígitos
+      contact: "5554567890",
     },
     {
       id: 5,
       name: "Luis Fernando Fernández García",
       instrument: "Trompeta",
-      contact: "5555678901", // Número de contacto con 10 dígitos
+      contact: "5555678901",
     },
   ];
 
@@ -53,11 +53,20 @@ export default function TeacherTable() {
             {teachers.length > 0 ? (
               teachers.map((teacher) => (
                 <tr key={teacher.id}>
-                  <td className="p-3 border-b">{teacher.id}</td>
-                  <td className="p-3 border-b">{teacher.name}</td>
-                  <td className="p-3 border-b">{teacher.instrument}</td>
-                  <td className="p-3 border-b">{teacher.contact}</td>{" "}
-                  {/* Número de contacto con 10 dígitos */}
+                  <td className="p-3 border-b">
+                    <Link href="/formularioDeDocentes">{teacher.id} </Link>{" "}
+                  </td>
+                  <td className="p-3 border-b">
+                    <Link href="/formularioDeDocentes">{teacher.name} </Link>{" "}
+                  </td>
+                  <td className="p-3 border-b">
+                    <Link href="/formularioDeDocentes">
+                      {teacher.instrument}{" "}
+                    </Link>{" "}
+                  </td>
+                  <td className="p-3 border-b">
+                    <Link href="/formularioDeDocentes">{teacher.contact} </Link>{" "}
+                  </td>{" "}
                 </tr>
               ))
             ) : (

@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-const TutorForm = () => {
+const TeacherForm = () => {
   const {
     register,
     handleSubmit,
@@ -9,7 +9,7 @@ const TutorForm = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log("Datos del tutor:", data);
+    console.log("Datos del profesor:", data);
   };
 
   return (
@@ -18,31 +18,36 @@ const TutorForm = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label className="block font-semibold text-black">
-              Nombre del Tutor
+              Nombre del Profesor
             </label>
             <input
-              {...register("nombreTutor", {
+              {...register("nombreProfesor", {
                 required: "Este campo es obligatorio",
               })}
               className="w-full p-2 border rounded text-black"
             />
-            {errors.nombreTutor && (
+            {errors.nombreProfesor && (
               <p className="text-red-500 text-sm">
-                {errors.nombreTutor.message}
+                {errors.nombreProfesor.message}
               </p>
             )}
           </div>
 
           <div>
             <label className="block font-semibold text-black">
-              Tutor de (Alumno)
+              Clase que Imparte
             </label>
             <input
-              {...register("tutorDe", {
+              {...register("claseImparte", {
                 required: "Este campo es obligatorio",
               })}
               className="w-full p-2 border rounded text-black"
             />
+            {errors.claseImparte && (
+              <p className="text-red-500 text-sm">
+                {errors.claseImparte.message}
+              </p>
+            )}
           </div>
 
           <div>
@@ -50,11 +55,37 @@ const TutorForm = () => {
               Teléfono de Contacto
             </label>
             <input
-              {...register("telefonoTutor", {
+              {...register("telefonoContacto", {
                 required: "Este campo es obligatorio",
               })}
               className="w-full p-2 border rounded text-black"
             />
+            {errors.telefonoContacto && (
+              <p className="text-red-500 text-sm">
+                {errors.telefonoContacto.message}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label className="block font-semibold text-black">
+              Correo Electrónico
+            </label>
+            <input
+              {...register("emailProfesor", {
+                required: "Este campo es obligatorio",
+                pattern: {
+                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                  message: "Por favor ingresa un correo electrónico válido",
+                },
+              })}
+              className="w-full p-2 border rounded text-black"
+            />
+            {errors.emailProfesor && (
+              <p className="text-red-500 text-sm">
+                {errors.emailProfesor.message}
+              </p>
+            )}
           </div>
 
           <div>
@@ -67,6 +98,11 @@ const TutorForm = () => {
               })}
               className="w-full p-2 border rounded text-black"
             />
+            {errors.sedeCultural && (
+              <p className="text-red-500 text-sm">
+                {errors.sedeCultural.message}
+              </p>
+            )}
           </div>
 
           <button
@@ -81,4 +117,4 @@ const TutorForm = () => {
   );
 };
 
-export default TutorForm;
+export default TeacherForm;

@@ -54,13 +54,13 @@ export default function TutorTable() {
               parents.map((parent) => (
                 <tr key={parent.id}>
                   <td className="p-3 border-b">
-                    <Link href="/formulariodelTutor">{parent.id}</Link>
+                    <Link href="/formularioDeTutores">{parent.id}</Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formulariodelTutor">{parent.name}</Link>
+                    <Link href="/formularioDeTutores">{parent.name}</Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formulariodelTutor">{parent.childName}</Link>
+                    <Link href="/formularioDeTutores">{parent.childName}</Link>
                   </td>
                   <td className="p-3 border-b">{parent.childContact}</td>
                 </tr>

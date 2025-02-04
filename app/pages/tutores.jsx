@@ -7,7 +7,7 @@ export default function ParentPage() {
   const router = useRouter();
 
   const handleCreateStudent = () => {
-    router.push("/formulariodelTutor");
+    router.push("/formularioDeTutores");
   };
 
   return (

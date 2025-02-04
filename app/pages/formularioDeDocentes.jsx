@@ -1,17 +1,17 @@
 import React from "react";
 import Sidebar from "@/components/Sidebar";
-import RegisterTutorForm from "@/components/TutorForm";
+import TeacherForm from "@/components/TeacherForm";
 
-export default function AddTutor() {
+export default function TeacherFormPage() {
   return (
     <div className="flex">
       <Sidebar />
       <div className="flex-1 bg-gray-50 min-h-screen">
         <div className="container mx-auto px-6 py-6">
           <h1 className="text-2xl font-bold text-center mb-6 text-[#6C0036]">
-            Información del Tutor
+            Información del Docente
           </h1>
-          <RegisterTutorForm />
+          <TeacherForm />
         </div>
       </div>
     </div>

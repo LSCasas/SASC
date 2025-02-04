@@ -1,9 +1,14 @@
 import React from "react";
+import { useRouter } from "next/router";
 import Sidebar from "@/components/Sidebar";
 import TeacherTable from "@/components/TeacherTable";
 
 export default function AlumnoPage() {
-  const handleCreateStudent = () => {};
+  const router = useRouter();
+
+  const handleCreateStudent = () => {
+    router.push("/formularioDeDocentes");
+  };
 
   return (
     <div className="flex">
