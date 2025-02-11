@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Sidebar from "@/components/Sidebar";
 import TeacherTable from "@/components/TeacherTable";
 
-export default function AlumnoPage() {
+export default function TeacherPage() {
   const router = useRouter();
 
   const handleCreateStudent = () => {

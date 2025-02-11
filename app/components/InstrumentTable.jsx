@@ -2,37 +2,43 @@ import React from "react";
 import InstrumentFilters from "./InstrumentFilters";
 import ExportButtons from "./ExportButtons";
 import Link from "next/link";
+
 export default function InstrumentTable() {
   const instruments = [
     {
       id: 1,
+      firstName: "Juan Carlos",
+      lastName: "Pérez Sánchez",
       instrument: "Violín",
       ownerId: "A001",
-      owner: "Juan Carlos Pérez Sánchez",
     },
     {
       id: 2,
+      firstName: "Ana Sofía",
+      lastName: "Gómez Herrera",
       instrument: "Viola",
       ownerId: "A002",
-      owner: "Ana Sofía Gómez Herrera",
     },
     {
       id: 3,
+      firstName: "Carlos Eduardo",
+      lastName: "Ramírez López",
       instrument: "Cello",
       ownerId: "A003",
-      owner: "Carlos Eduardo Ramírez López",
     },
     {
       id: 4,
+      firstName: "María José",
+      lastName: "Torres Martínez",
       instrument: "Contrabajo",
       ownerId: "A004",
-      owner: "María José Torres Martínez",
     },
     {
       id: 5,
+      firstName: "Luis Fernando",
+      lastName: "Fernández García",
       instrument: "Flauta",
       ownerId: "A005",
-      owner: "Luis Fernando Fernández García",
     },
   ];
 
@@ -46,7 +52,8 @@ export default function InstrumentTable() {
               <th className="p-3 border-b text-black">#</th>
               <th className="p-3 border-b text-black">Instrumento</th>
               <th className="p-3 border-b text-black">Id</th>
-              <th className="p-3 border-b text-black">Propietario</th>
+              <th className="p-3 border-b text-black">Nombre</th>
+              <th className="p-3 border-b text-black">Apellidos</th>
             </tr>
           </thead>
           <tbody>
@@ -70,14 +77,19 @@ export default function InstrumentTable() {
                   </td>
                   <td className="p-3 border-b">
                     <Link href="/formularioDeInstrumentos">
-                      {instrument.owner}
+                      {instrument.firstName}
+                    </Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    <Link href="/formularioDeInstrumentos">
+                      {instrument.lastName}
                     </Link>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="p-3 text-center text-black">
+                <td colSpan="5" className="p-3 text-center text-black">
                   No hay registros disponibles
                 </td>
               </tr>

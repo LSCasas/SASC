@@ -7,35 +7,40 @@ export default function SedeTable() {
   const Sedes = [
     {
       id: 1,
-      fullName: "Juan Carlos Pérez Sánchez",
+      firstName: "Juan Carlos",
+      lastName: "Pérez Sánchez",
       campus: "Sede Central",
       address: "Av. Principal 123, Ciudad Central",
       phone: "123-456-7890",
     },
     {
       id: 2,
-      fullName: "Ana Sofía Gómez Herrera",
+      firstName: "Ana Sofía",
+      lastName: "Gómez Herrera",
       campus: "Sede Norte",
       address: "Calle Norte 456, Ciudad Norte",
       phone: "987-654-3210",
     },
     {
       id: 3,
-      fullName: "Carlos Eduardo Ramírez López",
+      firstName: "Carlos Eduardo",
+      lastName: "Ramírez López",
       campus: "Sede Sur",
       address: "Av. Sur 789, Ciudad Sur",
       phone: "456-789-0123",
     },
     {
       id: 4,
-      fullName: "María José Torres Martínez",
+      firstName: "María José",
+      lastName: "Torres Martínez",
       campus: "Sede Este",
       address: "Calle Este 321, Ciudad Este",
       phone: "321-654-9870",
     },
     {
       id: 5,
-      fullName: "Luis Fernando Fernández García",
+      firstName: "Luis Fernando",
+      lastName: "Fernández García",
       campus: "Sede Oeste",
       address: "Av. Oeste 789, Ciudad Oeste",
       phone: "789-012-3456",
@@ -53,6 +58,7 @@ export default function SedeTable() {
               <th className="p-3 border-b text-black">Nombre (Sede)</th>
               <th className="p-3 border-b text-black">Dirección</th>
               <th className="p-3 border-b text-black">Coordinador</th>
+              <th className="p-3 border-b text-black">Apellido</th>
               <th className="p-3 border-b text-black">Teléfono de Contacto</th>
             </tr>
           </thead>
@@ -70,7 +76,10 @@ export default function SedeTable() {
                     <Link href="/formularioDeSedes">{Sede.address}</Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeSedes">{Sede.fullName}</Link>
+                    <Link href="/formularioDeSedes">{Sede.firstName}</Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    <Link href="/formularioDeSedes">{Sede.lastName}</Link>
                   </td>
                   <td className="p-3 border-b">
                     <Link href="/formularioDeSedes">{Sede.phone}</Link>
@@ -79,7 +88,7 @@ export default function SedeTable() {
               ))
             ) : (
               <tr>
-                <td colSpan="5" className="p-3 text-center text-black">
+                <td colSpan="6" className="p-3 text-center text-black">
                   No hay registros disponibles
                 </td>
               </tr>

@@ -2,36 +2,47 @@ import React from "react";
 import Filters from "./TutorFilters";
 import ExportButtons from "./ExportButtons";
 import Link from "next/link";
+
 export default function TutorTable() {
   const parents = [
     {
       id: 1,
-      name: "Juan Carlos Pérez Sánchez",
-      childName: "Pedro Pérez Martínez",
+      firstName: "Juan Carlos",
+      lastName: "Pérez Sánchez",
+      childFirstName: "Pedro",
+      childLastName: "Pérez Martínez",
       childContact: "5512345678",
     },
     {
       id: 2,
-      name: "Ana Sofía Gómez Herrera",
-      childName: "Luis Gómez Hernández",
+      firstName: "Ana Sofía",
+      lastName: "Gómez Herrera",
+      childFirstName: "Luis",
+      childLastName: "Gómez Hernández",
       childContact: "5523456789",
     },
     {
       id: 3,
-      name: "Carlos Eduardo Ramírez López",
-      childName: "Martín Ramírez Torres",
+      firstName: "Carlos Eduardo",
+      lastName: "Ramírez López",
+      childFirstName: "Martín",
+      childLastName: "Ramírez Torres",
       childContact: "5534567890",
     },
     {
       id: 4,
-      name: "María José Torres Martínez",
-      childName: "Andrea Torres Rodríguez",
+      firstName: "María José",
+      lastName: "Torres Martínez",
+      childFirstName: "Andrea",
+      childLastName: "Torres Rodríguez",
       childContact: "5545678901",
     },
     {
       id: 5,
-      name: "Luis Fernando Fernández García",
-      childName: "José Fernández Ruiz",
+      firstName: "Luis Fernando",
+      lastName: "Fernández García",
+      childFirstName: "José",
+      childLastName: "Fernández Ruiz",
       childContact: "5556789012",
     },
   ];
@@ -45,7 +56,11 @@ export default function TutorTable() {
             <tr className="bg-gray-100 text-left">
               <th className="p-3 border-b text-black">#</th>
               <th className="p-3 border-b text-black">Nombre</th>
+              <th className="p-3 border-b text-black">Apellidos</th>
               <th className="p-3 border-b text-black">Tutor del estudiante</th>
+              <th className="p-3 border-b text-black">
+                Apellidos del estudiante
+              </th>
               <th className="p-3 border-b text-black">Contacto</th>
             </tr>
           </thead>
@@ -57,17 +72,27 @@ export default function TutorTable() {
                     <Link href="/formularioDeTutores">{parent.id}</Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeTutores">{parent.name}</Link>
+                    <Link href="/formularioDeTutores">{parent.firstName}</Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeTutores">{parent.childName}</Link>
+                    <Link href="/formularioDeTutores">{parent.lastName}</Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    <Link href="/formularioDeTutores">
+                      {parent.childFirstName}
+                    </Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    <Link href="/formularioDeTutores">
+                      {parent.childLastName}
+                    </Link>
                   </td>
                   <td className="p-3 border-b">{parent.childContact}</td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="p-3 text-center text-black">
+                <td colSpan="6" className="p-3 text-center text-black">
                   No hay registros disponibles
                 </td>
               </tr>

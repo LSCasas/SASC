@@ -7,38 +7,38 @@ export default function StudentTable() {
   const students = [
     {
       id: 1,
-      name: "Juan Carlos Pérez Sánchez",
+      firstName: "Juan Carlos",
+      lastName: "Pérez Sánchez",
       instrument: "Guitarra",
       genre: "Masculino",
-      age: 16,
     },
     {
       id: 2,
-      name: "Ana Sofía Gómez Herrera",
+      firstName: "Ana Sofía",
+      lastName: "Gómez Herrera",
       instrument: "Piano",
       genre: "Femenino",
-      age: 18,
     },
     {
       id: 3,
-      name: "Carlos Eduardo Ramírez López",
+      firstName: "Carlos Eduardo",
+      lastName: "Ramírez López",
       instrument: "Batería",
       genre: "Masculino",
-      age: 17,
     },
     {
       id: 4,
-      name: "María José Torres Martínez",
+      firstName: "María José",
+      lastName: "Torres Martínez",
       instrument: "Violín",
       genre: "Femenino",
-      age: 15,
     },
     {
       id: 5,
-      name: "Luis Fernando Fernández García",
+      firstName: "Luis Fernando",
+      lastName: "Fernández García",
       instrument: "Trompeta",
       genre: "Masculino",
-      age: 19,
     },
   ];
 
@@ -51,9 +51,9 @@ export default function StudentTable() {
             <tr className="bg-gray-100 text-left">
               <th className="p-3 border-b text-black">#</th>
               <th className="p-3 border-b text-black">Nombre</th>
+              <th className="p-3 border-b text-black">Apellidos</th>
               <th className="p-3 border-b text-black">Instrumento</th>
               <th className="p-3 border-b text-black">Género</th>
-              <th className="p-3 border-b text-black">Edad</th>
             </tr>
           </thead>
           <tbody>
@@ -67,7 +67,10 @@ export default function StudentTable() {
                     <Link href="/formularioDeAlumnos">{student.id}</Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeAlumnos">{student.name}</Link>
+                    <Link href="/formularioDeAlumnos">{student.firstName}</Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    <Link href="/formularioDeAlumnos">{student.lastName}</Link>
                   </td>
                   <td className="p-3 border-b">
                     <Link href="/formularioDeAlumnos">
@@ -77,14 +80,11 @@ export default function StudentTable() {
                   <td className="p-3 border-b">
                     <Link href="/formularioDeAlumnos">{student.genre}</Link>
                   </td>
-                  <td className="p-3 border-b">
-                    <Link href="/formularioDeAlumnos">{student.age}</Link>
-                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5" className="p-3 text-center text-black">
+                <td colSpan="6" className="p-3 text-center text-black">
                   No hay registros disponibles
                 </td>
               </tr>
@@ -106,7 +106,6 @@ export default function StudentTable() {
           <ExportButtons data={students} />
         </div>
       </div>
-      a
     </div>
   );
 }

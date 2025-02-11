@@ -2,7 +2,7 @@ import React from "react";
 import Sidebar from "@/components/Sidebar";
 import TransferTable from "@/components/TransferTable";
 
-export default function AlumnoPage() {
+export default function TransferPage() {
   return (
     <div className="flex flex-col lg:flex-row">
       <Sidebar />

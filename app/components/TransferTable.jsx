@@ -2,11 +2,12 @@ import React from "react";
 import TransferFilters from "./TransferFilters";
 import ExportButtons from "./ExportButtons";
 
-export default function StudentTable() {
+export default function TransferTable() {
   const students = [
     {
       id: 1,
-      name: "Juan Carlos Pérez Sánchez",
+      firstName: "Juan Carlos",
+      lastName: "Pérez Sánchez",
       instrument: "Guitarra",
       genre: "Masculino",
       sendingLocation: "Cantera",
@@ -14,7 +15,8 @@ export default function StudentTable() {
     },
     {
       id: 2,
-      name: "Ana Sofía Gómez Herrera",
+      firstName: "Ana Sofía",
+      lastName: "Gómez Herrera",
       instrument: "Piano",
       genre: "Femenino",
       sendingLocation: "Sede Sur",
@@ -22,7 +24,8 @@ export default function StudentTable() {
     },
     {
       id: 3,
-      name: "Carlos Eduardo Ramírez López",
+      firstName: "Carlos Eduardo",
+      lastName: "Ramírez López",
       instrument: "Batería",
       genre: "Masculino",
       sendingLocation: "Local",
@@ -30,7 +33,8 @@ export default function StudentTable() {
     },
     {
       id: 4,
-      name: "María José Torres Martínez",
+      firstName: "María José",
+      lastName: "Torres Martínez",
       instrument: "Violín",
       genre: "Femenino",
       sendingLocation: "Teyahualco",
@@ -38,7 +42,8 @@ export default function StudentTable() {
     },
     {
       id: 5,
-      name: "Luis Fernando Fernández García",
+      firstName: "Luis Fernando",
+      lastName: "Fernández García",
       instrument: "Trompeta",
       genre: "Masculino",
       sendingLocation: "Sede Sur",
@@ -55,6 +60,7 @@ export default function StudentTable() {
             <tr className="bg-gray-100 text-left">
               <th className="p-3 border-b text-black">#</th>
               <th className="p-3 border-b text-black">Nombre</th>
+              <th className="p-3 border-b text-black">Apellidos</th>
               <th className="p-3 border-b text-black">Instrumento</th>
               <th className="p-3 border-b text-black">Género</th>
               <th className="p-3 border-b text-black">Sede de Envío</th>
@@ -66,7 +72,8 @@ export default function StudentTable() {
               students.map((student) => (
                 <tr key={student.id}>
                   <td className="p-3 border-b">{student.id}</td>
-                  <td className="p-3 border-b">{student.name}</td>
+                  <td className="p-3 border-b">{student.firstName}</td>
+                  <td className="p-3 border-b">{student.lastName}</td>
                   <td className="p-3 border-b">{student.instrument}</td>
                   <td className="p-3 border-b">{student.genre}</td>
                   <td className="p-3 border-b">{student.sendingLocation}</td>
@@ -75,7 +82,7 @@ export default function StudentTable() {
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="p-3 text-center text-black">
+                <td colSpan="7" className="p-3 text-center text-black">
                   No hay registros disponibles
                 </td>
               </tr>

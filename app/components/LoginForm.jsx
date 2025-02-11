@@ -19,7 +19,7 @@ export default function Login() {
   const onSubmit = (data) => {
     const { email } = data;
     if (email === "admin@xample.com") {
-      router.push("/admin");
+      router.push("/enlacesDeSedes");
     } else if (email === "sede@xample.com") {
       router.push("/alumnos");
     } else {

@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
 
-export default function Generations() {
+export default function GenerationsPage() {
   const router = useRouter();
 
   const generaciones = [

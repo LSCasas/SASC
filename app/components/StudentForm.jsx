@@ -158,15 +158,13 @@ const StudentForm = () => {
           </div>
 
           <div>
-            <label className="block font-semibold text-black">
-              Orquesta Sinfónica
-            </label>
+            <label className="block font-semibold text-black">Genero</label>
             <select
               {...register("orquestaSinfónica")}
               className="w-full p-2 border rounded text-black"
             >
-              <option value="Sí">Sí</option>
-              <option value="No">No</option>
+              <option value="Masculino">Masculino</option>
+              <option value="Femenino">Femenino</option>
             </select>
           </div>
 

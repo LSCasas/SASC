@@ -1,10 +1,14 @@
 import React from "react";
 import Sidebar from "@/components/Sidebar";
 import InstrumentTable from "@/components/InstrumentTable";
+import { useRouter } from "next/router";
 
-export default function AlumnoPage() {
-  const handleCreateStudent = () => {};
+export default function InstrumentPage() {
+  const router = useRouter();
 
+  const handleCreateStudent = () => {
+    router.push("/formularioDeInstrumentos");
+  };
   return (
     <div className="flex">
       <Sidebar />

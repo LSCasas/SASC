@@ -2,35 +2,41 @@ import React from "react";
 import TeacherFilters from "./TeacherFilters";
 import ExportButtons from "./ExportButtons";
 import Link from "next/link";
+
 export default function TeacherTable() {
   const teachers = [
     {
       id: 1,
-      name: "Juan Carlos Pérez Sánchez",
+      firstName: "Juan Carlos",
+      lastName: "Pérez Sánchez",
       instrument: "Guitarra",
       contact: "5551234567",
     },
     {
       id: 2,
-      name: "Ana Sofía Gómez Herrera",
+      firstName: "Ana Sofía",
+      lastName: "Gómez Herrera",
       instrument: "Piano",
       contact: "5552345678",
     },
     {
       id: 3,
-      name: "Carlos Eduardo Ramírez López",
+      firstName: "Carlos Eduardo",
+      lastName: "Ramírez López",
       instrument: "Batería",
       contact: "5553456789",
     },
     {
       id: 4,
-      name: "María José Torres Martínez",
+      firstName: "María José",
+      lastName: "Torres Martínez",
       instrument: "Violín",
       contact: "5554567890",
     },
     {
       id: 5,
-      name: "Luis Fernando Fernández García",
+      firstName: "Luis Fernando",
+      lastName: "Fernández García",
       instrument: "Trompeta",
       contact: "5555678901",
     },
@@ -45,6 +51,7 @@ export default function TeacherTable() {
             <tr className="bg-gray-100 text-left">
               <th className="p-3 border-b text-black">#</th>
               <th className="p-3 border-b text-black">Nombre</th>
+              <th className="p-3 border-b text-black">Apellidos</th>
               <th className="p-3 border-b text-black">Clase que imparte</th>
               <th className="p-3 border-b text-black">Contacto</th>
             </tr>
@@ -54,24 +61,29 @@ export default function TeacherTable() {
               teachers.map((teacher) => (
                 <tr key={teacher.id}>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeDocentes">{teacher.id} </Link>{" "}
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link href="/formularioDeDocentes">{teacher.name} </Link>{" "}
+                    <Link href="/formularioDeDocentes">{teacher.id}</Link>
                   </td>
                   <td className="p-3 border-b">
                     <Link href="/formularioDeDocentes">
-                      {teacher.instrument}{" "}
-                    </Link>{" "}
+                      {teacher.firstName}
+                    </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeDocentes">{teacher.contact} </Link>{" "}
-                  </td>{" "}
+                    <Link href="/formularioDeDocentes">{teacher.lastName}</Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    <Link href="/formularioDeDocentes">
+                      {teacher.instrument}
+                    </Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    <Link href="/formularioDeDocentes">{teacher.contact}</Link>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="p-3 text-center text-black">
+                <td colSpan="5" className="p-3 text-center text-black">
                   No hay registros disponibles
                 </td>
               </tr>
