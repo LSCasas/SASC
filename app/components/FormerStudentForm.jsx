@@ -1,7 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-
-const StudentForm = () => {
+const FormerStudentForm = () => {
   const {
     register,
     handleSubmit,
@@ -16,51 +15,6 @@ const StudentForm = () => {
     <div className="bg-white p-6 rounded-lg shadow-md max-w-lg mx-auto">
       <div className="max-h-[550px] overflow-y-auto p-2">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div>
-            <label className="block font-semibold text-black">
-              Nombre del Alumno
-            </label>
-            <input
-              {...register("nombreTutor", {
-                required: "Este campo es obligatorio",
-              })}
-              defaultValue="Juan"
-              className="w-full p-2 border rounded text-black"
-            />
-            {errors.nombreTutor && (
-              <p className="text-red-500 text-sm">
-                {errors.nombreTutor.message}
-              </p>
-            )}
-          </div>
-
-          <div>
-            <label className="block font-semibold text-black">
-              Apellidos del Alumno
-            </label>
-            <input
-              {...register("nombreTutor", {
-                required: "Este campo es obligatorio",
-              })}
-              defaultValue="Pérez"
-              className="w-full p-2 border rounded text-black"
-            />
-            {errors.nombreTutor && (
-              <p className="text-red-500 text-sm">
-                {errors.nombreTutor.message}
-              </p>
-            )}
-          </div>
-
-          <div>
-            <label className="block font-semibold text-black">CURP</label>
-            <input
-              {...register("curp", { required: "Este campo es obligatorio" })}
-              defaultValue="JUAP890101HDFRRL09"
-              className="w-full p-2 border rounded text-black"
-            />
-          </div>
-
           <div>
             <label className="block font-semibold text-black">
               Nombre Tutor
@@ -93,6 +47,15 @@ const StudentForm = () => {
           </div>
 
           <div>
+            <label className="block font-semibold text-black">CURP</label>
+            <input
+              {...register("curp", { required: "Este campo es obligatorio" })}
+              defaultValue="JUAP890101HDFRRL09"
+              className="w-full p-2 border rounded text-black"
+            />
+          </div>
+
+          <div>
             <label className="block font-semibold text-black">
               Sede Cultural
             </label>
@@ -104,9 +67,7 @@ const StudentForm = () => {
           </div>
 
           <div>
-            <label className="block font-semibold text-black">
-              Inscrito Desde
-            </label>
+            <label className="block font-semibold text-black">Baja Desde</label>
             <input
               type="date"
               {...register("inscritoDesde")}
@@ -116,7 +77,7 @@ const StudentForm = () => {
           </div>
 
           <div>
-            <label className="block font-semibold text-black">Curso</label>
+            <label className="block font-semibold text-black">Estado</label>
             <input
               {...register("curso")}
               defaultValue="Violín Intermedio"
@@ -148,41 +109,6 @@ const StudentForm = () => {
 
           <div>
             <label className="block font-semibold text-black">
-              Orquesta Sinfónica
-            </label>
-            <select
-              {...register("orquestaSinfónica")}
-              className="w-full p-2 border rounded text-black"
-            >
-              <option value="Sí">Sí</option>
-              <option value="No">No</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block font-semibold text-black">
-              Condiciones Médicas
-            </label>
-            <input
-              {...register("condicionesMedicas")}
-              defaultValue="Ninguna"
-              className="w-full p-2 border rounded text-black"
-            />
-          </div>
-
-          <div>
-            <label className="block font-semibold text-black">
-              Necesidades Especiales
-            </label>
-            <input
-              {...register("necesidadesEspeciales")}
-              defaultValue="Ninguna"
-              className="w-full p-2 border rounded text-black"
-            />
-          </div>
-
-          <div>
-            <label className="block font-semibold text-black">
               Documentos Requeridos
             </label>
             <input
@@ -204,4 +130,4 @@ const StudentForm = () => {
   );
 };
 
-export default StudentForm;
+export default FormerStudentForm;

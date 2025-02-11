@@ -1,7 +1,7 @@
 import React from "react";
 import FormerStudentFilters from "./FormerStudentFilters";
 import ExportButtons from "./ExportButtons";
-
+import Link from "next/link";
 export default function ExStudentTable() {
   const students = [
     {
@@ -62,13 +62,38 @@ export default function ExStudentTable() {
             {students.length > 0 ? (
               students.map((student) => (
                 <tr key={student.id}>
-                  <td className="p-3 border-b">{student.id}</td>
-                  <td className="p-3 border-b">{student.name}</td>
-                  <td className="p-3 border-b">{student.instrument}</td>
-                  <td className="p-3 border-b">{student.genre}</td>
-                  <td className="p-3 border-b">{student.age}</td>
-                  <td className="p-3 border-b">{student.status}</td>
-                  <td className="p-3 border-b">{student.instrumentReturned}</td>
+                  <td className="p-3 border-b">
+                    {" "}
+                    <Link href="/formularioDeExAlumnos">{student.id}</Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    {" "}
+                    <Link href="/formularioDeExAlumnos">{student.name}</Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    {" "}
+                    <Link href="/formularioDeExAlumnos">
+                      {student.instrument}
+                    </Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    {" "}
+                    <Link href="/formularioDeExAlumnos">{student.genre}</Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    {" "}
+                    <Link href="/formularioDeExAlumnos">{student.age}</Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    {" "}
+                    <Link href="/formularioDeExAlumnos">{student.status}</Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    {" "}
+                    <Link href="/formularioDeExAlumnos">
+                      {student.instrumentReturned}
+                    </Link>
+                  </td>
                 </tr>
               ))
             ) : (

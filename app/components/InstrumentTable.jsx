@@ -1,7 +1,7 @@
 import React from "react";
 import InstrumentFilters from "./InstrumentFilters";
 import ExportButtons from "./ExportButtons";
-
+import Link from "next/link";
 export default function InstrumentTable() {
   const instruments = [
     {
@@ -53,10 +53,26 @@ export default function InstrumentTable() {
             {instruments.length > 0 ? (
               instruments.map((instrument) => (
                 <tr key={instrument.id}>
-                  <td className="p-3 border-b">{instrument.id}</td>
-                  <td className="p-3 border-b">{instrument.instrument}</td>
-                  <td className="p-3 border-b">{instrument.ownerId}</td>
-                  <td className="p-3 border-b">{instrument.owner}</td>
+                  <td className="p-3 border-b">
+                    <Link href="/formularioDeInstrumentos">
+                      {instrument.id}
+                    </Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    <Link href="/formularioDeInstrumentos">
+                      {instrument.instrument}
+                    </Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    <Link href="/formularioDeInstrumentos">
+                      {instrument.ownerId}
+                    </Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    <Link href="/formularioDeInstrumentos">
+                      {instrument.owner}
+                    </Link>
+                  </td>
                 </tr>
               ))
             ) : (
