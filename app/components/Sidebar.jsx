@@ -11,6 +11,8 @@ import {
   RefreshCw,
   UserX,
   LogOut,
+  Link as LinkIcon,
+  Building,
 } from "lucide-react";
 
 const Sidebar = () => {
@@ -33,7 +35,6 @@ const Sidebar = () => {
 
   return (
     <>
-      {/* Botón de menú hamburguesa SOLO en móviles */}
       <button
         id="menu-button"
         onClick={() => setIsOpen(!isOpen)}
@@ -42,12 +43,10 @@ const Sidebar = () => {
         <Menu size={24} />
       </button>
 
-      {/* Sidebar en escritorio (sin fixed, usando absolute) */}
       <div className="hidden sm:flex sm:w-64 h-screen bg-gradient-to-r from-[#B0005E] to-[#6C0036] p-4 absolute sm:relative">
         <SidebarContent />
       </div>
 
-      {/* Sidebar flotante en móviles */}
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 sm:hidden z-50 flex items-start">
           <div
@@ -100,6 +99,16 @@ const SidebarContent = () => {
         href="/exAlumnos"
         icon={<UserX size={20} />}
         label="Ex-Alumnos"
+      />
+      <SidebarItem
+        href="/enlacesDeSedes"
+        icon={<LinkIcon size={20} />}
+        label="Enlaces de Sedes"
+      />
+      <SidebarItem
+        href="/ControlDeSedes"
+        icon={<Building size={20} />}
+        label="Control de Sedes"
       />
       <SidebarItem href="/" icon={<LogOut size={20} />} label="Salir" />
     </nav>
