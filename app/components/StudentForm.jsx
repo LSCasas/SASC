@@ -81,6 +81,17 @@ const StudentForm = () => {
 
           <div>
             <label className="block font-semibold text-black">
+              CURP del Tutor
+            </label>
+            <input
+              {...register("curp", { required: "Este campo es obligatorio" })}
+              defaultValue="JUAP890101HDFRRL09"
+              className="w-full p-2 border rounded text-black"
+            />
+          </div>
+
+          <div>
+            <label className="block font-semibold text-black">
               Teléfono Tutor
             </label>
             <input

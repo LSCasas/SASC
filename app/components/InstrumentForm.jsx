@@ -46,6 +46,18 @@ const InstrumentForm = () => {
           </div>
 
           <div>
+            <label className="block font-semibold text-black">
+              Fecha de Asignacion
+            </label>
+            <input
+              {...register("tutorDe", {
+                required: "Este campo es obligatorio",
+              })}
+              className="w-full p-2 border rounded text-black"
+            />
+          </div>
+
+          <div>
             <label className="block font-semibold text-black">Id</label>
             <input
               {...register("telefonoTutor", {

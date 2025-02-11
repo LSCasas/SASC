@@ -35,6 +35,18 @@ const TutorForm = () => {
 
           <div>
             <label className="block font-semibold text-black">
+              Curp del Tutor
+            </label>
+            <input
+              {...register("tutorDe", {
+                required: "Este campo es obligatorio",
+              })}
+              className="w-full p-2 border rounded text-black"
+            />
+          </div>
+
+          <div>
+            <label className="block font-semibold text-black">
               Tutor de (Alumno)
             </label>
             <input
