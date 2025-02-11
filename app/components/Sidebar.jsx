@@ -13,6 +13,7 @@ import {
   LogOut,
   Link as LinkIcon,
   Building,
+  Briefcase,
 } from "lucide-react";
 
 const Sidebar = () => {
@@ -109,6 +110,11 @@ const SidebarContent = () => {
         href="/ControlDeSedes"
         icon={<Building size={20} />}
         label="Control de Sedes"
+      />
+      <SidebarItem
+        href="/coordinadores"
+        icon={<Briefcase size={20} />}
+        label="Control de Coordinadores"
       />
       <SidebarItem href="/" icon={<LogOut size={20} />} label="Salir" />
     </nav>
