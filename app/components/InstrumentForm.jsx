@@ -35,7 +35,19 @@ const InstrumentForm = () => {
 
           <div>
             <label className="block font-semibold text-black">
-              Propietario (Alumno)
+              Curp de Propietario (Alumno)
+            </label>
+            <input
+              {...register("tutorDe", {
+                required: "Este campo es obligatorio",
+              })}
+              className="w-full p-2 border rounded text-black"
+            />
+          </div>
+
+          <div>
+            <label className="block font-semibold text-black">
+              Curp de Tutor
             </label>
             <input
               {...register("tutorDe", {

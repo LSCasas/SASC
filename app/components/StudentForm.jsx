@@ -24,7 +24,6 @@ const StudentForm = () => {
               {...register("nombreTutor", {
                 required: "Este campo es obligatorio",
               })}
-              defaultValue="Juan"
               className="w-full p-2 border rounded text-black"
             />
             {errors.nombreTutor && (
@@ -42,7 +41,6 @@ const StudentForm = () => {
               {...register("nombreTutor", {
                 required: "Este campo es obligatorio",
               })}
-              defaultValue="Pérez"
               className="w-full p-2 border rounded text-black"
             />
             {errors.nombreTutor && (
@@ -56,7 +54,6 @@ const StudentForm = () => {
             <label className="block font-semibold text-black">CURP</label>
             <input
               {...register("curp", { required: "Este campo es obligatorio" })}
-              defaultValue="JUAP890101HDFRRL09"
               className="w-full p-2 border rounded text-black"
             />
           </div>
@@ -69,7 +66,6 @@ const StudentForm = () => {
               {...register("nombreTutor", {
                 required: "Este campo es obligatorio",
               })}
-              defaultValue="Juan Pérez"
               className="w-full p-2 border rounded text-black"
             />
             {errors.nombreTutor && (
@@ -85,7 +81,16 @@ const StudentForm = () => {
             </label>
             <input
               {...register("curp", { required: "Este campo es obligatorio" })}
-              defaultValue="JUAP890101HDFRRL09"
+              className="w-full p-2 border rounded text-black"
+            />
+          </div>
+
+          <div>
+            <label className="block font-semibold text-black">Estatus</label>
+            <input
+              {...register("telefonoTutor", {
+                required: "Este campo es obligatorio",
+              })}
               className="w-full p-2 border rounded text-black"
             />
           </div>
@@ -98,7 +103,6 @@ const StudentForm = () => {
               {...register("telefonoTutor", {
                 required: "Este campo es obligatorio",
               })}
-              defaultValue="555-123-4567"
               className="w-full p-2 border rounded text-black"
             />
           </div>
@@ -109,7 +113,6 @@ const StudentForm = () => {
             </label>
             <input
               {...register("sedeCultural")}
-              defaultValue="Sede Cultural de Tultepec"
               className="w-full p-2 border rounded text-black"
             />
           </div>
@@ -121,7 +124,6 @@ const StudentForm = () => {
             <input
               type="date"
               {...register("inscritoDesde")}
-              defaultValue="2023-02-01"
               className="w-full p-2 border rounded text-black"
             />
           </div>
@@ -130,18 +132,6 @@ const StudentForm = () => {
             <label className="block font-semibold text-black">Curso</label>
             <input
               {...register("curso")}
-              defaultValue="Violín Intermedio"
-              className="w-full p-2 border rounded text-black"
-            />
-          </div>
-
-          <div>
-            <label className="block font-semibold text-black">
-              Instrumento
-            </label>
-            <input
-              {...register("instrumento")}
-              defaultValue="Violín"
               className="w-full p-2 border rounded text-black"
             />
           </div>
@@ -152,7 +142,6 @@ const StudentForm = () => {
             </label>
             <input
               {...register("cursosAnteriores")}
-              defaultValue="Violín Básico, Solfeo"
               className="w-full p-2 border rounded text-black"
             />
           </div>
@@ -174,7 +163,6 @@ const StudentForm = () => {
             </label>
             <input
               {...register("condicionesMedicas")}
-              defaultValue="Ninguna"
               className="w-full p-2 border rounded text-black"
             />
           </div>
@@ -185,7 +173,6 @@ const StudentForm = () => {
             </label>
             <input
               {...register("necesidadesEspeciales")}
-              defaultValue="Ninguna"
               className="w-full p-2 border rounded text-black"
             />
           </div>
@@ -196,7 +183,6 @@ const StudentForm = () => {
             </label>
             <input
               {...register("documentosRequeridos")}
-              defaultValue="Acta de nacimiento, CURP"
               className="w-full p-2 border rounded text-black"
             />
           </div>
