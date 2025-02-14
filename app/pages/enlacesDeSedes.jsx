@@ -1,5 +1,5 @@
 import Sidebar from "@/components/Sidebar";
-import SedesCard from "@/components/SedesCard";
+import CampusCard from "@/components/CampusCard";
 
 export default function Admin() {
   return (
@@ -10,7 +10,7 @@ export default function Admin() {
           <h1 className="text-2xl font-bold text-center mb-6 text-[#6C0036]">
             Sedes culturales
           </h1>
-          <SedesCard />
+          <CampusCard />
         </div>
       </div>
     </div>

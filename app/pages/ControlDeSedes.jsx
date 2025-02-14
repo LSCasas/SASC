@@ -1,12 +1,12 @@
 import React from "react";
 import Sidebar from "@/components/Sidebar";
-import SedeTable from "@/components/SedeTable";
+import CampusTable from "@/components/CampusTable";
 import { useRouter } from "next/router";
 
-export default function SedePage() {
+export default function CampusPage() {
   const router = useRouter();
 
-  const handleCreateSede = () => {
+  const handleCreateCampus = () => {
     router.push("/formularioDeSedes");
   };
 
@@ -21,7 +21,7 @@ export default function SedePage() {
 
           <div className="mb-4 text-right">
             <button
-              onClick={handleCreateSede}
+              onClick={handleCreateCampus}
               className="w-full sm:w-auto py-2 px-4 bg-gradient-to-r bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
             >
               Agregar Sede
@@ -29,7 +29,7 @@ export default function SedePage() {
           </div>
 
           <div className="overflow-x-auto">
-            <SedeTable />
+            <CampusTable />
           </div>
         </div>
       </div>

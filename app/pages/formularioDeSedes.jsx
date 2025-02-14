@@ -1,8 +1,8 @@
 import React from "react";
 import Sidebar from "@/components/Sidebar";
-import SedeForm from "@/components/SedeForm";
+import CampusForm from "@/components/CampusForm";
 
-export default function SedeFormPage() {
+export default function CampusFormPage() {
   return (
     <div className="flex">
       <Sidebar />
@@ -11,7 +11,7 @@ export default function SedeFormPage() {
           <h1 className="text-2xl font-bold text-center mb-6 text-[#6C0036]">
             Información de Sede
           </h1>
-          <SedeForm />
+          <CampusForm />
         </div>
       </div>
     </div>

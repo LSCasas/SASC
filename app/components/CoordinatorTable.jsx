@@ -11,6 +11,7 @@ export default function CoordinatorTable() {
       lastname: "Pérez Sánchez",
       email: "sede@example.com",
       phone: "123-456-7890",
+      campus: "Sede Norte",
     },
     {
       id: 2,
@@ -18,6 +19,7 @@ export default function CoordinatorTable() {
       lastname: "Pérez Sánchez",
       email: "sede@example.com",
       phone: "987-654-3210",
+      campus: "Sede Sur",
     },
     {
       id: 3,
@@ -25,6 +27,7 @@ export default function CoordinatorTable() {
       lastname: "Pérez Sánchez",
       email: "sede@example.com",
       phone: "456-789-0123",
+      campus: "Sede Este",
     },
     {
       id: 4,
@@ -32,6 +35,7 @@ export default function CoordinatorTable() {
       lastname: "Pérez Sánchez",
       email: "sede@example.com",
       phone: "321-654-9870",
+      campus: "Sede Oeste",
     },
     {
       id: 5,
@@ -39,6 +43,7 @@ export default function CoordinatorTable() {
       lastname: "Pérez Sánchez",
       email: "sede@example.com",
       phone: "789-012-3456",
+      campus: "Sede Central",
     },
   ];
 
@@ -54,6 +59,7 @@ export default function CoordinatorTable() {
               <th className="p-3 border-b text-black">Apellido</th>
               <th className="p-3 border-b text-black">Email</th>
               <th className="p-3 border-b text-black">Teléfono de Contacto</th>
+              <th className="p-3 border-b text-black">Sede que coordina</th>
             </tr>
           </thead>
           <tbody>
@@ -77,11 +83,14 @@ export default function CoordinatorTable() {
                   <td className="p-3 border-b">
                     <Link href="/formularioDeCoordinadores">{Sede.phone}</Link>
                   </td>
+                  <td className="p-3 border-b">
+                    <Link href="/formularioDeCoordinadores">{Sede.campus}</Link>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5" className="p-3 text-center text-black">
+                <td colSpan="6" className="p-3 text-center text-black">
                   No hay registros disponibles
                 </td>
               </tr>

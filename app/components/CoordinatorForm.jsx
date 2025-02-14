@@ -87,6 +87,23 @@ const CoordinatorForm = () => {
             )}
           </div>
 
+          <div>
+            <label className="block font-semibold text-black">
+              Sede a su cargo
+            </label>
+            <input
+              {...register("telefono_contacto", {
+                required: "Este campo es obligatorio",
+              })}
+              className="w-full p-2 border rounded text-black"
+            />
+            {errors.telefono_contacto && (
+              <p className="text-red-500 text-sm">
+                {errors.telefono_contacto.message}
+              </p>
+            )}
+          </div>
+
           <button
             type="submit"
             className="w-full sm:w-auto py-2 px-4 bg-gradient-to-r bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
