@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
+import { toast, Toaster } from "sonner";
 import clsx from "clsx";
+import { useRouter } from "next/router";
+import { login } from "@/api/api";
 
-export default function Login() {
+export default function LoginForm() {
   const {
     register,
     handleSubmit,
@@ -21,7 +23,7 @@ export default function Login() {
     if (email === "admin@xample.com") {
       router.push("/enlacesDeSedes");
     } else if (email === "sede@xample.com") {
-      router.push("/alumnos");
+      router.push("/enlacesDeSedes");
     } else {
       alert("Correo no válido");
     }

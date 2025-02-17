@@ -2,14 +2,14 @@ import React from "react";
 import { useRouter } from "next/router";
 
 const campus = [
-  { id: 1, name: "campus Cantera" },
-  { id: 2, name: "campus Xahuento" },
-  { id: 3, name: "campus Teyahualco" },
-  { id: 4, name: "campus Central" },
-  { id: 5, name: "campus Paseos" },
-  { id: 6, name: "campus 10 de Junio" },
-  { id: 7, name: "campus El Dorado" },
-  { id: 8, name: "campus Cantera" },
+  { id: 1, name: "Sede Cantera" },
+  { id: 2, name: "Sede Xahuento" },
+  { id: 3, name: "Sede Teyahualco" },
+  { id: 4, name: "Sede Central" },
+  { id: 5, name: "Sede Paseos" },
+  { id: 6, name: "Sede 10 de Junio" },
+  { id: 7, name: "Sede El Dorado" },
+  { id: 8, name: "Sede Cantera" },
 ];
 
 export default function CampusCard() {

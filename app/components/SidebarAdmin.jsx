@@ -2,21 +2,13 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   Menu,
-  GraduationCap,
-  Users,
-  UserCheck,
-  BookOpen,
-  Music,
-  Calendar,
-  RefreshCw,
-  UserX,
   LogOut,
   Link as LinkIcon,
   Building,
   Briefcase,
 } from "lucide-react";
 
-const Sidebar = () => {
+const SidebarAdmin = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -45,7 +37,7 @@ const Sidebar = () => {
       </button>
 
       <div className="hidden sm:flex sm:w-64 h-screen bg-gradient-to-r from-[#B0005E] to-[#6C0036] p-4 absolute sm:relative">
-        <SidebarContent />
+        <SidebarAdminContent />
       </div>
 
       {isOpen && (
@@ -54,7 +46,7 @@ const Sidebar = () => {
             id="mobile-menu"
             className="w-64 h-full bg-gradient-to-r from-[#B0005E] to-[#6C0036] p-4"
           >
-            <SidebarContent />
+            <SidebarAdminContent />
           </div>
         </div>
       )}
@@ -62,60 +54,35 @@ const Sidebar = () => {
   );
 };
 
-const SidebarContent = () => {
+const SidebarAdminContent = () => {
   return (
     <nav className="flex flex-col gap-4">
       <div>
-        <SidebarItem
-          href="/alumnos"
-          icon={<GraduationCap size={25} />}
-          label="Alumnos"
+        <SidebarAdminItem
+          href="/enlacesDeSedes"
+          icon={<LinkIcon size={25} />}
+          label="Enlaces de Sedes"
         />
-        <SidebarItem
-          href="/tutores"
-          icon={<Users size={25} />}
-          label="Tutores"
+        <SidebarAdminItem
+          href="/ControlDeSedes"
+          icon={<Building size={25} />}
+          label="Control de Sedes"
         />
-        <SidebarItem
-          href="/docentes"
-          icon={<UserCheck size={25} />}
-          label="Docentes"
-        />
-        <SidebarItem
-          href="/clases"
-          icon={<BookOpen size={25} />}
-          label="Clases"
-        />
-        <SidebarItem
-          href="/instrumentos"
-          icon={<Music size={25} />}
-          label="Instrumentos"
-        />
-        <SidebarItem
-          href="/horarios"
-          icon={<Calendar size={25} />}
-          label="Horarios"
-        />
-        <SidebarItem
-          href="/transferencias"
-          icon={<RefreshCw size={25} />}
-          label="Transferencias"
-        />
-        <SidebarItem
-          href="/exAlumnos"
-          icon={<UserX size={25} />}
-          label="Ex-Alumnos"
+        <SidebarAdminItem
+          href="/coordinadores"
+          icon={<Briefcase size={25} />}
+          label="Control de Coordinadores"
         />
       </div>
 
       <div className="mt-auto">
-        <SidebarItem href="/" icon={<LogOut size={25} />} label="Salir" />
+        <SidebarAdminItem href="/" icon={<LogOut size={25} />} label="Salir" />
       </div>
     </nav>
   );
 };
 
-const SidebarItem = ({ href, icon, label }) => {
+const SidebarAdminItem = ({ href, icon, label }) => {
   return (
     <Link
       href={href}
@@ -127,4 +94,4 @@ const SidebarItem = ({ href, icon, label }) => {
   );
 };
 
-export default Sidebar;
+export default SidebarAdmin;
