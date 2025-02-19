@@ -1,7 +1,18 @@
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 import SidebarAdmin from "@/components/SidebarAdmin";
 import CampusCard from "@/components/CampusCard";
 
 export default function Admin() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/login");
+    }
+  }, [router]);
+
   return (
     <div className="flex flex-col lg:flex-row">
       <SidebarAdmin />

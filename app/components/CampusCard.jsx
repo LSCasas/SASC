@@ -1,31 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
-const campus = [
-  { id: 1, name: "Sede Cantera" },
-  { id: 2, name: "Sede Xahuento" },
-  { id: 3, name: "Sede Teyahualco" },
-  { id: 4, name: "Sede Central" },
-  { id: 5, name: "Sede Paseos" },
-  { id: 6, name: "Sede 10 de Junio" },
-  { id: 7, name: "Sede El Dorado" },
-  { id: 8, name: "Sede Cantera" },
-];
+import { selectCampus } from "@/api/api";
 
 export default function CampusCard() {
+  const [campuses, setCampuses] = useState([]);
   const router = useRouter();
 
-  const handleRedirect = () => {
-    router.push("/alumnos");
+  useEffect(() => {
+    const storedCampuses = JSON.parse(localStorage.getItem("campuses")) || [];
+    setCampuses(storedCampuses);
+  }, []);
+
+  const handleSelectCampus = async (campusId) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await selectCampus(token, campusId);
+
+      localStorage.removeItem("campuses");
+
+      localStorage.setItem("token", response.token);
+
+      router.push("/alumnos");
+    } catch (error) {
+      console.error("Error al seleccionar sede:", error);
+    }
   };
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-6">
-      {campus.map((campus) => (
+      {campuses.map((campus) => (
         <div
-          key={campus.id}
+          key={campus._id}
           className="cursor-pointer p-6 text-center bg-white shadow-lg rounded-2xl hover:shadow-xl transition border border-gray-200"
-          onClick={handleRedirect}
+          onClick={() => handleSelectCampus(campus._id)}
         >
           <h2 className="text-lg font-semibold text-gray-700">{campus.name}</h2>
         </div>

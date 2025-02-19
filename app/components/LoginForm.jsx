@@ -18,19 +18,20 @@ export default function LoginForm() {
     setShowPassword(!showPassword);
   };
 
-  const onSubmit = (data) => {
-    const { email } = data;
-    if (email === "admin@xample.com") {
+  const onSubmit = async (data) => {
+    try {
+      const response = await login(data);
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("campuses", JSON.stringify(response.campuses));
       router.push("/enlacesDeSedes");
-    } else if (email === "sede@xample.com") {
-      router.push("/enlacesDeSedes");
-    } else {
-      alert("Correo no válido");
+    } catch (error) {
+      toast.error("Error al iniciar sesión: " + error.message);
     }
   };
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-8 mt-24 w-full">
+      <Toaster />
       <h2 className="mb-4 text-center text-2xl font-bold text-[#B0005E]">
         Iniciar sesión
       </h2>
