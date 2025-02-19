@@ -13,12 +13,9 @@ export default function CampusCard() {
 
   const handleSelectCampus = async (campusId) => {
     try {
-      const token = localStorage.getItem("token");
-      const response = await selectCampus(token, campusId);
+      const response = await selectCampus(campusId);
 
       localStorage.removeItem("campuses");
-
-      localStorage.setItem("token", response.token);
 
       router.push("/alumnos");
     } catch (error) {

@@ -8,6 +8,7 @@ export async function login(data) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
+    credentials: "include",
   });
 
   const json = await res.json();
@@ -16,17 +17,26 @@ export async function login(data) {
 }
 
 // SELECTED SEDE
-export async function selectCampus(token, selectedCampusId) {
-  const res = await fetch(`${API_URL}/auth/select-campus`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ selectedCampusId }),
-  });
+export async function selectCampus(campusId) {
+  try {
+    const response = await fetch(`${API_URL}/auth/select-campus`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ selectedCampusId: campusId }),
+    });
 
-  const json = await res.json();
-  if (!json.success) throw new Error(json.message);
-  return json.data;
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Error desconocido en selectCampus");
+    }
+
+    return data.data;
+  } catch (error) {
+    console.error("Error en la respuesta de selectCampus:", error);
+    throw error;
+  }
 }

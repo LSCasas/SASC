@@ -21,7 +21,6 @@ export default function LoginForm() {
   const onSubmit = async (data) => {
     try {
       const response = await login(data);
-      localStorage.setItem("token", response.token);
       localStorage.setItem("campuses", JSON.stringify(response.campuses));
       router.push("/enlacesDeSedes");
     } catch (error) {
