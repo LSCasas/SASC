@@ -9,35 +9,30 @@ export default function TeacherTable() {
       id: 1,
       firstName: "Juan Carlos",
       lastName: "Pérez Sánchez",
-      instrument: "Guitarra",
       contact: "5551234567",
     },
     {
       id: 2,
       firstName: "Ana Sofía",
       lastName: "Gómez Herrera",
-      instrument: "Piano",
       contact: "5552345678",
     },
     {
       id: 3,
       firstName: "Carlos Eduardo",
       lastName: "Ramírez López",
-      instrument: "Batería",
       contact: "5553456789",
     },
     {
       id: 4,
       firstName: "María José",
       lastName: "Torres Martínez",
-      instrument: "Violín",
       contact: "5554567890",
     },
     {
       id: 5,
       firstName: "Luis Fernando",
       lastName: "Fernández García",
-      instrument: "Trompeta",
       contact: "5555678901",
     },
   ];
@@ -52,7 +47,6 @@ export default function TeacherTable() {
               <th className="p-3 border-b text-black">#</th>
               <th className="p-3 border-b text-black">Nombre</th>
               <th className="p-3 border-b text-black">Apellidos</th>
-              <th className="p-3 border-b text-black">Clase que imparte</th>
               <th className="p-3 border-b text-black">Contacto</th>
             </tr>
           </thead>
@@ -70,11 +64,6 @@ export default function TeacherTable() {
                   </td>
                   <td className="p-3 border-b">
                     <Link href="/formularioDeDocentes">{teacher.lastName}</Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link href="/formularioDeDocentes">
-                      {teacher.instrument}
-                    </Link>
                   </td>
                   <td className="p-3 border-b">
                     <Link href="/formularioDeDocentes">{teacher.contact}</Link>

@@ -17,9 +17,7 @@ const TeacherForm = () => {
       <div className="max-h-[550px] overflow-y-auto p-2">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block font-semibold text-black">
-              Nombre del Profesor
-            </label>
+            <label className="block font-semibold text-black">Nombre</label>
             <input
               {...register("nombreProfesor", {
                 required: "Este campo es obligatorio",
@@ -35,7 +33,7 @@ const TeacherForm = () => {
 
           <div>
             <label className="block font-semibold text-black">
-              Clase que Imparte
+              Apellidos (empezando por paterno)
             </label>
             <input
               {...register("claseImparte", {
@@ -84,23 +82,6 @@ const TeacherForm = () => {
             {errors.emailProfesor && (
               <p className="text-red-500 text-sm">
                 {errors.emailProfesor.message}
-              </p>
-            )}
-          </div>
-
-          <div>
-            <label className="block font-semibold text-black">
-              Sede Cultural
-            </label>
-            <input
-              {...register("sedeCultural", {
-                required: "Este campo es obligatorio",
-              })}
-              className="w-full p-2 border rounded text-black"
-            />
-            {errors.sedeCultural && (
-              <p className="text-red-500 text-sm">
-                {errors.sedeCultural.message}
               </p>
             )}
           </div>

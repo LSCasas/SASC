@@ -7,9 +7,28 @@ import {
   Building,
   Briefcase,
 } from "lucide-react";
+import { getUserById } from "../api/api";
 
 const SidebarAdmin = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [userRole, setUserRole] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userData = await getUserById();
+        setUserRole(userData.role);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setUserRole(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -25,6 +44,10 @@ const SidebarAdmin = () => {
       return () => document.removeEventListener("click", handleClickOutside);
     }
   }, [isOpen]);
+
+  if (loading) return null;
+
+  if (userRole !== "admin") return null;
 
   return (
     <>
