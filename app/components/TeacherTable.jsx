@@ -10,6 +10,10 @@ export default function TeacherTable() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Estados para los filtros
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("active");
+
   useEffect(() => {
     async function fetchTeachers() {
       try {
@@ -34,14 +38,28 @@ export default function TeacherTable() {
   if (loading) return <p className="text-center text-black">Cargando...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
-  // Filtra los docentes cuyo isAchive es false
-  const activeTeachers = teachers.filter(
-    (teacher) => teacher.isAchive === false
-  );
+  // Filtra los docentes basado en el término de búsqueda y el estado
+  const filteredTeachers = teachers.filter((teacher) => {
+    const matchesName =
+      teacher.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      teacher.lastName.toLowerCase().includes(searchTerm.toLowerCase());
+
+    const matchesStatus =
+      statusFilter === "active"
+        ? teacher.isAchive === false
+        : teacher.isAchive === true;
+
+    return matchesName && matchesStatus;
+  });
 
   return (
     <div className="mt-6">
-      <TeacherFilters />
+      <TeacherFilters
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        statusFilter={statusFilter}
+        setStatusFilter={setStatusFilter}
+      />
       <div className="overflow-y-auto max-h-[400px]">
         <table className="min-w-full bg-white border border-gray-200 text-black">
           <thead>
@@ -54,8 +72,8 @@ export default function TeacherTable() {
             </tr>
           </thead>
           <tbody>
-            {activeTeachers.length > 0 ? (
-              activeTeachers.map((teacher, index) => (
+            {filteredTeachers.length > 0 ? (
+              filteredTeachers.map((teacher, index) => (
                 <tr key={teacher._id}>
                   <td className="p-3 border-b">
                     <Link href={`/formularioDeDocentes?id=${teacher._id}`}>
@@ -99,8 +117,8 @@ export default function TeacherTable() {
           <h1 className="text-black"> ◀︎ </h1>
         </button>
         <span className="text-gray-600">
-          {activeTeachers.length > 0
-            ? `1–${activeTeachers.length} de ${activeTeachers.length}`
+          {filteredTeachers.length > 0
+            ? `1–${filteredTeachers.length} de ${filteredTeachers.length}`
             : "0 de 0"}
         </span>
         <button className="opacity-50 cursor-not-allowed">
@@ -109,7 +127,7 @@ export default function TeacherTable() {
       </div>
       <div className="mt-3 flex justify-center">
         <div className="w-full">
-          <ExportButtons data={activeTeachers} />
+          <ExportButtons data={filteredTeachers} />
         </div>
       </div>
     </div>
