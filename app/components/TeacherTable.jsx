@@ -157,7 +157,10 @@ export default function TeacherTable() {
       </div>
       <div className="mt-3 flex justify-center">
         <div className="w-full">
-          <ExportButtons data={displayedTeachers} />
+          <ExportButtons
+            data={displayedTeachers}
+            allTeachers={filteredTeachers}
+          />
         </div>
       </div>
     </div>
