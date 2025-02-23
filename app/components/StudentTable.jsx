@@ -1,6 +1,6 @@
 import React from "react";
 import Filters from "./StudentFilters";
-import ExportButtons from "./ExportButtons";
+import ExportButtons from "./TeacherExportButtons";
 import Link from "next/link";
 
 export default function StudentTable() {

@@ -1,9 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import * as XLSX from "xlsx";
+import { getUserById } from "../api/user";
 
 export default function ExportButtons({ data, allTeachers }) {
+  const [campusName, setCampusName] = useState("");
+
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+        const user = await getUserById();
+        const userCampusId = user.selectedCampusId;
+        const campus = user.campusId.find(
+          (campus) => campus._id === userCampusId
+        );
+        if (campus) {
+          setCampusName(campus.name);
+        }
+      } catch (error) {
+        console.error("Error al obtener los datos del usuario:", error);
+      }
+    }
+
+    fetchUserData();
+  }, []);
+
   const handleExport = (type) => {
     if (type === "PDF") {
       exportToPDF();
@@ -20,13 +42,20 @@ export default function ExportButtons({ data, allTeachers }) {
     const tableWidth = doc.internal.pageSize.getWidth() - marginLeft - 5;
 
     const chunkSize = 20;
+    let firstPage = true;
+
     for (let i = 0; i < allTeachers.length; i += chunkSize) {
       const chunk = allTeachers.slice(i, i + chunkSize);
 
       if (i > 0) doc.addPage();
 
+      if (firstPage) {
+        doc.text(`Reporte de Docentes - ${campusName}`, marginLeft, 10);
+        firstPage = false;
+      }
+
       doc.autoTable({
-        startY: 10,
+        startY: 20,
         head: [["#", "Nombre", "Apellidos", "Teléfono", "Correo"]],
         body: chunk.map((teacher, index) => [
           i + index + 1,
@@ -55,7 +84,7 @@ export default function ExportButtons({ data, allTeachers }) {
       });
     }
 
-    doc.save("docentes.pdf");
+    doc.save(`Reporte_de_Docentes_${campusName}.pdf`);
   };
 
   const exportToExcel = () => {
@@ -72,9 +101,13 @@ export default function ExportButtons({ data, allTeachers }) {
     );
 
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Docentes");
+    XLSX.utils.book_append_sheet(
+      workbook,
+      worksheet,
+      `Docentes - ${campusName}`
+    );
 
-    XLSX.writeFile(workbook, "docentes.xlsx");
+    XLSX.writeFile(workbook, `Docentes_${campusName}.xlsx`);
   };
 
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import Filters from "./TutorFilters";
-import ExportButtons from "./ExportButtons";
+import ExportButtons from "./TeacherExportButtons";
 import Link from "next/link";
 
 export default function TutorTable() {

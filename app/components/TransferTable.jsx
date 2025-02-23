@@ -1,6 +1,6 @@
 import React from "react";
 import TransferFilters from "./TransferFilters";
-import ExportButtons from "./ExportButtons";
+import ExportButtons from "./TeacherExportButtons";
 
 export default function TransferTable() {
   const students = [

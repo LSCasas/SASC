@@ -1,6 +1,6 @@
 import React from "react";
 import InstrumentFilters from "./InstrumentFilters";
-import ExportButtons from "./ExportButtons";
+import ExportButtons from "./TeacherExportButtons";
 import Link from "next/link";
 
 export default function InstrumentTable() {

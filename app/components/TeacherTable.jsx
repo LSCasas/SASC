@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TeacherFilters from "./TeacherFilters";
-import ExportButtons from "./ExportButtons";
+import ExportButtons from "./TeacherExportButtons";
 import Link from "next/link";
 import { getUserById } from "../api/user";
 import { getTeachersByCampusId } from "../api/teacher";

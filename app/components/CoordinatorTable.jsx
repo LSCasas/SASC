@@ -1,6 +1,6 @@
 import React from "react";
 import CoordinatorFilters from "./CoordinatorFilters";
-import ExportButtons from "./ExportButtons";
+import ExportButtons from "./TeacherExportButtons";
 import Link from "next/link";
 
 export default function CoordinatorTable() {
