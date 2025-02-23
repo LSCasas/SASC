@@ -10,9 +10,11 @@ export default function TeacherTable() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Estados para los filtros
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("active");
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const recordsPerPage = 20;
 
   useEffect(() => {
     async function fetchTeachers() {
@@ -24,7 +26,8 @@ export default function TeacherTable() {
           throw new Error("El usuario no tiene un campus seleccionado");
 
         const teachersData = await getTeachersByCampusId(campusId);
-        setTeachers(teachersData);
+
+        setTeachers(teachersData.reverse());
       } catch (err) {
         setError(err.message);
       } finally {
@@ -38,7 +41,6 @@ export default function TeacherTable() {
   if (loading) return <p className="text-center text-black">Cargando...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
-  // Filtra los docentes basado en el término de búsqueda y el estado
   const filteredTeachers = teachers.filter((teacher) => {
     const matchesName =
       teacher.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -52,15 +54,33 @@ export default function TeacherTable() {
     return matchesName && matchesStatus;
   });
 
+  const totalRecords = filteredTeachers.length;
+  const startIndex = currentPage * recordsPerPage + 1;
+  const endIndex = Math.min(startIndex + recordsPerPage - 1, totalRecords);
+
+  const displayedTeachers = filteredTeachers.slice(startIndex - 1, endIndex);
+
+  const handleLoadNext = () => {
+    if ((currentPage + 1) * recordsPerPage < filteredTeachers.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handleLoadPrev = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
-    <div className="mt-6">
+    <div className="mt-6 ">
       <TeacherFilters
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         statusFilter={statusFilter}
         setStatusFilter={setStatusFilter}
       />
-      <div className="overflow-y-auto max-h-[400px]">
+      <div className="overflow-y-auto md:h-[45vh]  ">
         <table className="min-w-full bg-white border border-gray-200 text-black">
           <thead>
             <tr className="bg-gray-100 text-left">
@@ -72,12 +92,12 @@ export default function TeacherTable() {
             </tr>
           </thead>
           <tbody>
-            {filteredTeachers.length > 0 ? (
-              filteredTeachers.map((teacher, index) => (
+            {displayedTeachers.length > 0 ? (
+              displayedTeachers.map((teacher, index) => (
                 <tr key={teacher._id}>
                   <td className="p-3 border-b">
                     <Link href={`/formularioDeDocentes?id=${teacher._id}`}>
-                      {index + 1}
+                      {startIndex + index}
                     </Link>
                   </td>
                   <td className="p-3 border-b">
@@ -113,21 +133,31 @@ export default function TeacherTable() {
         </table>
       </div>
       <div className="mt-4 p-4 bg-gray-100 rounded-lg flex items-center justify-between">
-        <button className="opacity-50 cursor-not-allowed">
+        <button
+          onClick={handleLoadPrev}
+          disabled={currentPage === 0}
+          className={`${
+            currentPage === 0 ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
           <h1 className="text-black"> ◀︎ </h1>
         </button>
         <span className="text-gray-600">
-          {filteredTeachers.length > 0
-            ? `1–${filteredTeachers.length} de ${filteredTeachers.length}`
-            : "0 de 0"}
+          {startIndex}–{endIndex} de {totalRecords}
         </span>
-        <button className="opacity-50 cursor-not-allowed">
+        <button
+          onClick={handleLoadNext}
+          disabled={endIndex === totalRecords}
+          className={`${
+            endIndex === totalRecords ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
           <h1 className="text-black"> ▶︎ </h1>
         </button>
       </div>
       <div className="mt-3 flex justify-center">
         <div className="w-full">
-          <ExportButtons data={filteredTeachers} />
+          <ExportButtons data={displayedTeachers} />
         </div>
       </div>
     </div>
