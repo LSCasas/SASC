@@ -1,41 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TeacherFilters from "./TeacherFilters";
 import ExportButtons from "./ExportButtons";
 import Link from "next/link";
+import { getUserById } from "../api/user";
+import { getTeachersByCampusId } from "../api/teacher";
 
 export default function TeacherTable() {
-  const teachers = [
-    {
-      id: 1,
-      firstName: "Juan Carlos",
-      lastName: "Pérez Sánchez",
-      contact: "5551234567",
-    },
-    {
-      id: 2,
-      firstName: "Ana Sofía",
-      lastName: "Gómez Herrera",
-      contact: "5552345678",
-    },
-    {
-      id: 3,
-      firstName: "Carlos Eduardo",
-      lastName: "Ramírez López",
-      contact: "5553456789",
-    },
-    {
-      id: 4,
-      firstName: "María José",
-      lastName: "Torres Martínez",
-      contact: "5554567890",
-    },
-    {
-      id: 5,
-      firstName: "Luis Fernando",
-      lastName: "Fernández García",
-      contact: "5555678901",
-    },
-  ];
+  const [teachers, setTeachers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchTeachers() {
+      try {
+        const user = await getUserById();
+        const campusId = user.selectedCampusId;
+
+        if (!campusId)
+          throw new Error("El usuario no tiene un campus seleccionado");
+
+        const teachersData = await getTeachersByCampusId(campusId);
+        setTeachers(teachersData);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchTeachers();
+  }, []);
+
+  if (loading) return <p className="text-center text-black">Cargando...</p>;
+  if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
     <div className="mt-6">
@@ -52,10 +49,10 @@ export default function TeacherTable() {
           </thead>
           <tbody>
             {teachers.length > 0 ? (
-              teachers.map((teacher) => (
+              teachers.map((teacher, index) => (
                 <tr key={teacher.id}>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeDocentes">{teacher.id}</Link>
+                    <Link href="/formularioDeDocentes">{index + 1}</Link>
                   </td>
                   <td className="p-3 border-b">
                     <Link href="/formularioDeDocentes">
@@ -72,7 +69,7 @@ export default function TeacherTable() {
               ))
             ) : (
               <tr>
-                <td colSpan="5" className="p-3 text-center text-black">
+                <td colSpan="4" className="p-3 text-center text-black">
                   No hay registros disponibles
                 </td>
               </tr>
@@ -84,7 +81,11 @@ export default function TeacherTable() {
         <button className="opacity-50 cursor-not-allowed">
           <h1 className="text-black"> ◀︎ </h1>
         </button>
-        <span className="text-gray-600">0–5 de 5</span>
+        <span className="text-gray-600">
+          {teachers.length > 0
+            ? `1–${teachers.length} de ${teachers.length}`
+            : "0 de 0"}
+        </span>
         <button className="opacity-50 cursor-not-allowed">
           <h1 className="text-black"> ▶︎ </h1>
         </button>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import {
   Menu,
@@ -11,10 +12,8 @@ import {
   RefreshCw,
   UserX,
   LogOut,
-  Link as LinkIcon,
-  Building,
-  Briefcase,
 } from "lucide-react";
+import { logout } from "../api/auth";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -109,17 +108,37 @@ const SidebarContent = () => {
       </div>
 
       <div className="mt-auto">
-        <SidebarItem href="/" icon={<LogOut size={25} />} label="Salir" />
+        <SidebarItem
+          href="/"
+          icon={<LogOut size={25} />}
+          label="Salir"
+          isLogout
+        />
       </div>
     </nav>
   );
 };
 
-const SidebarItem = ({ href, icon, label }) => {
+const SidebarItem = ({ href, icon, label, isLogout = false }) => {
+  const router = useRouter();
+
+  const handleClick = async (event) => {
+    if (isLogout) {
+      event.preventDefault();
+      try {
+        await logout();
+        router.push(href);
+      } catch (error) {
+        console.error("Error al cerrar sesión:", error);
+      }
+    }
+  };
+
   return (
     <Link
       href={href}
       className="flex items-center gap-3 text-white hover:bg-white hover:text-[#B0005E] p-3 rounded-lg transition-all"
+      onClick={handleClick}
     >
       {icon}
       <span>{label}</span>

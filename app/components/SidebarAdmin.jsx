@@ -7,7 +7,7 @@ import {
   Building,
   Briefcase,
 } from "lucide-react";
-import { getUserById } from "../api/api";
+import { getUserById } from "../api/user";
 
 const SidebarAdmin = () => {
   const [isOpen, setIsOpen] = useState(false);

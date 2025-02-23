@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { selectCampus } from "@/api/api";
+import { selectCampus } from "@/api/auth";
 
 export default function CampusCard() {
   const [campuses, setCampuses] = useState([]);

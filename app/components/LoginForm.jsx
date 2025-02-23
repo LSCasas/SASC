@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { toast, Toaster } from "sonner";
 import clsx from "clsx";
 import { useRouter } from "next/router";
-import { login } from "@/api/api";
+import { login } from "@/api/auth";
 
 export default function LoginForm() {
   const {
