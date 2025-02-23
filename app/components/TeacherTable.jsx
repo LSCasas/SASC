@@ -25,9 +25,14 @@ export default function TeacherTable() {
         if (!campusId)
           throw new Error("El usuario no tiene un campus seleccionado");
 
-        const teachersData = await getTeachersByCampusId(campusId);
+        let teachersData = await getTeachersByCampusId(campusId);
 
-        setTeachers(teachersData.reverse());
+        // Ordenar por apellido en orden alfabético
+        teachersData = teachersData.sort((a, b) =>
+          a.lastName.localeCompare(b.lastName)
+        );
+
+        setTeachers(teachersData);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -55,10 +60,10 @@ export default function TeacherTable() {
   });
 
   const totalRecords = filteredTeachers.length;
-  const startIndex = currentPage * recordsPerPage + 1;
-  const endIndex = Math.min(startIndex + recordsPerPage - 1, totalRecords);
+  const startIndex = currentPage * recordsPerPage;
+  const endIndex = Math.min(startIndex + recordsPerPage, totalRecords);
 
-  const displayedTeachers = filteredTeachers.slice(startIndex - 1, endIndex);
+  const displayedTeachers = filteredTeachers.slice(startIndex, endIndex);
 
   const handleLoadNext = () => {
     if ((currentPage + 1) * recordsPerPage < filteredTeachers.length) {
@@ -73,14 +78,14 @@ export default function TeacherTable() {
   };
 
   return (
-    <div className="mt-6 ">
+    <div className="mt-6">
       <TeacherFilters
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         statusFilter={statusFilter}
         setStatusFilter={setStatusFilter}
       />
-      <div className="overflow-y-auto md:h-[45vh]  ">
+      <div className="overflow-y-auto md:h-[45vh]">
         <table className="min-w-full bg-white border border-gray-200 text-black">
           <thead>
             <tr className="bg-gray-100 text-left">
@@ -97,7 +102,7 @@ export default function TeacherTable() {
                 <tr key={teacher._id}>
                   <td className="p-3 border-b">
                     <Link href={`/formularioDeDocentes?id=${teacher._id}`}>
-                      {startIndex + index}
+                      {startIndex + index + 1}
                     </Link>
                   </td>
                   <td className="p-3 border-b">
@@ -143,7 +148,7 @@ export default function TeacherTable() {
           <h1 className="text-black"> ◀︎ </h1>
         </button>
         <span className="text-gray-600">
-          {startIndex}–{endIndex} de {totalRecords}
+          {startIndex + 1}–{endIndex} de {totalRecords}
         </span>
         <button
           onClick={handleLoadNext}
