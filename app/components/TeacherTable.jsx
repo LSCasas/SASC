@@ -34,6 +34,11 @@ export default function TeacherTable() {
   if (loading) return <p className="text-center text-black">Cargando...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
+  // Filtra los docentes cuyo isAchive es false
+  const activeTeachers = teachers.filter(
+    (teacher) => teacher.isAchive === false
+  );
+
   return (
     <div className="mt-6">
       <TeacherFilters />
@@ -44,32 +49,44 @@ export default function TeacherTable() {
               <th className="p-3 border-b text-black">#</th>
               <th className="p-3 border-b text-black">Nombre</th>
               <th className="p-3 border-b text-black">Apellidos</th>
-              <th className="p-3 border-b text-black">Contacto</th>
+              <th className="p-3 border-b text-black">Teléfono</th>
+              <th className="p-3 border-b text-black">Correo</th>
             </tr>
           </thead>
           <tbody>
-            {teachers.length > 0 ? (
-              teachers.map((teacher, index) => (
-                <tr key={teacher.id}>
+            {activeTeachers.length > 0 ? (
+              activeTeachers.map((teacher, index) => (
+                <tr key={teacher._id}>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeDocentes">{index + 1}</Link>
+                    <Link href={`/formularioDeDocentes?id=${teacher._id}`}>
+                      {index + 1}
+                    </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeDocentes">
+                    <Link href={`/formularioDeDocentes?id=${teacher._id}`}>
                       {teacher.firstName}
                     </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeDocentes">{teacher.lastName}</Link>
+                    <Link href={`/formularioDeDocentes?id=${teacher._id}`}>
+                      {teacher.lastName}
+                    </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeDocentes">{teacher.contact}</Link>
+                    <Link href={`/formularioDeDocentes?id=${teacher._id}`}>
+                      {teacher.phone}
+                    </Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    <Link href={`/formularioDeDocentes?id=${teacher._id}`}>
+                      {teacher.email}
+                    </Link>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="p-3 text-center text-black">
+                <td colSpan="5" className="p-3 text-center text-black">
                   No hay registros disponibles
                 </td>
               </tr>
@@ -82,8 +99,8 @@ export default function TeacherTable() {
           <h1 className="text-black"> ◀︎ </h1>
         </button>
         <span className="text-gray-600">
-          {teachers.length > 0
-            ? `1–${teachers.length} de ${teachers.length}`
+          {activeTeachers.length > 0
+            ? `1–${activeTeachers.length} de ${activeTeachers.length}`
             : "0 de 0"}
         </span>
         <button className="opacity-50 cursor-not-allowed">
@@ -92,7 +109,7 @@ export default function TeacherTable() {
       </div>
       <div className="mt-3 flex justify-center">
         <div className="w-full">
-          <ExportButtons data={teachers} />
+          <ExportButtons data={activeTeachers} />
         </div>
       </div>
     </div>
