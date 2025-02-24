@@ -1,15 +1,8 @@
 import React from "react";
 import Sidebar from "@/components/Sidebar";
 import TutorTable from "@/components/TutorTable";
-import { useRouter } from "next/router";
 
 export default function TutorPage() {
-  const router = useRouter();
-
-  const handleCreateStudent = () => {
-    router.push("/formularioDeTutores");
-  };
-
   return (
     <div className="flex flex-col lg:flex-row">
       <Sidebar />
@@ -18,15 +11,6 @@ export default function TutorPage() {
           <h1 className="text-xl sm:text-2xl font-bold text-center mb-4 text-[#6C0036]">
             Gestión de Tutores
           </h1>
-
-          <div className="mb-4 text-right">
-            <button
-              onClick={handleCreateStudent}
-              className="w-full sm:w-auto py-2 px-4 bg-gradient-to-r bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
-            >
-              Agregar Tutor
-            </button>
-          </div>
 
           <div className="overflow-x-auto">
             <TutorTable />
