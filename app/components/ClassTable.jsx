@@ -104,7 +104,9 @@ export default function ClassTable() {
                   </td>
                   <td className="p-3 border-b">
                     <Link href={`/formularioDeClases?id=${classItem._id}`}>
-                      {classItem.teacherId?.name || "Sin asignar"}
+                      {classItem.teacherId
+                        ? `${classItem.teacherId.firstName} ${classItem.teacherId.lastName}`
+                        : "Sin asignar"}
                     </Link>
                   </td>
                   <td className="p-3 border-b">
