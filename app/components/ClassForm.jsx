@@ -2,9 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { createClass, updateClass, getClassById } from "../api/class";
+import { getUserById } from "../api/user";
+import { getTeachersByCampusId } from "../api/teacher";
 
 const ClassForm = () => {
   const [isEdit, setIsEdit] = useState(false);
+  const [teachers, setTeachers] = useState([]);
+  const [loadingTeachers, setLoadingTeachers] = useState(true);
+  const [errorTeachers, setErrorTeachers] = useState(null);
+
   const {
     register,
     handleSubmit,
@@ -18,6 +24,31 @@ const ClassForm = () => {
 
   const router = useRouter();
   const { id } = router.query;
+
+  useEffect(() => {
+    async function fetchTeachers() {
+      try {
+        const user = await getUserById();
+        const campusId = user.selectedCampusId;
+
+        if (!campusId)
+          throw new Error("El usuario no tiene un campus seleccionado");
+
+        let teachersData = await getTeachersByCampusId(campusId);
+        teachersData = teachersData.sort((a, b) =>
+          a.lastName.localeCompare(b.lastName)
+        );
+
+        setTeachers(teachersData);
+      } catch (err) {
+        setErrorTeachers(err.message);
+      } finally {
+        setLoadingTeachers(false);
+      }
+    }
+
+    fetchTeachers();
+  }, []);
 
   useEffect(() => {
     if (id) {
@@ -76,12 +107,25 @@ const ClassForm = () => {
             <label className="block font-semibold text-black">
               Profesor que imparte la clase
             </label>
-            <input
-              {...register("teacherId", {
-                required: "Este campo es obligatorio",
-              })}
-              className="w-full p-2 border rounded text-black"
-            />
+            {loadingTeachers ? (
+              <p className="text-gray-500">Cargando profesores...</p>
+            ) : errorTeachers ? (
+              <p className="text-red-500">{errorTeachers}</p>
+            ) : (
+              <select
+                {...register("teacherId", {
+                  required: "Este campo es obligatorio",
+                })}
+                className="w-full p-2 border rounded text-black"
+              >
+                <option value="">Seleccione un profesor</option>
+                {teachers.map((teacher) => (
+                  <option key={teacher._id} value={teacher._id}>
+                    {teacher.firstName} {teacher.lastName}
+                  </option>
+                ))}
+              </select>
+            )}
             {errors.teacherId && (
               <p className="text-red-500 text-sm">{errors.teacherId.message}</p>
             )}
