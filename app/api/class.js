@@ -45,3 +45,19 @@ export async function getClassById(classId) {
   if (!json.success) throw new Error(json.error || "Error obteniendo clase");
   return json.data;
 }
+
+// GET CLASSES BY CAMPUS ID
+export async function getClassesByCampusId(campusId) {
+  const res = await fetch(`${API_URL}/class/campus/${campusId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+
+  const json = await res.json();
+  if (!json.success)
+    throw new Error(json.error || "Error obteniendo clases del campus");
+  return json.data;
+}
