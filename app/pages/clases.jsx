@@ -1,7 +1,7 @@
 import React from "react";
 import Sidebar from "@/components/Sidebar";
 import { useRouter } from "next/router";
-import InstrumentCard from "@/components/InstrumentCard";
+import ClassTable from "@/components/ClassTable";
 
 export default function ClassesPage() {
   const router = useRouter();
@@ -9,60 +9,27 @@ export default function ClassesPage() {
   const handleCreateStudent = () => {
     router.push("/formularioDeClases");
   };
-  const musicClassesData = [
-    {
-      title: "Violín",
-      instructor: "Carlos Martínez",
-      gradient: "bg-gradient-to-r from-[#FF7F50] to-[#FFB74D]",
-    },
-
-    {
-      title: "Flauta",
-      instructor: "José García",
-      gradient: "bg-gradient-to-r from-[#1E88E5] to-[#42A5F5]",
-    },
-    {
-      title: "Contrabajo",
-      instructor: "Raúl Fernández",
-      gradient: "bg-gradient-to-r from-[#43A047] to-[#66BB6A]",
-    },
-    {
-      title: "Tímpano",
-      instructor: "Ana Pérez",
-      gradient: "bg-gradient-to-r from-[#F57C00] to-[#FFB300]",
-    },
-    {
-      title: "Clarinete",
-      instructor: "Marta Rodríguez",
-      gradient: "bg-gradient-to-r from-[#9C27B0] to-[#D500F9]",
-    },
-  ];
 
   return (
-    <div className="flex">
+    <div className="flex flex-col lg:flex-row">
       <Sidebar />
       <div className="flex-1 bg-gray-50 min-h-screen">
-        <div className="container mx-auto px-6 py-6">
-          <h1 className="text-2xl font-bold text-center mb-6 text-[#6C0036]">
-            Clases impartidas en la Sede Cultural
+        <div className="container mx-auto px-4 sm:px-6 py-6">
+          <h1 className="text-xl sm:text-2xl font-bold text-center mb-4 text-[#6C0036]">
+            Gestión de Clases
           </h1>
+
           <div className="mb-4 text-right">
             <button
               onClick={handleCreateStudent}
-              className="w-auto py-2 px-4 bg-gradient-to-r bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
+              className="w-full sm:w-auto py-2 px-4 bg-gradient-to-r bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
             >
               Agregar Clase
             </button>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {musicClassesData.map((classData, index) => (
-              <InstrumentCard
-                key={index}
-                title={classData.title}
-                instructor={classData.instructor}
-                gradient={classData.gradient}
-              />
-            ))}
+
+          <div className="overflow-x-auto">
+            <ClassTable />
           </div>
         </div>
       </div>

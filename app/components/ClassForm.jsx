@@ -76,7 +76,7 @@ const ClassForm = () => {
                       type="checkbox"
                       {...register("days")}
                       value={dia}
-                      className="w-5 h-5" // Tamaño más grande
+                      className="w-5 h-5"
                     />
                     <span>{dia}</span>
                   </label>
