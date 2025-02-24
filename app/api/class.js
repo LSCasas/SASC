@@ -61,3 +61,19 @@ export async function getClassesByCampusId(campusId) {
     throw new Error(json.error || "Error obteniendo clases del campus");
   return json.data;
 }
+
+// UPDATE CLASS BY ID
+export async function updateClass(classId, data) {
+  const res = await fetch(`${API_URL}/class/${classId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+    credentials: "include",
+  });
+
+  const json = await res.json();
+  if (!json.success) throw new Error(json.error || "Error actualizando clase");
+  return json.data;
+}
