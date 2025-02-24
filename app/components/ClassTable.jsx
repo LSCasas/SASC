@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ExportButtons from "./TeacherExportButtons";
+import ClassFilters from "./ClassFilters";
 import Link from "next/link";
 import { getUserById } from "../api/user";
 import { getClassesByCampusId } from "../api/class";
@@ -76,6 +77,7 @@ export default function ClassTable() {
 
   return (
     <div className="mt-6">
+      <ClassFilters />
       <div className="overflow-y-auto md:h-[45vh]">
         <table className="min-w-full bg-white border border-gray-200 text-black">
           <thead>
