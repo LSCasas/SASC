@@ -1,8 +1,14 @@
 import React from "react";
 import Sidebar from "@/components/Sidebar";
+import { useRouter } from "next/router";
 import InstrumentCard from "@/components/InstrumentCard";
 
 export default function ClassesPage() {
+  const router = useRouter();
+
+  const handleCreateStudent = () => {
+    router.push("/formularioDeClases");
+  };
   const musicClassesData = [
     {
       title: "Violín",
@@ -40,6 +46,14 @@ export default function ClassesPage() {
           <h1 className="text-2xl font-bold text-center mb-6 text-[#6C0036]">
             Clases impartidas en la Sede Cultural
           </h1>
+          <div className="mb-4 text-right">
+            <button
+              onClick={handleCreateStudent}
+              className="w-auto py-2 px-4 bg-gradient-to-r bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
+            >
+              Agregar Clase
+            </button>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {musicClassesData.map((classData, index) => (
               <InstrumentCard
