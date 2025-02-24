@@ -8,7 +8,7 @@ const musicClassesData = [
   { title: "Clarinete", instructor: "Marta Rodríguez" },
 ];
 
-const days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
+const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"];
 const getRandomHour = () => `${Math.floor(Math.random() * 5) + 2}:00 PM`;
 
 export default function ClassSchedule() {

@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
+import { createClass, updateClass, getClassById } from "../api/class";
 
 const ClassForm = () => {
+  const [isEdit, setIsEdit] = useState(false);
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -12,8 +16,43 @@ const ClassForm = () => {
     },
   });
 
-  const onSubmit = (data) => {
-    console.log("Datos de la clase:", data);
+  const router = useRouter();
+  const { id } = router.query;
+
+  useEffect(() => {
+    if (id) {
+      setIsEdit(true);
+      async function fetchClass() {
+        try {
+          const classData = await getClassById(id);
+          setValue("name", classData.name);
+          setValue(
+            "teacherId",
+            classData.teacherId?._id || classData.teacherId
+          );
+          setValue("generation", classData.generation);
+          setValue("days", classData.days);
+          setValue("startTime", classData.startTime);
+          setValue("endTime", classData.endTime);
+        } catch (err) {
+          console.error("Error al obtener clase:", err);
+        }
+      }
+      fetchClass();
+    }
+  }, [id, setValue]);
+
+  const onSubmit = async (data) => {
+    try {
+      if (isEdit) {
+        await updateClass(id, data);
+      } else {
+        await createClass(data);
+      }
+      router.push("/clases");
+    } catch (error) {
+      console.error("Error al guardar clase:", error);
+    }
   };
 
   return (
@@ -51,17 +90,10 @@ const ClassForm = () => {
           <div>
             <label className="block font-semibold text-black">Generación</label>
             <input
-              {...register("generation", {
-                required: "Este campo es obligatorio",
-              })}
+              {...register("generation")}
               className="w-full p-2 border rounded text-black"
               readOnly
             />
-            {errors.generation && (
-              <p className="text-red-500 text-sm">
-                {errors.generation.message}
-              </p>
-            )}
           </div>
 
           <div>
@@ -69,7 +101,7 @@ const ClassForm = () => {
               Días de clase
             </label>
             <div className="grid grid-cols-2 gap-2 text-black">
-              {["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"].map(
+              {["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"].map(
                 (dia) => (
                   <label key={dia} className="flex items-center space-x-2">
                     <input
@@ -121,7 +153,7 @@ const ClassForm = () => {
             type="submit"
             className="w-full sm:w-auto py-2 px-4 bg-gradient-to-r bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
           >
-            Enviar
+            {isEdit ? "Actualizar Clase" : "Crear Clase"}
           </button>
         </form>
       </div>
