@@ -77,3 +77,18 @@ export async function updateClass(classId, data) {
   if (!json.success) throw new Error(json.error || "Error actualizando clase");
   return json.data;
 }
+
+// DELETE CLASS BY ID
+export async function deleteClass(classId) {
+  const res = await fetch(`${API_URL}/class/${classId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+
+  const json = await res.json();
+  if (!json.success) throw new Error(json.error || "Error eliminando clase");
+  return json.data;
+}
