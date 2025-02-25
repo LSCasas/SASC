@@ -1,46 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Filters from "./StudentFilters";
 import ExportButtons from "./TeacherExportButtons";
 import Link from "next/link";
+import { getUserById } from "../api/user";
+import { getStudentsByCampusId } from "../api/student";
 
 export default function StudentTable() {
-  const students = [
-    {
-      id: 1,
-      firstName: "Juan Carlos",
-      lastName: "Pérez Sánchez",
-      instrument: "Guitarra",
-      genre: "Masculino",
-    },
-    {
-      id: 2,
-      firstName: "Ana Sofía",
-      lastName: "Gómez Herrera",
-      instrument: "Piano",
-      genre: "Femenino",
-    },
-    {
-      id: 3,
-      firstName: "Carlos Eduardo",
-      lastName: "Ramírez López",
-      instrument: "Batería",
-      genre: "Masculino",
-    },
-    {
-      id: 4,
-      firstName: "María José",
-      lastName: "Torres Martínez",
-      instrument: "Violín",
-      genre: "Femenino",
-    },
-    {
-      id: 5,
-      firstName: "Luis Fernando",
-      lastName: "Fernández García",
-      instrument: "Trompeta",
-      genre: "Masculino",
-    },
-  ];
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchStudents() {
+      try {
+        setLoading(true);
+        const user = await getUserById();
+        const campusId = user?.selectedCampusId;
+
+        if (!campusId)
+          throw new Error("El usuario no tiene un campus seleccionado");
+
+        const studentData = await getStudentsByCampusId(campusId);
+        setStudents(studentData);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchStudents();
+  }, []);
+
+  if (loading) return <p className="text-center text-black">Cargando...</p>;
+  if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
     <div className="mt-6">
@@ -58,48 +50,47 @@ export default function StudentTable() {
           </thead>
           <tbody>
             {students.length > 0 ? (
-              students.map((student) => (
+              students.map((student, index) => (
                 <tr
-                  key={student.id}
+                  key={student._id}
                   className="cursor-pointer hover:bg-gray-100"
                 >
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeAlumnos">{student.id}</Link>
+                    <Link href={`/formularioDeAlumnos?id=${student._id}`}>
+                      {index + 1}
+                    </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeAlumnos">{student.firstName}</Link>
+                    <Link href={`/formularioDeAlumnos?id=${student._id}`}>
+                      {student.firstName}
+                    </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeAlumnos">{student.lastName}</Link>
+                    <Link href={`/formularioDeAlumnos?id=${student._id}`}>
+                      {student.lastName}
+                    </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeAlumnos">
+                    <Link href={`/formularioDeAlumnos?id=${student._id}`}>
                       {student.instrument}
                     </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeAlumnos">{student.genre}</Link>
+                    <Link href={`/formularioDeAlumnos?id=${student._id}`}>
+                      {student.genre}
+                    </Link>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="p-3 text-center text-black">
+                <td colSpan="5" className="p-3 text-center text-black">
                   No hay registros disponibles
                 </td>
               </tr>
             )}
           </tbody>
         </table>
-      </div>
-      <div className="mt-4 p-4 bg-gray-100 rounded-lg flex items-center justify-between">
-        <button className="opacity-50 cursor-not-allowed">
-          <h1 className="text-black"> ◀︎ </h1>
-        </button>
-        <span className="text-gray-600">0–5 de 5</span>
-        <button className="opacity-50 cursor-not-allowed">
-          <h1 className="text-black"> ▶︎ </h1>
-        </button>
       </div>
       <div className="mt-3 flex justify-center">
         <div className="w-full">

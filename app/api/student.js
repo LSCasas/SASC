@@ -3,7 +3,7 @@ const API_URL = "http://localhost:5000";
 // CREATE STUDENT
 export async function createStudent(data) {
   try {
-    const res = await fetch(`${API_URL}/students`, {
+    const res = await fetch(`${API_URL}/student`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,7 +28,7 @@ export async function createStudent(data) {
 // GET ALL STUDENTS
 export async function getAllStudents() {
   try {
-    const res = await fetch(`${API_URL}/students`, {
+    const res = await fetch(`${API_URL}/student`, {
       method: "GET",
       credentials: "include",
     });
@@ -49,7 +49,7 @@ export async function getAllStudents() {
 // GET STUDENT BY ID
 export async function getStudentById(studentId) {
   try {
-    const res = await fetch(`${API_URL}/students/${studentId}`, {
+    const res = await fetch(`${API_URL}/student/${studentId}`, {
       method: "GET",
       credentials: "include",
     });
@@ -70,7 +70,7 @@ export async function getStudentById(studentId) {
 // GET STUDENTS BY CAMPUS ID
 export async function getStudentsByCampusId(campusId) {
   try {
-    const res = await fetch(`${API_URL}/students/campus/${campusId}`, {
+    const res = await fetch(`${API_URL}/student/campus/${campusId}`, {
       method: "GET",
       credentials: "include",
     });
@@ -92,7 +92,7 @@ export async function getStudentsByCampusId(campusId) {
 // UPDATE STUDENT
 export async function updateStudent(studentId, data) {
   try {
-    const res = await fetch(`${API_URL}/students/${studentId}`, {
+    const res = await fetch(`${API_URL}/student/${studentId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -117,7 +117,7 @@ export async function updateStudent(studentId, data) {
 // DELETE STUDENT
 export async function deleteStudent(studentId) {
   try {
-    const res = await fetch(`${API_URL}/students/${studentId}`, {
+    const res = await fetch(`${API_URL}/student/${studentId}`, {
       method: "DELETE",
       credentials: "include",
     });
