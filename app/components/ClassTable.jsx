@@ -61,6 +61,18 @@ export default function ClassTable() {
   const endIndex = Math.min(startIndex + recordsPerPage, totalRecords);
   const displayedClasses = filteredClasses.slice(startIndex, endIndex);
 
+  const handleLoadNext = () => {
+    if ((currentPage + 1) * recordsPerPage < filteredClasses.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handleLoadPrev = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
     <div className="mt-6">
       <ClassFilters
@@ -121,9 +133,11 @@ export default function ClassTable() {
       </div>
       <div className="mt-4 p-4 bg-gray-100 rounded-lg flex items-center justify-between">
         <button
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
+          onClick={handleLoadPrev}
           disabled={currentPage === 0}
-          className="text-black"
+          className={`${
+            currentPage === 0 ? "opacity-50 cursor-not-allowed" : ""
+          } text-black`}
         >
           ◀︎
         </button>
@@ -131,13 +145,11 @@ export default function ClassTable() {
           {startIndex + 1}–{endIndex} de {totalRecords}
         </span>
         <button
-          onClick={() =>
-            setCurrentPage((prev) =>
-              endIndex < totalRecords ? prev + 1 : prev
-            )
-          }
-          disabled={endIndex >= totalRecords}
-          className="text-black"
+          onClick={handleLoadNext}
+          disabled={endIndex === totalRecords}
+          className={`${
+            endIndex === totalRecords ? "opacity-50 cursor-not-allowed" : ""
+          } text-black`}
         >
           ▶︎
         </button>
