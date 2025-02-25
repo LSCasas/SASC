@@ -88,3 +88,28 @@ export async function getStudentsByCampusId(campusId) {
     throw error;
   }
 }
+
+// UPDATE STUDENT
+export async function updateStudent(studentId, data) {
+  try {
+    const res = await fetch(`${API_URL}/students/${studentId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+      credentials: "include",
+    });
+
+    const json = await res.json();
+    if (!res.ok) {
+      throw new Error(
+        json.message || "Error desconocido al actualizar el estudiante"
+      );
+    }
+    return json.data;
+  } catch (error) {
+    console.error("Error actualizando el estudiante:", error);
+    throw error;
+  }
+}
