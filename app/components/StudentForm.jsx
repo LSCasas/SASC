@@ -1,55 +1,193 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
+import { createStudent, updateStudent, getStudentById } from "../api/student";
+import { getClassesByCampusId } from "../api/class";
+import { getUserById } from "../api/user";
 
 const StudentForm = () => {
+  const [isEdit, setIsEdit] = useState(false);
+  const [studentData, setStudentData] = useState(null);
+  const [previousClasses, setPreviousClasses] = useState([]);
+  const [classes, setClasses] = useState([]);
+  const [loadingClasses, setLoadingClasses] = useState(true);
+  const [errorClasses, setErrorClasses] = useState(null);
+  const handleRemovePreviousClass = (classId) => {
+    setPreviousClasses((prev) => prev.filter((cls) => cls._id !== classId));
+  };
+
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      curso: "none",
+    },
+  });
 
-  const onSubmit = (data) => {
-    console.log("Datos del alumno:", data);
+  const router = useRouter();
+  const { id } = router.query;
+
+  useEffect(() => {
+    async function fetchClasses() {
+      try {
+        const user = await getUserById();
+        const campusId = user.selectedCampusId;
+
+        if (!campusId)
+          throw new Error("El usuario no tiene un campus seleccionado");
+
+        let classesData = await getClassesByCampusId(campusId);
+        classesData = classesData.sort((a, b) => a.name.localeCompare(b.name));
+
+        setClasses(classesData);
+      } catch (err) {
+        setErrorClasses(err.message);
+      } finally {
+        setLoadingClasses(false);
+      }
+    }
+
+    fetchClasses();
+  }, []);
+
+  useEffect(() => {
+    if (id) {
+      setIsEdit(true);
+      async function fetchStudent() {
+        try {
+          const studentData = await getStudentById(id);
+          setStudentData(studentData); // Guardar en el estado
+
+          // Guardar las clases anteriores en el estado
+          setPreviousClasses(studentData.previousClasses || []);
+
+          setValue("nombreAlumno", studentData.firstName);
+          setValue("apellidosAlumno", studentData.lastName);
+          setValue("curp", studentData.curp);
+
+          if (studentData.tutorId) {
+            setValue("nombreTutor", studentData.tutorId.name || "");
+            setValue("apellidosTutor", studentData.tutorId.lastname || "");
+            setValue("curpTutor", studentData.tutorId.curp || "");
+            setValue("telefonoTutor", studentData.tutorId.phone || "");
+          }
+
+          const inscritoDesde = new Date(studentData.createdAt)
+            .toISOString()
+            .split("T")[0];
+          setValue("inscritoDesde", inscritoDesde);
+
+          setValue("curso", studentData.ClassId || "none");
+
+          // Verifica si previousClasses tiene datos y guárdalos
+          const previousClassNames = studentData.previousClasses
+            ? studentData.previousClasses.map((cls) => cls.name).join(", ")
+            : "";
+          setValue("cursosAnteriores", previousClassNames); // Solo lectura
+
+          setValue("genero", studentData.gender);
+          setValue("condicionesMedicas", studentData.medicalConditions || "");
+          setValue("necesidadesEspeciales", studentData.specialNeeds || "");
+          setValue("documentosRequeridos", studentData.requiredDocuments || "");
+        } catch (err) {
+          console.error("Error al obtener estudiante:", err);
+        }
+      }
+      fetchStudent();
+    }
+  }, [id, setValue]);
+
+  const onSubmit = async (data) => {
+    try {
+      let updatedPreviousClasses = [...previousClasses]; // Copia del historial de clases
+
+      // Verificar si el estudiante ya tiene una clase asignada
+      if (studentData?.ClassId && studentData.ClassId !== data.curso) {
+        // Si la clase cambió, agregamos la anterior a previousClasses si no está ya
+        if (!updatedPreviousClasses.includes(studentData.ClassId)) {
+          updatedPreviousClasses.push(studentData.ClassId);
+        }
+      }
+
+      const formattedData = {
+        firstName: data.nombreAlumno,
+        lastName: data.apellidosAlumno,
+        curp: data.curp,
+        gender: data.genero,
+        medicalConditions: data.condicionesMedicas || null,
+        specialNeeds: data.necesidadesEspeciales || null,
+        requiredDocuments: data.documentosRequeridos || null,
+        tutorName: data.nombreTutor,
+        tutorLastname: data.apellidosTutor,
+        tutorCurp: data.curpTutor,
+        tutorPhone: data.telefonoTutor,
+        previousClasses: updatedPreviousClasses, // Guardar historial actualizado
+      };
+
+      if (data.curso !== "none") {
+        formattedData.ClassId = data.curso;
+      }
+
+      if (isEdit) {
+        await updateStudent(id, formattedData);
+      } else {
+        await createStudent(formattedData);
+      }
+
+      router.push("/alumnos");
+    } catch (error) {
+      console.error("Error al guardar estudiante:", error);
+    }
+  };
+
+  const renderTutorInfo = () => {
+    if (!studentData) return null;
+
+    const tutorCreatedAt = new Date(
+      studentData.tutorId.createdAt
+    ).toLocaleDateString();
   };
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md max-w-lg mx-auto">
       <div className="max-h-[550px] overflow-y-auto p-2">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          {renderTutorInfo()}
           <div>
             <label className="block font-semibold text-black">
               Nombre del Alumno
             </label>
             <input
-              {...register("nombreTutor", {
+              {...register("nombreAlumno", {
                 required: "Este campo es obligatorio",
               })}
               className="w-full p-2 border rounded text-black"
             />
-            {errors.nombreTutor && (
+            {errors.nombreAlumno && (
               <p className="text-red-500 text-sm">
-                {errors.nombreTutor.message}
+                {errors.nombreAlumno.message}
               </p>
             )}
           </div>
-
           <div>
             <label className="block font-semibold text-black">
               Apellidos del Alumno
             </label>
             <input
-              {...register("nombreTutor", {
+              {...register("apellidosAlumno", {
                 required: "Este campo es obligatorio",
               })}
               className="w-full p-2 border rounded text-black"
             />
-            {errors.nombreTutor && (
+            {errors.apellidosAlumno && (
               <p className="text-red-500 text-sm">
-                {errors.nombreTutor.message}
+                {errors.apellidosAlumno.message}
               </p>
             )}
           </div>
-
           <div>
             <label className="block font-semibold text-black">CURP</label>
             <input
@@ -57,7 +195,6 @@ const StudentForm = () => {
               className="w-full p-2 border rounded text-black"
             />
           </div>
-
           <div>
             <label className="block font-semibold text-black">
               Nombre Tutor
@@ -74,17 +211,33 @@ const StudentForm = () => {
               </p>
             )}
           </div>
-
+          <div>
+            <label className="block font-semibold text-black">
+              Apellidos del Tutor
+            </label>
+            <input
+              {...register("apellidosTutor", {
+                required: "Este campo es obligatorio",
+              })}
+              className="w-full p-2 border rounded text-black"
+            />
+            {errors.nombreTutor && (
+              <p className="text-red-500 text-sm">
+                {errors.nombreTutor.message}
+              </p>
+            )}
+          </div>
           <div>
             <label className="block font-semibold text-black">
               CURP del Tutor
             </label>
             <input
-              {...register("curp", { required: "Este campo es obligatorio" })}
+              {...register("curpTutor", {
+                required: "Este campo es obligatorio",
+              })}
               className="w-full p-2 border rounded text-black"
             />
           </div>
-
           <div>
             <label className="block font-semibold text-black">
               Teléfono Tutor
@@ -96,7 +249,6 @@ const StudentForm = () => {
               className="w-full p-2 border rounded text-black"
             />
           </div>
-
           <div>
             <label className="block font-semibold text-black">
               Inscrito Desde
@@ -107,36 +259,80 @@ const StudentForm = () => {
               className="w-full p-2 border rounded text-black"
             />
           </div>
-
+          {isEdit && (
+            <div>
+              <label className="block font-semibold text-black">
+                Curso Actual
+              </label>
+              <input
+                value={studentData ? studentData.ClassId.name : ""}
+                className="w-full p-2 border rounded text-black bg-gray-200 cursor-not-allowed"
+                readOnly
+              />
+            </div>
+          )}
           <div>
-            <label className="block font-semibold text-black">Curso</label>
-            <input
-              {...register("curso")}
-              className="w-full p-2 border rounded text-black"
-            />
+            <label className="block font-semibold text-black">
+              Agregar o cambiar de curso
+            </label>
+            {loadingClasses ? (
+              <p className="text-gray-500">Cargando cursos...</p>
+            ) : errorClasses ? (
+              <p className="text-red-500">{errorClasses}</p>
+            ) : (
+              <select
+                {...register("curso")}
+                className="w-full p-2 border rounded text-black"
+              >
+                <option value="none">Seleccionar curso</option>
+                {classes.map((course) => (
+                  <option key={course._id} value={course._id}>
+                    {course.name}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
-
           <div>
             <label className="block font-semibold text-black">
               Cursos Anteriores
             </label>
-            <input
-              {...register("cursosAnteriores")}
-              className="w-full p-2 border rounded text-black"
-            />
+            <div className="space-y-2">
+              {previousClasses.length > 0 ? (
+                previousClasses.map((cls) => (
+                  <div
+                    key={cls._id}
+                    className="flex justify-between items-center"
+                  >
+                    <span className="text-gray-700 font-semibold">
+                      {cls.name}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => handleRemovePreviousClass(cls._id)}
+                      className="text-red-500 hover:underline text-sm"
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+                ))
+              ) : (
+                <p className="text-black">
+                  No hay cursos anteriores registrados.
+                </p>
+              )}
+            </div>
           </div>
-
           <div>
             <label className="block font-semibold text-black">Genero</label>
             <select
-              {...register("orquestaSinfónica")}
+              {...register("genero")}
               className="w-full p-2 border rounded text-black"
             >
               <option value="Masculino">Masculino</option>
               <option value="Femenino">Femenino</option>
             </select>
           </div>
-
           <div>
             <label className="block font-semibold text-black">
               Condiciones Médicas
@@ -146,7 +342,6 @@ const StudentForm = () => {
               className="w-full p-2 border rounded text-black"
             />
           </div>
-
           <div>
             <label className="block font-semibold text-black">
               Necesidades Especiales
@@ -156,7 +351,6 @@ const StudentForm = () => {
               className="w-full p-2 border rounded text-black"
             />
           </div>
-
           <div>
             <label className="block font-semibold text-black">
               Documentos Requeridos
@@ -166,12 +360,11 @@ const StudentForm = () => {
               className="w-full p-2 border rounded text-black"
             />
           </div>
-
           <button
             type="submit"
             className="w-full sm:w-auto py-2 px-4 bg-gradient-to-r bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
           >
-            Enviar
+            {isEdit ? "Actualizar Estudiante" : "Crear Estudiante"}
           </button>
         </form>
       </div>
