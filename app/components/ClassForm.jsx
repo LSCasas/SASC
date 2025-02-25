@@ -19,6 +19,7 @@ const ClassForm = () => {
   } = useForm({
     defaultValues: {
       generation: `${new Date().getFullYear()}-${new Date().getFullYear() + 1}`,
+      teacherId: "none", // Valor por defecto para que la clase pueda crearse sin profesor.
     },
   });
 
@@ -57,10 +58,7 @@ const ClassForm = () => {
         try {
           const classData = await getClassById(id);
           setValue("name", classData.name);
-          setValue(
-            "teacherId",
-            classData.teacherId?._id || classData.teacherId
-          );
+          setValue("teacherId", classData.teacherId?._id || "none");
           setValue("generation", classData.generation);
           setValue("days", classData.days);
           setValue("startTime", classData.startTime);
@@ -75,6 +73,10 @@ const ClassForm = () => {
 
   const onSubmit = async (data) => {
     try {
+      if (data.teacherId === "none") {
+        data.teacherId = null; // Enviar null si no se selecciona profesor
+      }
+
       if (isEdit) {
         await updateClass(id, data);
       } else {
@@ -113,21 +115,16 @@ const ClassForm = () => {
               <p className="text-red-500">{errorTeachers}</p>
             ) : (
               <select
-                {...register("teacherId", {
-                  required: "Este campo es obligatorio",
-                })}
+                {...register("teacherId")}
                 className="w-full p-2 border rounded text-black"
               >
-                <option value="">Seleccione un profesor</option>
+                <option value="none">Sin asignar</option>
                 {teachers.map((teacher) => (
                   <option key={teacher._id} value={teacher._id}>
                     {teacher.firstName} {teacher.lastName}
                   </option>
                 ))}
               </select>
-            )}
-            {errors.teacherId && (
-              <p className="text-red-500 text-sm">{errors.teacherId.message}</p>
             )}
           </div>
 
