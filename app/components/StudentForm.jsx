@@ -86,16 +86,6 @@ const StudentForm = () => {
           </div>
 
           <div>
-            <label className="block font-semibold text-black">Estatus</label>
-            <input
-              {...register("telefonoTutor", {
-                required: "Este campo es obligatorio",
-              })}
-              className="w-full p-2 border rounded text-black"
-            />
-          </div>
-
-          <div>
             <label className="block font-semibold text-black">
               Teléfono Tutor
             </label>
@@ -103,16 +93,6 @@ const StudentForm = () => {
               {...register("telefonoTutor", {
                 required: "Este campo es obligatorio",
               })}
-              className="w-full p-2 border rounded text-black"
-            />
-          </div>
-
-          <div>
-            <label className="block font-semibold text-black">
-              Sede Cultural
-            </label>
-            <input
-              {...register("sedeCultural")}
               className="w-full p-2 border rounded text-black"
             />
           </div>
