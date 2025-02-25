@@ -113,3 +113,24 @@ export async function updateStudent(studentId, data) {
     throw error;
   }
 }
+
+// DELETE STUDENT
+export async function deleteStudent(studentId) {
+  try {
+    const res = await fetch(`${API_URL}/students/${studentId}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+
+    const json = await res.json();
+    if (!res.ok) {
+      throw new Error(
+        json.message || "Error desconocido al eliminar el estudiante"
+      );
+    }
+    return json;
+  } catch (error) {
+    console.error("Error eliminando el estudiante:", error);
+    throw error;
+  }
+}
