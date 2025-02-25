@@ -21,7 +21,13 @@ export default function StudentTable() {
           throw new Error("El usuario no tiene un campus seleccionado");
 
         const studentData = await getStudentsByCampusId(campusId);
-        setStudents(studentData);
+
+        // Ordenar estudiantes por apellido (lastName) en orden alfabético
+        const sortedStudents = studentData.sort((a, b) =>
+          a.lastName.localeCompare(b.lastName)
+        );
+
+        setStudents(sortedStudents);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -44,6 +50,7 @@ export default function StudentTable() {
               <th className="p-3 border-b text-black">#</th>
               <th className="p-3 border-b text-black">Nombre</th>
               <th className="p-3 border-b text-black">Apellidos</th>
+              <th className="p-3 border-b text-black">Clase</th>
               <th className="p-3 border-b text-black">Instrumento</th>
               <th className="p-3 border-b text-black">Género</th>
             </tr>
@@ -72,19 +79,24 @@ export default function StudentTable() {
                   </td>
                   <td className="p-3 border-b">
                     <Link href={`/formularioDeAlumnos?id=${student._id}`}>
-                      {student.instrument}
+                      {student.ClassId?.name || "Sin clase"}
                     </Link>
                   </td>
                   <td className="p-3 border-b">
                     <Link href={`/formularioDeAlumnos?id=${student._id}`}>
-                      {student.genre}
+                      {student.hasInstrument ? "Sí" : "No"}
+                    </Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    <Link href={`/formularioDeAlumnos?id=${student._id}`}>
+                      {student.gender}
                     </Link>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5" className="p-3 text-center text-black">
+                <td colSpan="6" className="p-3 text-center text-black">
                   No hay registros disponibles
                 </td>
               </tr>
