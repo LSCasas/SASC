@@ -22,7 +22,6 @@ export default function StudentTable() {
 
         const studentData = await getStudentsByCampusId(campusId);
 
-        // Ordenar estudiantes por apellido (lastName) en orden alfabético
         const sortedStudents = studentData.sort((a, b) =>
           a.lastName.localeCompare(b.lastName)
         );

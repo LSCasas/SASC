@@ -10,7 +10,7 @@ export default function Filters() {
       />
       <input
         type="text"
-        placeholder="Buscar por instrumento"
+        placeholder="Buscar por clase"
         className="flex-1 min-w-[150px] p-2 border rounded"
       />
       <select className="flex-1 min-w-[150px] p-2 border rounded">
@@ -18,11 +18,11 @@ export default function Filters() {
         <option value="Masculino">Masculino</option>
         <option value="Femenino">Femenino</option>
       </select>
-      <input
-        type="text"
-        placeholder="Buscar por edad"
-        className="flex-1 min-w-[150px] p-2 border rounded"
-      />
+      <select className="flex-1 min-w-[150px] p-2 border rounded">
+        <option value="">Tiene Instrumento</option>
+        <option value="Masculino">Si</option>
+        <option value="Femenino">No</option>
+      </select>
     </div>
   );
 }
