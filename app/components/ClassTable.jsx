@@ -11,25 +11,24 @@ export default function ClassTable() {
   const [error, setError] = useState(null);
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [generationFilter, setGenerationFilter] = useState(""); // <-- Agregado
   const [statusFilter, setStatusFilter] = useState("active");
-
   const [currentPage, setCurrentPage] = useState(0);
   const recordsPerPage = 20;
 
   useEffect(() => {
     async function fetchClasses() {
       try {
+        setLoading(true);
         const user = await getUserById();
-        const campusId = user.selectedCampusId;
+        const campusId = user?.selectedCampusId;
 
         if (!campusId)
           throw new Error("El usuario no tiene un campus seleccionado");
 
         let classData = await getClassesByCampusId(campusId);
 
-        // Ordenar por nombre en orden alfabético
         classData = classData.sort((a, b) => a.name.localeCompare(b.name));
-
         setClasses(classData);
       } catch (err) {
         setError(err.message);
@@ -37,7 +36,6 @@ export default function ClassTable() {
         setLoading(false);
       }
     }
-
     fetchClasses();
   }, []);
 
@@ -48,44 +46,37 @@ export default function ClassTable() {
     const matchesName = classItem.name
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
-
+    const matchesGeneration = generationFilter
+      ? classItem.generation
+          .toLowerCase()
+          .includes(generationFilter.toLowerCase())
+      : true;
     const matchesStatus =
-      statusFilter === "active"
-        ? classItem.isAchive === false
-        : classItem.isAchive === true;
-
-    return matchesName && matchesStatus;
+      statusFilter === "active" ? !classItem.isAchive : classItem.isAchive;
+    return matchesName && matchesGeneration && matchesStatus;
   });
 
   const totalRecords = filteredClasses.length;
   const startIndex = currentPage * recordsPerPage;
   const endIndex = Math.min(startIndex + recordsPerPage, totalRecords);
-
   const displayedClasses = filteredClasses.slice(startIndex, endIndex);
-
-  const handleLoadNext = () => {
-    if ((currentPage + 1) * recordsPerPage < filteredClasses.length) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handleLoadPrev = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
 
   return (
     <div className="mt-6">
-      <ClassFilters />
+      <ClassFilters
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        generationFilter={generationFilter}
+        setGenerationFilter={setGenerationFilter}
+      />
       <div className="overflow-y-auto md:h-[45vh]">
         <table className="min-w-full bg-white border border-gray-200 text-black">
           <thead>
             <tr className="bg-gray-100 text-left">
-              <th className="p-3 border-b text-black">#</th>
-              <th className="p-3 border-b text-black">Nombre</th>
-              <th className="p-3 border-b text-black">Profesor</th>
-              <th className="p-3 border-b text-black">Generación</th>
+              <th className="p-3 border-b">#</th>
+              <th className="p-3 border-b">Nombre</th>
+              <th className="p-3 border-b">Profesor</th>
+              <th className="p-3 border-b">Generación</th>
             </tr>
           </thead>
           <tbody>
@@ -128,25 +119,25 @@ export default function ClassTable() {
       </div>
       <div className="mt-4 p-4 bg-gray-100 rounded-lg flex items-center justify-between">
         <button
-          onClick={handleLoadPrev}
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
           disabled={currentPage === 0}
-          className={`${
-            currentPage === 0 ? "opacity-50 cursor-not-allowed" : ""
-          }`}
+          className="disabled:opacity-50"
         >
-          <h1 className="text-black"> ◀︎ </h1>
+          ◀︎
         </button>
         <span className="text-gray-600">
           {startIndex + 1}–{endIndex} de {totalRecords}
         </span>
         <button
-          onClick={handleLoadNext}
-          disabled={endIndex === totalRecords}
-          className={`${
-            endIndex === totalRecords ? "opacity-50 cursor-not-allowed" : ""
-          }`}
+          onClick={() =>
+            setCurrentPage((prev) =>
+              endIndex < totalRecords ? prev + 1 : prev
+            )
+          }
+          disabled={endIndex >= totalRecords}
+          className="disabled:opacity-50"
         >
-          <h1 className="text-black"> ▶︎ </h1>
+          ▶︎
         </button>
       </div>
       <div className="mt-3 flex justify-center">
