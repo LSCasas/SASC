@@ -3,7 +3,7 @@ const API_URL = "http://localhost:5000";
 // CREATE TEACHER
 export async function createTeacher(data) {
   try {
-    const { selectedCampusId, userId } = data; // Asume que el ID del campus y el usuario vienen del front end o del contexto
+    const { selectedCampusId, userId } = data;
     const res = await fetch(`${API_URL}/teacher`, {
       method: "POST",
       headers: {

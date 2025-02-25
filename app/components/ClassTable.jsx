@@ -11,7 +11,7 @@ export default function ClassTable() {
   const [error, setError] = useState(null);
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [generationFilter, setGenerationFilter] = useState(""); // <-- Agregado
+  const [generationFilter, setGenerationFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("active");
   const [currentPage, setCurrentPage] = useState(0);
   const recordsPerPage = 20;
