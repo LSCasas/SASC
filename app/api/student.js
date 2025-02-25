@@ -45,3 +45,24 @@ export async function getAllStudents() {
     throw error;
   }
 }
+
+// GET STUDENT BY ID
+export async function getStudentById(studentId) {
+  try {
+    const res = await fetch(`${API_URL}/students/${studentId}`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    const json = await res.json();
+    if (!res.ok) {
+      throw new Error(
+        json.message || "Error desconocido al obtener el estudiante"
+      );
+    }
+    return json.data;
+  } catch (error) {
+    console.error("Error obteniendo el estudiante:", error);
+    throw error;
+  }
+}
