@@ -67,7 +67,7 @@ const StudentForm = () => {
           setValue("nombreAlumno", studentData.firstName);
           setValue("apellidosAlumno", studentData.lastName);
           setValue("curp", studentData.curp);
-
+          setValue("estatus", studentData.status || "activo");
           if (studentData.tutorId) {
             setValue("nombreTutor", studentData.tutorId.name || "");
             setValue("apellidosTutor", studentData.tutorId.lastname || "");
@@ -125,6 +125,7 @@ const StudentForm = () => {
         tutorCurp: data.curpTutor,
         tutorPhone: data.telefonoTutor,
         previousClasses: updatedPreviousClasses, // Guardar historial actualizado
+        status: data.estatus,
       };
 
       if (data.curso !== "none") {
@@ -259,6 +260,7 @@ const StudentForm = () => {
               className="w-full p-2 border rounded text-black"
             />
           </div>
+
           {isEdit && (
             <div>
               <label className="block font-semibold text-black">
@@ -323,6 +325,24 @@ const StudentForm = () => {
               )}
             </div>
           </div>
+
+          {isEdit && (
+            <div>
+              <label className="block font-semibold text-black">
+                Estatus del Alumno
+              </label>
+              <select
+                {...register("estatus")}
+                className="w-full p-2 border rounded text-black"
+              >
+                <option value="activo">activo</option>
+                <option value="baja temporal">baja temporal</option>
+                <option value="baja botal">baja total</option>
+                <option value="abandono voluntario">baja temporal</option>
+                <option value="finalizacion de estudios">baja total</option>
+              </select>
+            </div>
+          )}
           <div>
             <label className="block font-semibold text-black">Genero</label>
             <select
