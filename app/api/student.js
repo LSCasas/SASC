@@ -66,3 +66,25 @@ export async function getStudentById(studentId) {
     throw error;
   }
 }
+
+// GET STUDENTS BY CAMPUS ID
+export async function getStudentsByCampusId(campusId) {
+  try {
+    const res = await fetch(`${API_URL}/students/campus/${campusId}`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    const json = await res.json();
+    if (!res.ok) {
+      throw new Error(
+        json.message ||
+          "Error desconocido al obtener los estudiantes del campus"
+      );
+    }
+    return json.data;
+  } catch (error) {
+    console.error("Error obteniendo estudiantes por campus:", error);
+    throw error;
+  }
+}
