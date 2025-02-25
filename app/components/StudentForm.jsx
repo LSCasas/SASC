@@ -59,9 +59,8 @@ const StudentForm = () => {
       async function fetchStudent() {
         try {
           const studentData = await getStudentById(id);
-          setStudentData(studentData); // Guardar en el estado
+          setStudentData(studentData);
 
-          // Guardar las clases anteriores en el estado
           setPreviousClasses(studentData.previousClasses || []);
 
           setValue("nombreAlumno", studentData.firstName);
@@ -82,7 +81,6 @@ const StudentForm = () => {
 
           setValue("curso", studentData.ClassId || "none");
 
-          // Verifica si previousClasses tiene datos y guárdalos
           const previousClassNames = studentData.previousClasses
             ? studentData.previousClasses.map((cls) => cls.name).join(", ")
             : "";
@@ -104,9 +102,7 @@ const StudentForm = () => {
     try {
       let updatedPreviousClasses = [...previousClasses]; // Copia del historial de clases
 
-      // Verificar si el estudiante ya tiene una clase asignada
       if (studentData?.ClassId && studentData.ClassId !== data.curso) {
-        // Si la clase cambió, agregamos la anterior a previousClasses si no está ya
         if (!updatedPreviousClasses.includes(studentData.ClassId)) {
           updatedPreviousClasses.push(studentData.ClassId);
         }
@@ -124,7 +120,7 @@ const StudentForm = () => {
         tutorLastname: data.apellidosTutor,
         tutorCurp: data.curpTutor,
         tutorPhone: data.telefonoTutor,
-        previousClasses: updatedPreviousClasses, // Guardar historial actualizado
+        previousClasses: updatedPreviousClasses,
         status: data.estatus,
       };
 

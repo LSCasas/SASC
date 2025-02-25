@@ -28,7 +28,10 @@ export default function StudentTable() {
           throw new Error("El usuario no tiene un campus seleccionado");
 
         const studentData = await getStudentsByCampusId(campusId);
-        const sortedStudents = studentData.sort((a, b) =>
+        const activeStudents = studentData.filter(
+          (student) => student.status === "activo"
+        );
+        const sortedStudents = activeStudents.sort((a, b) =>
           a.lastName.localeCompare(b.lastName)
         );
 
