@@ -19,7 +19,7 @@ const ClassForm = () => {
   } = useForm({
     defaultValues: {
       generation: `${new Date().getFullYear()}-${new Date().getFullYear() + 1}`,
-      teacherId: "none", // Valor por defecto para que la clase pueda crearse sin profesor.
+      teacherId: "none",
     },
   });
 
@@ -63,6 +63,7 @@ const ClassForm = () => {
           setValue("days", classData.days);
           setValue("startTime", classData.startTime);
           setValue("endTime", classData.endTime);
+          setValue("isAchive", classData.isAchive || false); // Cargar estado actual
         } catch (err) {
           console.error("Error al obtener clase:", err);
         }
@@ -74,7 +75,7 @@ const ClassForm = () => {
   const onSubmit = async (data) => {
     try {
       if (data.teacherId === "none") {
-        data.teacherId = null; // Enviar null si no se selecciona profesor
+        data.teacherId = null;
       }
 
       if (isEdit) {
@@ -189,6 +190,21 @@ const ClassForm = () => {
               <p className="text-red-500 text-sm">{errors.endTime.message}</p>
             )}
           </div>
+
+          {isEdit && (
+            <div>
+              <label className="block font-semibold text-black">
+                Estatus (Activo/Baja)
+              </label>
+              <select
+                {...register("isAchive")}
+                className="w-full p-2 border rounded text-black"
+              >
+                <option value={false}>Activo</option>
+                <option value={true}>Baja</option>
+              </select>
+            </div>
+          )}
 
           <button
             type="submit"

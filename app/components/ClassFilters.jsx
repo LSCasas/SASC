@@ -5,6 +5,8 @@ export default function ClassFilters({
   setSearchTerm,
   generationFilter,
   setGenerationFilter,
+  statusFilter,
+  setStatusFilter,
 }) {
   return (
     <div className="flex flex-wrap gap-4 p-4 bg-gray-100 rounded-md text-black">
@@ -22,6 +24,14 @@ export default function ClassFilters({
         value={generationFilter}
         onChange={(e) => setGenerationFilter(e.target.value)}
       />
+      <select
+        className="p-2 border rounded"
+        value={statusFilter}
+        onChange={(e) => setStatusFilter(e.target.value)}
+      >
+        <option value="active">Activa</option>
+        <option value="inactive">Dada de baja</option>
+      </select>
     </div>
   );
 }

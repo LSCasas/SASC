@@ -68,6 +68,8 @@ export default function ClassTable() {
         setSearchTerm={setSearchTerm}
         generationFilter={generationFilter}
         setGenerationFilter={setGenerationFilter}
+        statusFilter={statusFilter}
+        setStatusFilter={setStatusFilter}
       />
       <div className="overflow-y-auto md:h-[45vh]">
         <table className="min-w-full bg-white border border-gray-200 text-black">
