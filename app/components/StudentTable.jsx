@@ -7,8 +7,15 @@ import { getStudentsByCampusId } from "../api/student";
 
 export default function StudentTable() {
   const [students, setStudents] = useState([]);
+  const [filteredStudents, setFilteredStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [filters, setFilters] = useState({
+    name: "",
+    className: "",
+    gender: "",
+    hasInstrument: "",
+  });
 
   useEffect(() => {
     async function fetchStudents() {
@@ -21,12 +28,12 @@ export default function StudentTable() {
           throw new Error("El usuario no tiene un campus seleccionado");
 
         const studentData = await getStudentsByCampusId(campusId);
-
         const sortedStudents = studentData.sort((a, b) =>
           a.lastName.localeCompare(b.lastName)
         );
 
         setStudents(sortedStudents);
+        setFilteredStudents(sortedStudents);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -36,12 +43,40 @@ export default function StudentTable() {
     fetchStudents();
   }, []);
 
+  useEffect(() => {
+    const filtered = students.filter((student) => {
+      const nameMatch =
+        student.firstName.toLowerCase().includes(filters.name.toLowerCase()) ||
+        student.lastName.toLowerCase().includes(filters.name.toLowerCase());
+      const classMatch =
+        student.ClassId?.name
+          .toLowerCase()
+          .includes(filters.className.toLowerCase()) ||
+        filters.className === "";
+      const genderMatch = filters.gender
+        ? student.gender === filters.gender
+        : true;
+      const instrumentMatch =
+        filters.hasInstrument === ""
+          ? true
+          : student.hasInstrument.toString() === filters.hasInstrument;
+
+      return nameMatch && classMatch && genderMatch && instrumentMatch;
+    });
+    setFilteredStudents(filtered);
+  }, [filters, students]);
+
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters((prev) => ({ ...prev, [name]: value }));
+  };
+
   if (loading) return <p className="text-center text-black">Cargando...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
     <div className="mt-6">
-      <Filters />
+      <Filters filters={filters} onFilterChange={handleFilterChange} />
       <div className="overflow-y-auto max-h-[400px]">
         <table className="min-w-full bg-white border border-gray-200 text-black">
           <thead>
@@ -50,13 +85,11 @@ export default function StudentTable() {
               <th className="p-3 border-b text-black">Nombre</th>
               <th className="p-3 border-b text-black">Apellidos</th>
               <th className="p-3 border-b text-black">Clase</th>
-              <th className="p-3 border-b text-black">Instrumento</th>
-              <th className="p-3 border-b text-black">Género</th>
             </tr>
           </thead>
           <tbody>
-            {students.length > 0 ? (
-              students.map((student, index) => (
+            {filteredStudents.length > 0 ? (
+              filteredStudents.map((student, index) => (
                 <tr
                   key={student._id}
                   className="cursor-pointer hover:bg-gray-100"
@@ -81,21 +114,11 @@ export default function StudentTable() {
                       {student.ClassId?.name || "Sin clase"}
                     </Link>
                   </td>
-                  <td className="p-3 border-b">
-                    <Link href={`/formularioDeAlumnos?id=${student._id}`}>
-                      {student.hasInstrument ? "Sí" : "No"}
-                    </Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link href={`/formularioDeAlumnos?id=${student._id}`}>
-                      {student.gender}
-                    </Link>
-                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="p-3 text-center text-black">
+                <td colSpan="4" className="p-3 text-center text-black">
                   No hay registros disponibles
                 </td>
               </tr>
@@ -105,7 +128,7 @@ export default function StudentTable() {
       </div>
       <div className="mt-3 flex justify-center">
         <div className="w-full">
-          <ExportButtons data={students} />
+          <ExportButtons data={filteredStudents} />
         </div>
       </div>
     </div>
