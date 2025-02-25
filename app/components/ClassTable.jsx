@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ExportButtons from "./TeacherExportButtons";
+import ExportButtons from "./ClassExportButtons";
 import ClassFilters from "./ClassFilters";
 import Link from "next/link";
 import { getUserById } from "../api/user";
@@ -123,7 +123,7 @@ export default function ClassTable() {
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
           disabled={currentPage === 0}
-          className="disabled:opacity-50"
+          className="text-black"
         >
           ◀︎
         </button>
@@ -137,7 +137,7 @@ export default function ClassTable() {
             )
           }
           disabled={endIndex >= totalRecords}
-          className="disabled:opacity-50"
+          className="text-black"
         >
           ▶︎
         </button>
