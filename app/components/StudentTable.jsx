@@ -30,18 +30,23 @@ export default function StudentTable() {
 
         const studentData = await getStudentsByCampusId(campusId);
 
-        const activeStudents = studentData.filter(
-          (student) => student.status === "activo"
-        );
+        if (studentData.length === 0) {
+          setError("No se encontraron estudiantes para este campus.");
+        } else {
+          const activeStudents = studentData.filter(
+            (student) => student.status === "activo"
+          );
 
-        const sortedStudents = activeStudents.sort((a, b) =>
-          a.lastName.localeCompare(b.lastName)
-        );
+          const sortedStudents = activeStudents.sort((a, b) =>
+            a.lastName.localeCompare(b.lastName)
+          );
 
-        setStudents(sortedStudents);
-        setFilteredStudents(sortedStudents);
+          setStudents(sortedStudents);
+          setFilteredStudents(sortedStudents);
+        }
       } catch (err) {
-        setError(err.message);
+        setError(err.message || "Hubo un problema al cargar los estudiantes.");
+        console.error("Error al obtener los estudiantes:", err);
       } finally {
         setLoading(false);
       }

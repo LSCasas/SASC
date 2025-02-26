@@ -76,12 +76,19 @@ export async function getStudentsByCampusId(campusId) {
     });
 
     const json = await res.json();
+
     if (!res.ok) {
+      // Si no se encontraron estudiantes, no lanzamos un error 500, solo mostramos el mensaje
+      if (json.error && json.error.includes("No students found")) {
+        return []; // Devuelve un array vacío si no se encuentran estudiantes
+      }
+
       throw new Error(
         json.message ||
           "Error desconocido al obtener los estudiantes del campus"
       );
     }
+
     return json.data;
   } catch (error) {
     console.error("Error obteniendo estudiantes por campus:", error);

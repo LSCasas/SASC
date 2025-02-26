@@ -27,7 +27,8 @@ export default function TutorTable() {
 
         let tutorsData = await getTutorsByCampusId(campusId);
 
-        // Ordenar por apellido en orden alfabético
+        tutorsData = tutorsData.filter((tutor) => tutor.isArchive === false);
+
         tutorsData = tutorsData.sort((a, b) =>
           a.lastname.localeCompare(b.lastname)
         );
@@ -92,38 +93,66 @@ export default function TutorTable() {
               <th className="p-3 border-b text-black">#</th>
               <th className="p-3 border-b text-black">Nombre</th>
               <th className="p-3 border-b text-black">Apellidos</th>
+              <th className="p-3 border-b text-black">
+                Nombre de los estudiantes
+              </th>
+              <th className="p-3 border-b text-black">
+                Apellidos de los estudiantes
+              </th>
+              <th className="p-3 border-b text-black">
+                Clase(s) de los estudiantes
+              </th>
               <th className="p-3 border-b text-black">Contacto</th>
             </tr>
           </thead>
           <tbody>
             {displayedTutors.length > 0 ? (
-              displayedTutors.map((tutor, index) => (
-                <tr key={tutor._id}>
-                  <td className="p-3 border-b">
-                    <Link href={`/formularioDeTutores?id=${tutor._id}`}>
-                      {startIndex + index + 1}
-                    </Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link href={`/formularioDeTutores?id=${tutor._id}`}>
-                      {tutor.name}
-                    </Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link href={`/formularioDeTutores?id=${tutor._id}`}>
-                      {tutor.lastname}
-                    </Link>
-                  </td>
+              displayedTutors.map((tutor, index) => {
+                const childrenNames = tutor.children
+                  .map((child) => child.firstName + " " + child.lastName)
+                  .join(", ");
+                const childrenLastNames = tutor.children
+                  .map((child) => child.lastName)
+                  .join(", ");
+                const childrenClasses = tutor.children
+                  .map((child) => child.ClassId.name)
+                  .join(", ");
 
-                  <td className="p-3 border-b">
-                    {/* Asegúrate de que childContact esté disponible */}
-                    {tutor.phone ? tutor.phone : "No disponible"}
-                  </td>
-                </tr>
-              ))
+                return (
+                  <tr key={tutor._id}>
+                    <td className="p-3 border-b">
+                      <Link href={`/formularioDeTutores?id=${tutor._id}`}>
+                        {startIndex + index + 1}
+                      </Link>
+                    </td>
+                    <td className="p-3 border-b">
+                      <Link href={`/formularioDeTutores?id=${tutor._id}`}>
+                        {tutor.name}
+                      </Link>
+                    </td>
+                    <td className="p-3 border-b">
+                      <Link href={`/formularioDeTutores?id=${tutor._id}`}>
+                        {tutor.lastname}
+                      </Link>
+                    </td>
+                    <td className="p-3 border-b">
+                      {childrenNames || "No disponible"}
+                    </td>
+                    <td className="p-3 border-b">
+                      {childrenLastNames || "No disponible"}
+                    </td>
+                    <td className="p-3 border-b">
+                      {childrenClasses || "No disponible"}
+                    </td>
+                    <td className="p-3 border-b">
+                      {tutor.phone ? tutor.phone : "No disponible"}
+                    </td>
+                  </tr>
+                );
+              })
             ) : (
               <tr>
-                <td colSpan="6" className="p-3 text-center text-black">
+                <td colSpan="7" className="p-3 text-center text-black">
                   No hay registros disponibles
                 </td>
               </tr>
