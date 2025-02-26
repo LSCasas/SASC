@@ -46,6 +46,21 @@ export async function getTutorById(tutorId) {
   return json.data;
 }
 
+// GET TUTORS BY CAMPUS ID
+export async function getTutorsByCampusId(campusId) {
+  const res = await fetch(`${API_URL}/tutors/campus/${campusId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+
+  const json = await res.json();
+  if (!json.success) throw new Error(json.message);
+  return json.data;
+}
+
 // UPDATE TUTOR
 export async function updateTutor(tutorId, data) {
   const res = await fetch(`${API_URL}/tutors/${tutorId}`, {
