@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Filters from "./StudentFilters";
-import ExportButtons from "./TeacherExportButtons";
+import ExportButtons from "./StudentExportButtons";
 import Link from "next/link";
 import { getUserById } from "../api/user";
 import { getStudentsByCampusId } from "../api/student";
@@ -30,7 +30,6 @@ export default function StudentTable() {
 
         const studentData = await getStudentsByCampusId(campusId);
 
-        // Filtrar solo estudiantes activos por defecto
         const activeStudents = studentData.filter(
           (student) => student.status === "activo"
         );
@@ -72,7 +71,6 @@ export default function StudentTable() {
           : student.hasInstrument.toString() === filters.hasInstrument;
 
       if (filters.generation) {
-        // Si se usa el filtro de generación, incluir al estudiante por cada coincidencia en ClassId o previousClasses
         let matchingStudents = [];
 
         if (
@@ -105,7 +103,6 @@ export default function StudentTable() {
       return nameMatch && classMatch && genderMatch && instrumentMatch;
     });
 
-    // Asegurar que `filtered` sea un solo array de objetos (cuando se filtra por generación)
     filtered = filtered.flat();
 
     setFilteredStudents(filtered);
@@ -137,7 +134,7 @@ export default function StudentTable() {
             {filteredStudents.length > 0 ? (
               filteredStudents.map((student, index) => (
                 <tr
-                  key={`${student._id}-${index}`} // Asegurar key única si el estudiante aparece múltiples veces
+                  key={`${student._id}-${index}`}
                   className="cursor-pointer hover:bg-gray-100"
                 >
                   <td className="p-3 border-b">
