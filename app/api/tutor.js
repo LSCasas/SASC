@@ -30,3 +30,18 @@ export async function getAllTutors() {
   if (!json.success) throw new Error(json.message);
   return json.data;
 }
+
+// GET TUTOR BY ID
+export async function getTutorById(tutorId) {
+  const res = await fetch(`${API_URL}/tutors/${tutorId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+
+  const json = await res.json();
+  if (!json.success) throw new Error(json.message);
+  return json.data;
+}
