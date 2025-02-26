@@ -61,3 +61,18 @@ export async function updateTutor(tutorId, data) {
   if (!json.success) throw new Error(json.message);
   return json.data;
 }
+
+// DELETE TUTOR
+export async function deleteTutor(tutorId) {
+  const res = await fetch(`${API_URL}/tutors/${tutorId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+
+  const json = await res.json();
+  if (!json.success) throw new Error(json.message);
+  return json.message;
+}
