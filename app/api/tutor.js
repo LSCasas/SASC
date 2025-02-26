@@ -15,3 +15,18 @@ export async function createTutor(data) {
   if (!json.success) throw new Error(json.message);
   return json.data;
 }
+
+// GET ALL TUTORS
+export async function getAllTutors() {
+  const res = await fetch(`${API_URL}/tutors`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+
+  const json = await res.json();
+  if (!json.success) throw new Error(json.message);
+  return json.data;
+}
