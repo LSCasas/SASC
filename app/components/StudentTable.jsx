@@ -15,6 +15,7 @@ export default function StudentTable() {
     className: "",
     gender: "",
     hasInstrument: "",
+    generation: "",
   });
 
   useEffect(() => {
@@ -28,9 +29,12 @@ export default function StudentTable() {
           throw new Error("El usuario no tiene un campus seleccionado");
 
         const studentData = await getStudentsByCampusId(campusId);
+
+        // Filtrar solo estudiantes activos por defecto
         const activeStudents = studentData.filter(
           (student) => student.status === "activo"
         );
+
         const sortedStudents = activeStudents.sort((a, b) =>
           a.lastName.localeCompare(b.lastName)
         );
@@ -47,25 +51,63 @@ export default function StudentTable() {
   }, []);
 
   useEffect(() => {
-    const filtered = students.filter((student) => {
+    let filtered = students.filter((student) => {
       const nameMatch =
         student.firstName.toLowerCase().includes(filters.name.toLowerCase()) ||
         student.lastName.toLowerCase().includes(filters.name.toLowerCase());
+
       const classMatch =
         student.ClassId?.name
-          .toLowerCase()
+          ?.toLowerCase()
           .includes(filters.className.toLowerCase()) ||
         filters.className === "";
+
       const genderMatch = filters.gender
         ? student.gender === filters.gender
         : true;
+
       const instrumentMatch =
         filters.hasInstrument === ""
           ? true
           : student.hasInstrument.toString() === filters.hasInstrument;
 
+      if (filters.generation) {
+        // Si se usa el filtro de generación, incluir al estudiante por cada coincidencia en ClassId o previousClasses
+        let matchingStudents = [];
+
+        if (
+          student.ClassId?.generation
+            ?.toLowerCase()
+            .includes(filters.generation.toLowerCase())
+        ) {
+          matchingStudents.push({
+            ...student,
+            matchedGeneration: student.ClassId?.generation,
+          });
+        }
+
+        student.previousClasses?.forEach((prevClass) => {
+          if (
+            prevClass.generation
+              ?.toLowerCase()
+              .includes(filters.generation.toLowerCase())
+          ) {
+            matchingStudents.push({
+              ...student,
+              matchedGeneration: prevClass.generation,
+            });
+          }
+        });
+
+        return matchingStudents.length > 0 ? matchingStudents : false;
+      }
+
       return nameMatch && classMatch && genderMatch && instrumentMatch;
     });
+
+    // Asegurar que `filtered` sea un solo array de objetos (cuando se filtra por generación)
+    filtered = filtered.flat();
+
     setFilteredStudents(filtered);
   }, [filters, students]);
 
@@ -88,13 +130,14 @@ export default function StudentTable() {
               <th className="p-3 border-b text-black">Nombre</th>
               <th className="p-3 border-b text-black">Apellidos</th>
               <th className="p-3 border-b text-black">Clase</th>
+              {/* <th className="p-3 border-b text-black">Generación</th> */}
             </tr>
           </thead>
           <tbody>
             {filteredStudents.length > 0 ? (
               filteredStudents.map((student, index) => (
                 <tr
-                  key={student._id}
+                  key={`${student._id}-${index}`} // Asegurar key única si el estudiante aparece múltiples veces
                   className="cursor-pointer hover:bg-gray-100"
                 >
                   <td className="p-3 border-b">
@@ -117,11 +160,18 @@ export default function StudentTable() {
                       {student.ClassId?.name || "Sin clase"}
                     </Link>
                   </td>
+                  {/* <td className="p-3 border-b">
+                    <Link href={`/formularioDeAlumnos?id=${student._id}`}>
+                      {student.matchedGeneration ||
+                        student.ClassId?.generation ||
+                        "Sin generación"}
+                    </Link>
+                  </td> */}
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="p-3 text-center text-black">
+                <td colSpan="5" className="p-3 text-center text-black">
                   No hay registros disponibles
                 </td>
               </tr>

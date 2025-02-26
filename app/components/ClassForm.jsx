@@ -59,7 +59,9 @@ const ClassForm = () => {
           const classData = await getClassById(id);
           setValue("name", classData.name);
           setValue("teacherId", classData.teacherId?._id || "none");
-          setValue("generation", classData.generation);
+          if (classData.generation) {
+            setValue("generation", classData.generation);
+          }
           setValue("days", classData.days);
           setValue("startTime", classData.startTime);
           setValue("endTime", classData.endTime);
@@ -131,11 +133,22 @@ const ClassForm = () => {
 
           <div>
             <label className="block font-semibold text-black">Generación</label>
-            <input
+            <select
               {...register("generation")}
               className="w-full p-2 border rounded text-black"
-              readOnly
-            />
+            >
+              {Array.from({ length: 11 }, (_, i) => {
+                const startYear = new Date().getFullYear() - 5 + i; // 5 años atrás hasta 5 años adelante
+                return (
+                  <option
+                    key={startYear}
+                    value={`${startYear}-${startYear + 1}`}
+                  >
+                    {startYear}-{startYear + 1}
+                  </option>
+                );
+              })}
+            </select>
           </div>
 
           <div>
