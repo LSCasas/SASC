@@ -2,7 +2,7 @@ const API_URL = "http://localhost:5000";
 
 // CREATE TUTOR
 export async function createTutor(data) {
-  const res = await fetch(`${API_URL}/tutors`, {
+  const res = await fetch(`${API_URL}/tutor`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -18,7 +18,7 @@ export async function createTutor(data) {
 
 // GET ALL TUTORS
 export async function getAllTutors() {
-  const res = await fetch(`${API_URL}/tutors`, {
+  const res = await fetch(`${API_URL}/tutor`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -33,7 +33,7 @@ export async function getAllTutors() {
 
 // GET TUTOR BY ID
 export async function getTutorById(tutorId) {
-  const res = await fetch(`${API_URL}/tutors/${tutorId}`, {
+  const res = await fetch(`${API_URL}/tutor/${tutorId}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export async function getTutorById(tutorId) {
 
 // GET TUTORS BY CAMPUS ID
 export async function getTutorsByCampusId(campusId) {
-  const res = await fetch(`${API_URL}/tutors/campus/${campusId}`, {
+  const res = await fetch(`${API_URL}/tutor/campus/${campusId}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -63,7 +63,7 @@ export async function getTutorsByCampusId(campusId) {
 
 // UPDATE TUTOR
 export async function updateTutor(tutorId, data) {
-  const res = await fetch(`${API_URL}/tutors/${tutorId}`, {
+  const res = await fetch(`${API_URL}/tutor/${tutorId}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -79,7 +79,7 @@ export async function updateTutor(tutorId, data) {
 
 // DELETE TUTOR
 export async function deleteTutor(tutorId) {
-  const res = await fetch(`${API_URL}/tutors/${tutorId}`, {
+  const res = await fetch(`${API_URL}/tutor/${tutorId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
