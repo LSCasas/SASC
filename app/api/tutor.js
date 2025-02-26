@@ -45,3 +45,19 @@ export async function getTutorById(tutorId) {
   if (!json.success) throw new Error(json.message);
   return json.data;
 }
+
+// UPDATE TUTOR
+export async function updateTutor(tutorId, data) {
+  const res = await fetch(`${API_URL}/tutors/${tutorId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+    credentials: "include",
+  });
+
+  const json = await res.json();
+  if (!json.success) throw new Error(json.message);
+  return json.data;
+}
