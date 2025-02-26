@@ -27,7 +27,6 @@ export default function TeacherTable() {
 
         let teachersData = await getTeachersByCampusId(campusId);
 
-        // Ordenar por apellido en orden alfabético
         teachersData = teachersData.sort((a, b) =>
           a.lastName.localeCompare(b.lastName)
         );
