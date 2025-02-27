@@ -24,3 +24,24 @@ export async function createTransfer(data) {
     throw error;
   }
 }
+
+// GET ALL TRANSFERS
+export async function getAllTransfers() {
+  try {
+    const response = await fetch(`${API_URL}/transfer`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || "Error obteniendo las transferencias");
+    }
+
+    return result.data;
+  } catch (error) {
+    console.error("Error obteniendo todas las transferencias:", error);
+    throw error;
+  }
+}
