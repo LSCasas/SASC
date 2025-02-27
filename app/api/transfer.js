@@ -89,3 +89,28 @@ export async function getTransfersByCampusId(campusId) {
     throw error;
   }
 }
+
+// UPDATE TRANSFER
+export async function updateTransfer(id, data) {
+  try {
+    const response = await fetch(`${API_URL}/transfer/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || "Error actualizando la transferencia");
+    }
+
+    return result.data;
+  } catch (error) {
+    console.error("Error actualizando la transferencia:", error);
+    throw error;
+  }
+}
