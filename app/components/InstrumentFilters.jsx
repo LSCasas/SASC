@@ -18,6 +18,10 @@ export default function Filters() {
         placeholder="Buscar por propietario"
         className="flex-1 min-w-[150px] p-2 border rounded"
       />
+      <select className="p-2 border rounded">
+        <option value="active">Activa</option>
+        <option value="inactive">Baja</option>
+      </select>
     </div>
   );
 }
