@@ -378,12 +378,32 @@ const StudentForm = () => {
               className="w-full p-2 border rounded text-black"
             />
           </div>
-          <button
-            type="submit"
-            className="w-full sm:w-auto py-2 px-4 bg-gradient-to-r bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
-          >
-            {isEdit ? "Actualizar Estudiante" : "Crear Estudiante"}
-          </button>
+          <div className="flex flex-wrap justify-center sm:justify-between mt-4 gap-2">
+            <button
+              type="button"
+              onClick={() => router.push("/alumnos")}
+              className="py-2 px-4 bg-gray-500 text-white rounded-md hover:bg-gray-700 w-full sm:w-auto"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              className="py-2 px-4 bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036] w-full sm:w-auto"
+            >
+              {isEdit ? "Actualizar Estudiante" : "Crear Estudiante"}
+            </button>
+            {isEdit && (
+              <button
+                type="button"
+                onClick={() =>
+                  router.push(`/formularioDeTransferencias?id=${id}`)
+                }
+                className="py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-700 w-full sm:w-auto"
+              >
+                Transferir
+              </button>
+            )}
+          </div>
         </form>
       </div>
     </div>
