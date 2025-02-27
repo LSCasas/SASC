@@ -40,3 +40,22 @@ export async function getAllCampuses() {
     throw error;
   }
 }
+
+// GET CAMPUS BY ID
+export async function getCampusById(campusId) {
+  try {
+    const response = await fetch(`${API_URL}/campuses/${campusId}`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    const data = await response.json();
+    if (!response.ok)
+      throw new Error(data.message || "Error al obtener campus");
+
+    return data.data;
+  } catch (error) {
+    console.error("Error en getCampusById:", error);
+    throw error;
+  }
+}
