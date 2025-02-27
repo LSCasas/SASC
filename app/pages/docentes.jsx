@@ -11,7 +11,7 @@ export default function TeacherPage() {
   };
 
   return (
-    <div className="flex">
+    <div className="flex flex-col lg:flex-row">
       <Sidebar />
       <div className="flex-1 bg-gray-50 min-h-screen">
         <div className="container mx-auto px-6 py-6">
@@ -22,7 +22,7 @@ export default function TeacherPage() {
           <div className="mb-4 text-right">
             <button
               onClick={handleCreateStudent}
-              className="w-auto py-2 px-4 bg-gradient-to-r bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
+              className="w-full sm:w-auto py-2 px-4 bg-gradient-to-r bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
             >
               Agregar docente
             </button>

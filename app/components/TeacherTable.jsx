@@ -9,12 +9,8 @@ export default function TeacherTable() {
   const [teachers, setTeachers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("active");
-
-  const [currentPage, setCurrentPage] = useState(0);
-  const recordsPerPage = 20;
 
   useEffect(() => {
     async function fetchTeachers() {
@@ -58,24 +54,6 @@ export default function TeacherTable() {
     return matchesName && matchesStatus;
   });
 
-  const totalRecords = filteredTeachers.length;
-  const startIndex = currentPage * recordsPerPage;
-  const endIndex = Math.min(startIndex + recordsPerPage, totalRecords);
-
-  const displayedTeachers = filteredTeachers.slice(startIndex, endIndex);
-
-  const handleLoadNext = () => {
-    if ((currentPage + 1) * recordsPerPage < filteredTeachers.length) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handleLoadPrev = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
   return (
     <div className="mt-6">
       <TeacherFilters
@@ -84,7 +62,7 @@ export default function TeacherTable() {
         statusFilter={statusFilter}
         setStatusFilter={setStatusFilter}
       />
-      <div className="overflow-y-auto md:h-[45vh]">
+      <div className="overflow-y-auto h-[50vh]">
         <table className="min-w-full bg-white border border-gray-200 text-black">
           <thead>
             <tr className="bg-gray-100 text-left">
@@ -96,12 +74,15 @@ export default function TeacherTable() {
             </tr>
           </thead>
           <tbody>
-            {displayedTeachers.length > 0 ? (
-              displayedTeachers.map((teacher, index) => (
-                <tr key={teacher._id}>
+            {filteredTeachers.length > 0 ? (
+              filteredTeachers.map((teacher, index) => (
+                <tr
+                  key={teacher._id}
+                  className="cursor-pointer hover:bg-gray-100"
+                >
                   <td className="p-3 border-b">
                     <Link href={`/formularioDeDocentes?id=${teacher._id}`}>
-                      {startIndex + index + 1}
+                      {index + 1}
                     </Link>
                   </td>
                   <td className="p-3 border-b">
@@ -136,35 +117,9 @@ export default function TeacherTable() {
           </tbody>
         </table>
       </div>
-      <div className="mt-4 p-4 bg-gray-100 rounded-lg flex items-center justify-between">
-        <button
-          onClick={handleLoadPrev}
-          disabled={currentPage === 0}
-          className={`${
-            currentPage === 0 ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-        >
-          <h1 className="text-black"> ◀︎ </h1>
-        </button>
-        <span className="text-gray-600">
-          {startIndex + 1}–{endIndex} de {totalRecords}
-        </span>
-        <button
-          onClick={handleLoadNext}
-          disabled={endIndex === totalRecords}
-          className={`${
-            endIndex === totalRecords ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-        >
-          <h1 className="text-black"> ▶︎ </h1>
-        </button>
-      </div>
       <div className="mt-3 flex justify-center">
         <div className="w-full">
-          <ExportButtons
-            data={displayedTeachers}
-            allTeachers={filteredTeachers}
-          />
+          <ExportButtons data={filteredTeachers} />
         </div>
       </div>
     </div>
