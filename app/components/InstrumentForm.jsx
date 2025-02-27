@@ -123,7 +123,7 @@ const InstrumentForm = () => {
               className="w-full p-2 border rounded text-black"
               onChange={(e) => handleStudentChange(e.target.value)}
             >
-              <option value="none">Seleccionar estudiante</option>
+              <option value="none">Sin Asignar</option>
               {students.map((student) => (
                 <option key={student._id} value={student._id}>
                   {student.firstName} {student.lastName}

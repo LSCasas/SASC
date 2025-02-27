@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import InstrumentFilters from "./InstrumentFilters";
-import ExportButtons from "./TeacherExportButtons";
+import ExportButtons from "./InstrumentExportButtons";
 import Link from "next/link";
 import { getUserById } from "../api/user";
 import { getInstrumentsByCampusId } from "../api/instrument";
