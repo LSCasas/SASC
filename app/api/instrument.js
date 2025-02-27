@@ -15,3 +15,18 @@ export async function createInstrument(data) {
   if (!json.success) throw new Error(json.error);
   return json.data;
 }
+
+// GET ALL INSTRUMENT
+export async function getAllInstruments() {
+  const res = await fetch(`${API_URL}/instrument`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+
+  const json = await res.json();
+  if (!json.success) throw new Error(json.error);
+  return json.data;
+}
