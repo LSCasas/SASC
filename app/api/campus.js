@@ -21,3 +21,22 @@ export async function createCampus(campusData) {
     throw error;
   }
 }
+
+// GET ALL CAMPUSES
+export async function getAllCampuses() {
+  try {
+    const response = await fetch(`${API_URL}/campuses`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    const data = await response.json();
+    if (!response.ok)
+      throw new Error(data.message || "Error al obtener campuses");
+
+    return data.data;
+  } catch (error) {
+    console.error("Error en getAllCampuses:", error);
+    throw error;
+  }
+}
