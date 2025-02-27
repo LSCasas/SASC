@@ -46,7 +46,6 @@ export default function TutorTable() {
   if (loading) return <p className="text-center text-black">Cargando...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
-  // Aplicar filtros
   const filteredTutors = tutors.filter((tutor) => {
     const matchesName =
       tutor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -102,7 +101,7 @@ export default function TutorTable() {
         statusFilter={statusFilter}
         setStatusFilter={setStatusFilter}
       />
-      <div className="overflow-y-auto md:h-[45vh]">
+      <div className="overflow-y-auto h-[60vh]">
         <table className="min-w-full bg-white border border-gray-200 text-black">
           <thead>
             <tr className="bg-gray-100 text-left">

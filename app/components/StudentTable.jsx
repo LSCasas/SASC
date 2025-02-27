@@ -124,7 +124,7 @@ export default function StudentTable() {
   return (
     <div className="mt-6">
       <Filters filters={filters} onFilterChange={handleFilterChange} />
-      <div className="overflow-y-auto max-h-[400px]">
+      <div className="overflow-y-auto h-[50vh]">
         <table className="min-w-full bg-white border border-gray-200 text-black">
           <thead>
             <tr className="bg-gray-100 text-left">
