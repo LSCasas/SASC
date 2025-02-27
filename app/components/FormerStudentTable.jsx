@@ -104,15 +104,6 @@ export default function ExStudentTable() {
           </tbody>
         </table>
       </div>
-      <div className="mt-4 p-4 bg-gray-100 rounded-lg flex items-center justify-between">
-        <button className="opacity-50 cursor-not-allowed">
-          <h1 className="text-black"> ◀︎ </h1>
-        </button>
-        <span className="text-gray-600">0–5 de 5</span>
-        <button className="opacity-50 cursor-not-allowed">
-          <h1 className="text-black"> ▶︎ </h1>
-        </button>
-      </div>
       <div className="mt-3 flex justify-center">
         <div className="w-full">
           <ExportButtons data={filteredStudents} />
