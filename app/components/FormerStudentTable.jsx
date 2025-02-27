@@ -1,47 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FormerStudentFilters from "./FormerStudentFilters";
 import ExportButtons from "./TeacherExportButtons";
 import Link from "next/link";
+import { getUserById } from "../api/user";
+import { getStudentsByCampusId } from "../api/student";
 
 export default function ExStudentTable() {
-  const students = [
-    {
-      id: 1,
-      firstName: "Juan Carlos",
-      lastName: "Pérez Sánchez",
-      instrument: "Guitarra",
-      genre: "Masculino",
-      status: "Baja Temporal",
-      instrumentReturned: "Sí",
-    },
-    {
-      id: 2,
-      firstName: "Ana Sofía",
-      lastName: "Gómez Herrera",
-      instrument: "Piano",
-      genre: "Femenino",
-      status: "Baja Total",
-      instrumentReturned: "No",
-    },
-    {
-      id: 3,
-      firstName: "Carlos Eduardo",
-      lastName: "Ramírez López",
-      instrument: "Batería",
-      genre: "Masculino",
-      status: "Abandono Voluntario",
-      instrumentReturned: "Sí",
-    },
-    {
-      id: 4,
-      firstName: "María José",
-      lastName: "Torres Martínez",
-      instrument: "Violín",
-      genre: "Femenino",
-      status: "Finalización de Estudios",
-      instrumentReturned: "No",
-    },
-  ];
+  const [students, setStudents] = useState([]);
+  const [filteredStudents, setFilteredStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchStudents() {
+      try {
+        setLoading(true);
+        const user = await getUserById();
+        const campusId = user?.selectedCampusId;
+
+        if (!campusId)
+          throw new Error("El usuario no tiene un campus seleccionado");
+
+        const studentData = await getStudentsByCampusId(campusId);
+
+        if (studentData.length === 0) {
+          setError("No se encontraron estudiantes para este campus.");
+        } else {
+          // Filtramos solo los estudiantes cuyo status no sea "activo"
+          const formerStudents = studentData.filter(
+            (student) => student.status !== "activo"
+          );
+
+          // Ordenamos a los estudiantes por apellido
+          const sortedStudents = formerStudents.sort((a, b) =>
+            a.lastName.localeCompare(b.lastName)
+          );
+
+          setStudents(sortedStudents);
+          setFilteredStudents(sortedStudents);
+        }
+      } catch (err) {
+        setError(err.message || "Hubo un problema al cargar los estudiantes.");
+        console.error("Error al obtener los estudiantes:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchStudents();
+  }, []);
+
+  if (loading) return <p className="text-center text-black">Cargando...</p>;
+  if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
     <div className="mt-6">
@@ -53,41 +62,41 @@ export default function ExStudentTable() {
               <th className="p-3 border-b text-black">#</th>
               <th className="p-3 border-b text-black">Nombre</th>
               <th className="p-3 border-b text-black">Apellido</th>
-              <th className="p-3 border-b text-black">Ultima Clase</th>
+              <th className="p-3 border-b text-black">Última Clase Tomada</th>
               <th className="p-3 border-b text-black">Estado</th>
             </tr>
           </thead>
           <tbody>
-            {students.length > 0 ? (
-              students.map((student) => (
-                <tr key={student.id}>
+            {filteredStudents.length > 0 ? (
+              filteredStudents.map((student, index) => (
+                <tr key={student._id}>
+                  <td className="p-3 border-b">{index + 1}</td>{" "}
+                  {/* Numeración */}
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeExAlumnos">{student.id}</Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link href="/formularioDeExAlumnos">
+                    <Link href={`/formularioDeExAlumnos?id=${student._id}`}>
                       {student.firstName}
                     </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeExAlumnos">
+                    <Link href={`/formularioDeExAlumnos?id=${student._id}`}>
                       {student.lastName}
                     </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeExAlumnos">
-                      {student.instrument}
+                    <Link href={`/formularioDeExAlumnos?id=${student._id}`}>
+                      {student.ClassId?.name || "Sin clase"}
                     </Link>
                   </td>
-
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeExAlumnos">{student.status}</Link>
+                    <Link href={`/formularioDeExAlumnos?id=${student._id}`}>
+                      {student.status}
+                    </Link>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="7" className="p-3 text-center text-black">
+                <td colSpan="5" className="p-3 text-center text-black">
                   No hay registros disponibles
                 </td>
               </tr>
@@ -106,7 +115,7 @@ export default function ExStudentTable() {
       </div>
       <div className="mt-3 flex justify-center">
         <div className="w-full">
-          <ExportButtons data={students} />
+          <ExportButtons data={filteredStudents} />
         </div>
       </div>
     </div>
