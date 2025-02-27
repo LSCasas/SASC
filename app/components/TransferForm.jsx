@@ -10,7 +10,7 @@ const TransferForm = () => {
   const [classes, setClasses] = useState([]);
   const [loadingClasses, setLoadingClasses] = useState(true);
   const [errorClasses, setErrorClasses] = useState(null);
-  const [studentData, setStudentData] = useState(null); // Estado para guardar los datos del estudiante
+  const [studentData, setStudentData] = useState(null);
 
   const {
     register,
@@ -51,7 +51,7 @@ const TransferForm = () => {
       async function fetchStudent() {
         try {
           const studentData = await getStudentById(id);
-          setStudentData(studentData); // Guardar los datos del estudiante en el estado
+          setStudentData(studentData);
           setValue("nombreAlumno", studentData.firstName);
           setValue("apellidosAlumno", studentData.lastName);
           setValue("curso", studentData.ClassId || "none");
@@ -111,7 +111,20 @@ const TransferForm = () => {
             </label>
             <input
               value={studentData.ClassId ? studentData.ClassId.name : ""}
-              className="w-full p-2 border rounded text-black bg-gray-100 "
+              className="w-full p-2 border rounded text-black bg-gray-50 "
+              readOnly
+            />
+          </div>
+        )}
+
+        {isEdit && studentData && (
+          <div>
+            <label className="block font-semibold text-black">
+              Campus Actual
+            </label>
+            <input
+              value={studentData.campusId ? studentData.campusId.name : ""}
+              className="w-full p-2 border rounded text-black bg-gray-50 "
               readOnly
             />
           </div>
