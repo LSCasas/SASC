@@ -45,3 +45,24 @@ export async function getAllTransfers() {
     throw error;
   }
 }
+
+// GET TRANSFER BY ID
+export async function getTransferById(id) {
+  try {
+    const response = await fetch(`${API_URL}/transfer/${id}`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || "Error obteniendo la transferencia");
+    }
+
+    return result.data;
+  } catch (error) {
+    console.error("Error obteniendo la transferencia por ID:", error);
+    throw error;
+  }
+}
