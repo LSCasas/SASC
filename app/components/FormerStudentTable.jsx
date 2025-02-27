@@ -11,6 +11,12 @@ export default function ExStudentTable() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [searchName, setSearchName] = useState("");
+  const [searchClass, setSearchClass] = useState("");
+  const [selectedGender, setSelectedGender] = useState("");
+  const [instrumentStatus, setInstrumentStatus] = useState("");
+  const [studentStatus, setStudentStatus] = useState("");
+
   useEffect(() => {
     async function fetchStudents() {
       try {
@@ -26,12 +32,10 @@ export default function ExStudentTable() {
         if (studentData.length === 0) {
           setError("No se encontraron estudiantes para este campus.");
         } else {
-          // Filtramos solo los estudiantes cuyo status no sea "activo"
           const formerStudents = studentData.filter(
             (student) => student.status !== "activo"
           );
 
-          // Ordenamos a los estudiantes por apellido
           const sortedStudents = formerStudents.sort((a, b) =>
             a.lastName.localeCompare(b.lastName)
           );
@@ -49,12 +53,63 @@ export default function ExStudentTable() {
     fetchStudents();
   }, []);
 
+  useEffect(() => {
+    let filtered = students;
+
+    if (searchName) {
+      filtered = filtered.filter(
+        (student) =>
+          student.firstName.toLowerCase().includes(searchName.toLowerCase()) ||
+          student.lastName.toLowerCase().includes(searchName.toLowerCase())
+      );
+    }
+
+    if (searchClass) {
+      filtered = filtered.filter((student) =>
+        student.ClassId?.name?.toLowerCase().includes(searchClass.toLowerCase())
+      );
+    }
+
+    if (selectedGender) {
+      filtered = filtered.filter(
+        (student) => student.gender === selectedGender
+      );
+    }
+
+    if (instrumentStatus) {
+      filtered = filtered.filter((student) =>
+        instrumentStatus === "Devuelto"
+          ? student.hasInstrument === false
+          : student.hasInstrument === true
+      );
+    }
+
+    if (studentStatus) {
+      filtered = filtered.filter((student) => student.status === studentStatus);
+    }
+
+    setFilteredStudents(filtered);
+  }, [
+    searchName,
+    searchClass,
+    selectedGender,
+    instrumentStatus,
+    studentStatus,
+    students,
+  ]);
+
   if (loading) return <p className="text-center text-black">Cargando...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
     <div className="mt-6">
-      <FormerStudentFilters />
+      <FormerStudentFilters
+        setSearchName={setSearchName}
+        setSearchClass={setSearchClass}
+        setSelectedGender={setSelectedGender}
+        setInstrumentStatus={setInstrumentStatus}
+        setStudentStatus={setStudentStatus}
+      />
       <div className="overflow-y-auto max-h-[400px]">
         <table className="min-w-full bg-white border border-gray-200 text-black">
           <thead>
@@ -70,8 +125,7 @@ export default function ExStudentTable() {
             {filteredStudents.length > 0 ? (
               filteredStudents.map((student, index) => (
                 <tr key={student._id}>
-                  <td className="p-3 border-b">{index + 1}</td>{" "}
-                  {/* Numeración */}
+                  <td className="p-3 border-b">{index + 1}</td>
                   <td className="p-3 border-b">
                     <Link href={`/formularioDeExAlumnos?id=${student._id}`}>
                       {student.firstName}
