@@ -46,13 +46,29 @@ export async function getInstrumentById(id) {
   return json.data;
 }
 
-// GET CLASSES BY CAMPUS ID
+// GET INSTRUMENT BY CAMPUS ID
 export async function getInstrumentsByCampusId(campusId) {
   const res = await fetch(`${API_URL}/instrument/campus/${campusId}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
+  });
+
+  const json = await res.json();
+  if (!json.success) throw new Error(json.error);
+  return json.data;
+}
+
+// UPDATE INSTRUMENT BY ID
+export async function updateInstrument(id, data) {
+  const res = await fetch(`${API_URL}/instrument/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
     credentials: "include",
   });
 
