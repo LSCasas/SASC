@@ -10,7 +10,7 @@ export default function Filters() {
       />
       <input
         type="text"
-        placeholder="Buscar por instrumento"
+        placeholder="Buscar por clase"
         className="flex-1 min-w-[150px] p-2 border rounded"
       />
       <select className="flex-1 min-w-[150px] p-2 border rounded">
@@ -18,15 +18,19 @@ export default function Filters() {
         <option value="Masculino">Masculino</option>
         <option value="Femenino">Femenino</option>
       </select>
-      <input
-        type="text"
-        placeholder="Buscar por edad"
-        className="flex-1 min-w-[150px] p-2 border rounded"
-      />
+
       <select className="flex-1 min-w-[150px] p-2 border rounded">
         <option value="">Estado del instrumento</option>
         <option value="Devuelto">Devuelto</option>
         <option value="No devuelto">No devuelto</option>
+      </select>
+
+      <select className="flex-1 min-w-[150px] p-2 border rounded">
+        <option value="">Estado del alumno</option>
+        <option value="Devuelto">Baja Temporal</option>
+        <option value="No devuelto">Baja Total</option>
+        <option value="Devuelto">Abandono Voluntario</option>
+        <option value="No devuelto">Finalización de Estudios</option>
       </select>
     </div>
   );

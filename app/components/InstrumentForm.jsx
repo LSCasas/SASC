@@ -184,7 +184,7 @@ const InstrumentForm = () => {
               className="md:w-[30vh] w-[20vh]  py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-800"
               onClick={() => setShowDatePicker(!showDatePicker)}
             >
-              Modificar Fecha de Asignación
+              Agregar o Modificar Fecha de Asignación
             </button>
             {showDatePicker && (
               <div className="mt-2">

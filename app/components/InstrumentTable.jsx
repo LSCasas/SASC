@@ -44,7 +44,6 @@ export default function InstrumentTable() {
   if (loading) return <p className="text-center text-black">Cargando...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
-  // Apply filtering if there are search terms or filters, otherwise return all instruments
   const filteredInstruments = instruments.filter((instrument) => {
     const matchesName = instrument.name
       .toLowerCase()
@@ -74,7 +73,6 @@ export default function InstrumentTable() {
         ? !instrument.studentId
         : true;
 
-    // Only filter if there are filter conditions set
     return (
       (searchTerm ? matchesName : true) &&
       (internalIdSearchTerm ? matchesInternalId : true) &&

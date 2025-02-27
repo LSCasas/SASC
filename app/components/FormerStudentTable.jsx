@@ -53,10 +53,8 @@ export default function ExStudentTable() {
               <th className="p-3 border-b text-black">#</th>
               <th className="p-3 border-b text-black">Nombre</th>
               <th className="p-3 border-b text-black">Apellido</th>
-              <th className="p-3 border-b text-black">Instrumento</th>
-              <th className="p-3 border-b text-black">Género</th>
+              <th className="p-3 border-b text-black">Ultima Clase</th>
               <th className="p-3 border-b text-black">Estado</th>
-              <th className="p-3 border-b text-black">Instrumento Devuelto</th>
             </tr>
           </thead>
           <tbody>
@@ -81,16 +79,9 @@ export default function ExStudentTable() {
                       {student.instrument}
                     </Link>
                   </td>
-                  <td className="p-3 border-b">
-                    <Link href="/formularioDeExAlumnos">{student.genre}</Link>
-                  </td>
+
                   <td className="p-3 border-b">
                     <Link href="/formularioDeExAlumnos">{student.status}</Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link href="/formularioDeExAlumnos">
-                      {student.instrumentReturned}
-                    </Link>
                   </td>
                 </tr>
               ))

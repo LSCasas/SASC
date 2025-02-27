@@ -334,8 +334,10 @@ const StudentForm = () => {
                 <option value="activo">activo</option>
                 <option value="baja temporal">baja temporal</option>
                 <option value="baja botal">baja total</option>
-                <option value="abandono voluntario">baja temporal</option>
-                <option value="finalizacion de estudios">baja total</option>
+                <option value="abandono voluntario">abandono voluntario</option>
+                <option value="finalizacion de estudios">
+                  finalizacion de estudios
+                </option>
               </select>
             </div>
           )}
