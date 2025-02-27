@@ -1,88 +1,121 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import InstrumentFilters from "./InstrumentFilters";
 import ExportButtons from "./TeacherExportButtons";
 import Link from "next/link";
+import { getUserById } from "../api/user";
+import { getInstrumentsByCampusId } from "../api/instrument";
 
 export default function InstrumentTable() {
-  const instruments = [
-    {
-      id: 1,
-      firstName: "Juan Carlos",
-      lastName: "Pérez Sánchez",
-      instrument: "Violín",
-      ownerId: "A001",
-    },
-    {
-      id: 2,
-      firstName: "Ana Sofía",
-      lastName: "Gómez Herrera",
-      instrument: "Viola",
-      ownerId: "A002",
-    },
-    {
-      id: 3,
-      firstName: "Carlos Eduardo",
-      lastName: "Ramírez López",
-      instrument: "Cello",
-      ownerId: "A003",
-    },
-    {
-      id: 4,
-      firstName: "María José",
-      lastName: "Torres Martínez",
-      instrument: "Contrabajo",
-      ownerId: "A004",
-    },
-    {
-      id: 5,
-      firstName: "Luis Fernando",
-      lastName: "Fernández García",
-      instrument: "Flauta",
-      ownerId: "A005",
-    },
-  ];
+  const [instruments, setInstruments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("active");
+
+  useEffect(() => {
+    async function fetchInstruments() {
+      try {
+        const user = await getUserById();
+        const campusId = user.selectedCampusId;
+
+        if (!campusId)
+          throw new Error("El usuario no tiene un campus seleccionado");
+
+        let instrumentsData = await getInstrumentsByCampusId(campusId);
+
+        instrumentsData = instrumentsData.sort((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+
+        setInstruments(instrumentsData);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchInstruments();
+  }, []);
+
+  if (loading) return <p className="text-center text-black">Cargando...</p>;
+  if (error) return <p className="text-center text-red-500">Error: {error}</p>;
+
+  const filteredInstruments = instruments.filter((instrument) => {
+    const matchesName = instrument.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    const matchesStatus =
+      statusFilter === "active"
+        ? instrument.isAchive === false
+        : instrument.isAchive === true;
+
+    return matchesName && matchesStatus;
+  });
 
   return (
     <div className="mt-6">
-      <InstrumentFilters />
+      <InstrumentFilters
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        statusFilter={statusFilter}
+        setStatusFilter={setStatusFilter}
+      />
       <div className="overflow-y-auto max-h-[400px]">
         <table className="min-w-full bg-white border border-gray-200 text-black">
           <thead>
             <tr className="bg-gray-100 text-left">
               <th className="p-3 border-b text-black">#</th>
               <th className="p-3 border-b text-black">Instrumento</th>
-              <th className="p-3 border-b text-black">Id</th>
-              <th className="p-3 border-b text-black">Nombre</th>
-              <th className="p-3 border-b text-black">Apellidos</th>
+              <th className="p-3 border-b text-black">Id Interno</th>
+              <th className="p-3 border-b text-black">Estudiante</th>
+              <th className="p-3 border-b text-black">Fecha Asignación</th>
             </tr>
           </thead>
           <tbody>
-            {instruments.length > 0 ? (
-              instruments.map((instrument) => (
-                <tr key={instrument.id}>
+            {filteredInstruments.length > 0 ? (
+              filteredInstruments.map((instrument, index) => (
+                <tr key={instrument._id}>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeInstrumentos">
-                      {instrument.id}
+                    <Link
+                      href={`/formularioDeInstrumentos?id=${instrument._id}`}
+                    >
+                      {index + 1}
                     </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeInstrumentos">
-                      {instrument.instrument}
+                    <Link
+                      href={`/formularioDeInstrumentos?id=${instrument._id}`}
+                    >
+                      {instrument.name}
                     </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeInstrumentos">
-                      {instrument.ownerId}
+                    <Link
+                      href={`/formularioDeInstrumentos?id=${instrument._id}`}
+                    >
+                      {instrument.internalId}
                     </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeInstrumentos">
-                      {instrument.firstName}
+                    <Link
+                      href={`/formularioDeInstrumentos?id=${instrument._id}`}
+                    >
+                      {instrument.studentId
+                        ? instrument.studentId
+                        : "Sin asignar"}
                     </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeInstrumentos">
-                      {instrument.lastName}
+                    <Link
+                      href={`/formularioDeInstrumentos?id=${instrument._id}`}
+                    >
+                      {instrument.assignmentDate
+                        ? new Date(
+                            instrument.assignmentDate
+                          ).toLocaleDateString()
+                        : "Sin asignar"}
                     </Link>
                   </td>
                 </tr>
@@ -97,18 +130,9 @@ export default function InstrumentTable() {
           </tbody>
         </table>
       </div>
-      <div className="mt-4 p-4 bg-gray-100 rounded-lg flex items-center justify-between">
-        <button className="opacity-50 cursor-not-allowed">
-          <h1 className="text-black"> ◀︎ </h1>
-        </button>
-        <span className="text-gray-600">0–5 de 5</span>
-        <button className="opacity-50 cursor-not-allowed">
-          <h1 className="text-black"> ▶︎ </h1>
-        </button>
-      </div>
       <div className="mt-3 flex justify-center">
         <div className="w-full">
-          <ExportButtons data={instruments} />
+          <ExportButtons data={filteredInstruments} />
         </div>
       </div>
     </div>
