@@ -66,3 +66,26 @@ export async function getTransferById(id) {
     throw error;
   }
 }
+
+// GET TRANSFERS BY CAMPUS ID
+export async function getTransfersByCampusId(campusId) {
+  try {
+    const response = await fetch(`${API_URL}/transfer/campus/${campusId}`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        result.message || "Error obteniendo las transferencias por sede"
+      );
+    }
+
+    return result.data;
+  } catch (error) {
+    console.error("Error obteniendo transferencias por sede:", error);
+    throw error;
+  }
+}
