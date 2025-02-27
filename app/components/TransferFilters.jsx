@@ -10,7 +10,7 @@ export default function Filters() {
       />
       <input
         type="text"
-        placeholder="Buscar por instrumento"
+        placeholder="Buscar por clase"
         className="flex-1 min-w-[150px] p-2 border rounded"
       />
       <select className="flex-1 min-w-[150px] p-2 border rounded">
@@ -21,11 +21,6 @@ export default function Filters() {
       <input
         type="text"
         placeholder="Buscar por sede de envío"
-        className="flex-1 min-w-[150px] p-2 border rounded"
-      />
-      <input
-        type="text"
-        placeholder="Buscar por sede de recepción"
         className="flex-1 min-w-[150px] p-2 border rounded"
       />
     </div>
