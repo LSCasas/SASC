@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Filters from "./TutorFilters";
+import TutorFilters from "./TutorFilters";
 import ExportButtons from "./TeacherExportButtons";
 import Link from "next/link";
 import { getUserById } from "../api/user";
@@ -11,6 +11,8 @@ export default function TutorTable() {
   const [error, setError] = useState(null);
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [studentSearch, setStudentSearch] = useState("");
+  const [classSearch, setClassSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("active");
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -26,9 +28,6 @@ export default function TutorTable() {
           throw new Error("El usuario no tiene un campus seleccionado");
 
         let tutorsData = await getTutorsByCampusId(campusId);
-
-        tutorsData = tutorsData.filter((tutor) => tutor.isArchive === false);
-
         tutorsData = tutorsData.sort((a, b) =>
           a.lastname.localeCompare(b.lastname)
         );
@@ -47,17 +46,30 @@ export default function TutorTable() {
   if (loading) return <p className="text-center text-black">Cargando...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
+  // Aplicar filtros
   const filteredTutors = tutors.filter((tutor) => {
     const matchesName =
       tutor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       tutor.lastname.toLowerCase().includes(searchTerm.toLowerCase());
+
+    const matchesStudent =
+      studentSearch === "" ||
+      tutor.children.some((child) =>
+        child.firstName.toLowerCase().includes(studentSearch.toLowerCase())
+      );
+
+    const matchesClass =
+      classSearch === "" ||
+      tutor.children.some((child) =>
+        child.ClassId.name.toLowerCase().includes(classSearch.toLowerCase())
+      );
 
     const matchesStatus =
       statusFilter === "active"
         ? tutor.isArchive === false
         : tutor.isArchive === true;
 
-    return matchesName && matchesStatus;
+    return matchesName && matchesStudent && matchesClass && matchesStatus;
   });
 
   const totalRecords = filteredTutors.length;
@@ -80,9 +92,13 @@ export default function TutorTable() {
 
   return (
     <div className="mt-6">
-      <Filters
+      <TutorFilters
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
+        studentSearch={studentSearch}
+        setStudentSearch={setStudentSearch}
+        classSearch={classSearch}
+        setClassSearch={setClassSearch}
         statusFilter={statusFilter}
         setStatusFilter={setStatusFilter}
       />
@@ -160,34 +176,7 @@ export default function TutorTable() {
           </tbody>
         </table>
       </div>
-      <div className="mt-4 p-4 bg-gray-100 rounded-lg flex items-center justify-between">
-        <button
-          onClick={handleLoadPrev}
-          disabled={currentPage === 0}
-          className={`${
-            currentPage === 0 ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-        >
-          <h1 className="text-black"> ◀︎ </h1>
-        </button>
-        <span className="text-gray-600">
-          {startIndex + 1}–{endIndex} de {totalRecords}
-        </span>
-        <button
-          onClick={handleLoadNext}
-          disabled={endIndex === totalRecords}
-          className={`${
-            endIndex === totalRecords ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-        >
-          <h1 className="text-black"> ▶︎ </h1>
-        </button>
-      </div>
-      <div className="mt-3 flex justify-center">
-        <div className="w-full">
-          <ExportButtons data={displayedTutors} allTutors={filteredTutors} />
-        </div>
-      </div>
+      <ExportButtons data={displayedTutors} allTutors={filteredTutors} />
     </div>
   );
 }
