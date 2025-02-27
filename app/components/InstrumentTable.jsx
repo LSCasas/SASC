@@ -102,8 +102,10 @@ export default function InstrumentTable() {
                     <Link
                       href={`/formularioDeInstrumentos?id=${instrument._id}`}
                     >
-                      {instrument.studentId
-                        ? instrument.studentId
+                      {instrument.studentId &&
+                      instrument.studentId.firstName &&
+                      instrument.studentId.lastName
+                        ? `${instrument.studentId.firstName} ${instrument.studentId.lastName}`
                         : "Sin asignar"}
                     </Link>
                   </td>
