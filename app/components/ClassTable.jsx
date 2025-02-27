@@ -13,8 +13,6 @@ export default function ClassTable() {
   const [searchTerm, setSearchTerm] = useState("");
   const [generationFilter, setGenerationFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("active");
-  const [currentPage, setCurrentPage] = useState(0);
-  const recordsPerPage = 20;
 
   useEffect(() => {
     async function fetchClasses() {
@@ -56,23 +54,6 @@ export default function ClassTable() {
     return matchesName && matchesGeneration && matchesStatus;
   });
 
-  const totalRecords = filteredClasses.length;
-  const startIndex = currentPage * recordsPerPage;
-  const endIndex = Math.min(startIndex + recordsPerPage, totalRecords);
-  const displayedClasses = filteredClasses.slice(startIndex, endIndex);
-
-  const handleLoadNext = () => {
-    if ((currentPage + 1) * recordsPerPage < filteredClasses.length) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handleLoadPrev = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
   return (
     <div className="mt-6">
       <ClassFilters
@@ -83,7 +64,7 @@ export default function ClassTable() {
         statusFilter={statusFilter}
         setStatusFilter={setStatusFilter}
       />
-      <div className="overflow-y-auto md:h-[45vh]">
+      <div className="overflow-y-auto h-[50vh]">
         <table className="min-w-full bg-white border border-gray-200 text-black">
           <thead>
             <tr className="bg-gray-100 text-left">
@@ -94,12 +75,12 @@ export default function ClassTable() {
             </tr>
           </thead>
           <tbody>
-            {displayedClasses.length > 0 ? (
-              displayedClasses.map((classItem, index) => (
+            {filteredClasses.length > 0 ? (
+              filteredClasses.map((classItem, index) => (
                 <tr key={classItem._id}>
                   <td className="p-3 border-b">
                     <Link href={`/formularioDeClases?id=${classItem._id}`}>
-                      {startIndex + index + 1}
+                      {index + 1}
                     </Link>
                   </td>
                   <td className="p-3 border-b">
@@ -131,32 +112,9 @@ export default function ClassTable() {
           </tbody>
         </table>
       </div>
-      <div className="mt-4 p-4 bg-gray-100 rounded-lg flex items-center justify-between">
-        <button
-          onClick={handleLoadPrev}
-          disabled={currentPage === 0}
-          className={`${
-            currentPage === 0 ? "opacity-50 cursor-not-allowed" : ""
-          } text-black`}
-        >
-          ◀︎
-        </button>
-        <span className="text-gray-600">
-          {startIndex + 1}–{endIndex} de {totalRecords}
-        </span>
-        <button
-          onClick={handleLoadNext}
-          disabled={endIndex === totalRecords}
-          className={`${
-            endIndex === totalRecords ? "opacity-50 cursor-not-allowed" : ""
-          } text-black`}
-        >
-          ▶︎
-        </button>
-      </div>
       <div className="mt-3 flex justify-center">
         <div className="w-full">
-          <ExportButtons data={displayedClasses} allClasses={filteredClasses} />
+          <ExportButtons data={filteredClasses} allClasses={filteredClasses} />
         </div>
       </div>
     </div>
