@@ -10,7 +10,7 @@ export default function InstrumentPage() {
     router.push("/formularioDeInstrumentos");
   };
   return (
-    <div className="flex">
+    <div className="flex flex-col lg:flex-row">
       <Sidebar />
       <div className="flex-1 bg-gray-50 min-h-screen">
         <div className="container mx-auto px-6 py-6">
