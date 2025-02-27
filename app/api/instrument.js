@@ -76,3 +76,15 @@ export async function updateInstrument(id, data) {
   if (!json.success) throw new Error(json.error);
   return json.data;
 }
+
+// DELETE INSTRUMENT BY ID
+export async function deleteInstrument(id) {
+  const res = await fetch(`${API_URL}/instrument/${id}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  const json = await res.json();
+  if (!json.success) throw new Error(json.error);
+  return json.message;
+}
