@@ -85,6 +85,10 @@ const InstrumentForm = () => {
   const handleStudentChange = (studentId) => {
     const student = students.find((s) => s._id === studentId);
     setSelectedStudent(student || null);
+
+    if (studentId === "none") {
+      setValue("assignmentDate", "");
+    }
   };
 
   const onSubmit = async (data) => {
