@@ -5,11 +5,12 @@ import { createStudent, updateStudent, getStudentById } from "../api/student";
 import { getClassesByCampusId } from "../api/class";
 import { getUserById } from "../api/user";
 
-const StudentForm = () => {
+const TransferForm = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [classes, setClasses] = useState([]);
   const [loadingClasses, setLoadingClasses] = useState(true);
   const [errorClasses, setErrorClasses] = useState(null);
+  const [studentData, setStudentData] = useState(null); // Estado para guardar los datos del estudiante
 
   const {
     register,
@@ -50,6 +51,7 @@ const StudentForm = () => {
       async function fetchStudent() {
         try {
           const studentData = await getStudentById(id);
+          setStudentData(studentData); // Guardar los datos del estudiante en el estado
           setValue("nombreAlumno", studentData.firstName);
           setValue("apellidosAlumno", studentData.lastName);
           setValue("curso", studentData.ClassId || "none");
@@ -98,29 +100,23 @@ const StudentForm = () => {
               required: "Este campo es obligatorio",
             })}
             className="w-full p-2 border rounded text-black"
+            disabled={isEdit}
           />
         </div>
 
-        <div>
-          <label className="block font-semibold text-black">Clase actual</label>
-          {loadingClasses ? (
-            <p className="text-gray-500">Cargando cursos...</p>
-          ) : errorClasses ? (
-            <p className="text-red-500">{errorClasses}</p>
-          ) : (
-            <select
-              {...register("curso")}
-              className="w-full p-2 border rounded text-black"
-            >
-              <option value="none">Seleccionar curso</option>
-              {classes.map((course) => (
-                <option key={course._id} value={course._id}>
-                  {course.name}
-                </option>
-              ))}
-            </select>
-          )}
-        </div>
+        {isEdit && studentData && (
+          <div>
+            <label className="block font-semibold text-black">
+              Curso Actual
+            </label>
+            <input
+              value={studentData.ClassId ? studentData.ClassId.name : ""}
+              className="w-full p-2 border rounded text-black bg-gray-100 "
+              readOnly
+            />
+          </div>
+        )}
+
         <div>
           <label className="block font-semibold text-black">
             Campus de Envío
@@ -154,4 +150,4 @@ const StudentForm = () => {
   );
 };
 
-export default StudentForm;
+export default TransferForm;
