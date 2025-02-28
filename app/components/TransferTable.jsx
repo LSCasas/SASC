@@ -9,6 +9,11 @@ export default function TransferTable() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [nameFilter, setNameFilter] = useState("");
+  const [classFilter, setClassFilter] = useState("");
+  const [genderFilter, setGenderFilter] = useState("");
+  const [locationFilter, setLocationFilter] = useState("");
+
   useEffect(() => {
     async function fetchTransfers() {
       try {
@@ -20,7 +25,6 @@ export default function TransferTable() {
           throw new Error("El usuario no tiene un campus seleccionado");
 
         const transferData = await getTransfersByCampusId(campusId);
-
         setTransfers(transferData);
       } catch (err) {
         setError(err.message);
@@ -28,16 +32,55 @@ export default function TransferTable() {
         setLoading(false);
       }
     }
-
     fetchTransfers();
   }, []);
 
   if (loading) return <p className="text-center text-black">Cargando...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
+  const filteredTransfers = transfers.filter((transfer) => {
+    const matchesName =
+      transfer.studentId?.firstName
+        .toLowerCase()
+        .includes(nameFilter.toLowerCase()) ||
+      transfer.studentId?.lastName
+        .toLowerCase()
+        .includes(nameFilter.toLowerCase());
+    const matchesClass =
+      transfer.originClass?.name
+        .toLowerCase()
+        .includes(classFilter.toLowerCase()) ||
+      transfer.destinationClass?.name
+        .toLowerCase()
+        .includes(classFilter.toLowerCase());
+    const matchesGender =
+      genderFilter === "" ||
+      transfer.studentId?.gender
+        .toLowerCase()
+        .includes(genderFilter.toLowerCase());
+    const matchesLocation =
+      transfer.originLocationId?.name
+        .toLowerCase()
+        .includes(locationFilter.toLowerCase()) ||
+      transfer.destinationLocationId?.name
+        .toLowerCase()
+        .includes(locationFilter.toLowerCase());
+
+    return matchesName && matchesClass && matchesGender && matchesLocation;
+  });
+
   return (
     <div className="mt-6">
-      <TransferFilters />
+      <TransferFilters
+        nameFilter={nameFilter}
+        setNameFilter={setNameFilter}
+        classFilter={classFilter}
+        setClassFilter={setClassFilter}
+        genderFilter={genderFilter}
+        setGenderFilter={setGenderFilter}
+        locationFilter={locationFilter}
+        setLocationFilter={setLocationFilter}
+      />
       <div className="overflow-y-auto max-h-[400px]">
         <table className="min-w-full bg-white border border-gray-200 text-black">
           <thead>
@@ -55,8 +98,8 @@ export default function TransferTable() {
             </tr>
           </thead>
           <tbody>
-            {transfers.length > 0 ? (
-              transfers.map((transfer, index) => (
+            {filteredTransfers.length > 0 ? (
+              filteredTransfers.map((transfer, index) => (
                 <tr key={transfer._id}>
                   <td className="p-3 border-b">{index + 1}</td>
                   <td className="p-3 border-b">
@@ -94,7 +137,7 @@ export default function TransferTable() {
       </div>
       <div className="mt-3 flex justify-center">
         <div className="w-full">
-          <ExportButtons data={transfers} />
+          <ExportButtons data={filteredTransfers} />
         </div>
       </div>
     </div>
