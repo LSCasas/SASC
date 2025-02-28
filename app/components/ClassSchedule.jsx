@@ -1,19 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getUserById } from "../api/user";
+import { getClassesByCampusId } from "../api/class";
 
-const musicClassesData = [
-  { title: "Violín", instructor: "Carlos Martínez" },
-  { title: "Flauta", instructor: "José García" },
-  { title: "Contrabajo", instructor: "Raúl Fernández" },
-  { title: "Tímpano", instructor: "Ana Pérez" },
-  { title: "Clarinete", instructor: "Marta Rodríguez" },
-];
-
-const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"];
-const getRandomHour = () => `${Math.floor(Math.random() * 5) + 2}:00 PM`;
+const days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
 
 export default function ClassSchedule() {
+  const [classes, setClasses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchClasses() {
+      try {
+        setLoading(true);
+        const user = await getUserById();
+        const campusId = user?.selectedCampusId;
+
+        if (!campusId)
+          throw new Error("El usuario no tiene un campus seleccionado");
+
+        let classData = await getClassesByCampusId(campusId);
+        classData = classData
+          .filter((c) => c.isAchive === false)
+          .sort((a, b) => a.name.localeCompare(b.name));
+
+        setClasses(classData);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchClasses();
+  }, []);
+
+  if (loading) return <p className="text-center text-black">Cargando...</p>;
+  if (error) return <p className="text-center text-red-500">Error: {error}</p>;
+
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-y-auto h-[70vh]">
       <table className="w-full border-collapse border border-gray-300 text-black">
         <thead>
           <tr className="bg-[#B0005E] text-white">
@@ -27,20 +52,24 @@ export default function ClassSchedule() {
           </tr>
         </thead>
         <tbody>
-          {musicClassesData.map((classData, index) => (
+          {classes.map((classData, index) => (
             <tr key={index} className="bg-white hover:bg-gray-200">
               <td className="border border-gray-300 px-4 py-4">
-                {classData.title}
+                {classData.name}
               </td>
               <td className="border border-gray-300 px-4 py-4">
-                {classData.instructor}
+                {classData.teacherId
+                  ? `${classData.teacherId.firstName} ${classData.teacherId.lastName}`
+                  : "Sin asignar"}
               </td>
-              {days.map((_, i) => (
+              {days.map((day, i) => (
                 <td
                   key={i}
                   className="border border-gray-300 px-4 py-4 text-center"
                 >
-                  {getRandomHour()}
+                  {classData.days.includes(day)
+                    ? `${classData.startTime} - ${classData.endTime}`
+                    : ""}
                 </td>
               ))}
             </tr>
