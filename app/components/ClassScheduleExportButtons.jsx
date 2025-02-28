@@ -31,7 +31,7 @@ export default function ClassScheduleExportButtons({ data }) {
   const exportToPDF = () => {
     if (!Array.isArray(data)) return;
 
-    const doc = new jsPDF("l", "mm", "a4"); // Horizontal orientation
+    const doc = new jsPDF("l", "mm", "a4");
     const marginLeft = 5;
     const tableWidth = doc.internal.pageSize.getWidth() - marginLeft - 5;
 

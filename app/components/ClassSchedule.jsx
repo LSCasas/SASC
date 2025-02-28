@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getUserById } from "../api/user";
 import { getClassesByCampusId } from "../api/class";
-import ExportButtons from "./ClassScheduleExportButtons";
 
 const days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
 
@@ -40,10 +39,6 @@ export default function ClassSchedule() {
 
   return (
     <div className="overflow-y-auto h-[70vh]">
-      <div className="mt-4 flex justify-center mb-5">
-        <ExportButtons data={classes} />
-      </div>
-
       <div className="mb-4">
         <table className="w-full border-collapse border border-gray-300 text-black">
           <thead>
