@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { createStudent, updateStudent, getStudentById } from "../api/student";
 import { getClassesByCampusId } from "../api/class";
-import { getUserById } from "../api/user";
+import { getCurrentUser } from "../api/user";
 
 const StudentForm = () => {
   const [isEdit, setIsEdit] = useState(false);
@@ -33,7 +33,7 @@ const StudentForm = () => {
   useEffect(() => {
     async function fetchClasses() {
       try {
-        const user = await getUserById();
+        const user = await getCurrentUser();
         const campusId = user.selectedCampusId;
 
         if (!campusId)

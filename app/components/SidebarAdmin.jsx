@@ -7,7 +7,7 @@ import {
   Building,
   Briefcase,
 } from "lucide-react";
-import { getUserById } from "../api/user";
+import { getCurrentUser } from "../api/user";
 
 const SidebarAdmin = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +17,7 @@ const SidebarAdmin = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const userData = await getUserById();
+        const userData = await getCurrentUser();
         setUserRole(userData.role);
       } catch (error) {
         console.error("Error fetching user data:", error);

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { createClass, updateClass, getClassById } from "../api/class";
-import { getUserById } from "../api/user";
+import { getCurrentUser } from "../api/user";
 import { getTeachersByCampusId } from "../api/teacher";
 
 const ClassForm = () => {
@@ -29,7 +29,7 @@ const ClassForm = () => {
   useEffect(() => {
     async function fetchTeachers() {
       try {
-        const user = await getUserById();
+        const user = await getCurrentUser();
         const campusId = user.selectedCampusId;
 
         if (!campusId)

@@ -7,7 +7,7 @@ import {
   updateInstrument,
   getInstrumentById,
 } from "../api/instrument";
-import { getUserById } from "../api/user";
+import { getCurrentUser } from "../api/user";
 
 const InstrumentForm = () => {
   const [isEdit, setIsEdit] = useState(false);
@@ -38,7 +38,7 @@ const InstrumentForm = () => {
   useEffect(() => {
     async function fetchStudents() {
       try {
-        const user = await getUserById();
+        const user = await getCurrentUser();
         const campusId = user.selectedCampusId;
         if (!campusId)
           throw new Error("El usuario no tiene un campus seleccionado");

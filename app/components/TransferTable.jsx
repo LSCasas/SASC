@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TransferFilters from "./TransferFilters";
 import ExportButtons from "./TransferExportButtons";
-import { getUserById } from "../api/user";
+import { getCurrentUser } from "../api/user";
 import { getTransfersByCampusId } from "../api/transfer";
 
 export default function TransferTable() {
@@ -18,7 +18,7 @@ export default function TransferTable() {
     async function fetchTransfers() {
       try {
         setLoading(true);
-        const user = await getUserById();
+        const user = await getCurrentUser();
         const campusId = user?.selectedCampusId;
 
         if (!campusId)

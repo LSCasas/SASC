@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getUserById } from "../api/user";
+import { getCurrentUser } from "../api/user";
 import { getClassesByCampusId } from "../api/class";
 
 const days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
@@ -13,7 +13,7 @@ export default function ClassSchedule() {
     async function fetchClasses() {
       try {
         setLoading(true);
-        const user = await getUserById();
+        const user = await getCurrentUser();
         const campusId = user?.selectedCampusId;
 
         if (!campusId)

@@ -32,7 +32,7 @@ export async function getAllUsers() {
 }
 
 // GET USER BY ID
-export async function getUserById(userId = "me") {
+export async function getCurrentUser(userId = "me") {
   const res = await fetch(`${API_URL}/user/${userId}`, {
     method: "GET",
     headers: {
@@ -44,6 +44,30 @@ export async function getUserById(userId = "me") {
   const json = await res.json();
   if (!json.success) throw new Error(json.error || "Error obteniendo usuario");
   return json.data;
+}
+
+// GET USER BY ID
+export async function getUserById(userId) {
+  try {
+    const response = await fetch(`${API_URL}/users/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || "Error fetching user by ID");
+    }
+
+    return result.data;
+  } catch (error) {
+    console.error("Error fetching user by ID:", error);
+    throw error;
+  }
 }
 
 // UPDATE USER BY ID

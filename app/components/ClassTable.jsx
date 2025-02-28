@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ExportButtons from "./ClassExportButtons";
 import ClassFilters from "./ClassFilters";
 import Link from "next/link";
-import { getUserById } from "../api/user";
+import { getCurrentUser } from "../api/user";
 import { getClassesByCampusId } from "../api/class";
 
 export default function ClassTable() {
@@ -18,7 +18,7 @@ export default function ClassTable() {
     async function fetchClasses() {
       try {
         setLoading(true);
-        const user = await getUserById();
+        const user = await getCurrentUser();
         const campusId = user?.selectedCampusId;
 
         if (!campusId)

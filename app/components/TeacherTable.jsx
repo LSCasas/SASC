@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TeacherFilters from "./TeacherFilters";
 import ExportButtons from "./TeacherExportButtons";
 import Link from "next/link";
-import { getUserById } from "../api/user";
+import { getCurrentUser } from "../api/user";
 import { getTeachersByCampusId } from "../api/teacher";
 
 export default function TeacherTable() {
@@ -15,7 +15,7 @@ export default function TeacherTable() {
   useEffect(() => {
     async function fetchTeachers() {
       try {
-        const user = await getUserById();
+        const user = await getCurrentUser();
         const campusId = user.selectedCampusId;
 
         if (!campusId)

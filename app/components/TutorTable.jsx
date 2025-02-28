@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TutorFilters from "./TutorFilters";
 import ExportButtons from "./TutorExportButtons";
 import Link from "next/link";
-import { getUserById } from "../api/user";
+import { getCurrentUser } from "../api/user";
 import { getTutorsByCampusId } from "../api/tutor";
 
 export default function TutorTable() {
@@ -21,7 +21,7 @@ export default function TutorTable() {
   useEffect(() => {
     async function fetchTutors() {
       try {
-        const user = await getUserById();
+        const user = await getCurrentUser();
         const campusId = user.selectedCampusId;
 
         if (!campusId)

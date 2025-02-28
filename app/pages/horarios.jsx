@@ -3,7 +3,7 @@ import Sidebar from "@/components/Sidebar";
 import ClassSchedule from "@/components/ClassSchedule";
 import ClassScheduleExportButtons from "@/components/ClassScheduleExportButtons";
 import { getClassesByCampusId } from "@/api/class";
-import { getUserById } from "@/api/user";
+import { getCurrentUser } from "@/api/user";
 
 export default function SchedulePage() {
   const [classes, setClasses] = useState([]);
@@ -11,7 +11,7 @@ export default function SchedulePage() {
   useEffect(() => {
     async function fetchClasses() {
       try {
-        const user = await getUserById();
+        const user = await getCurrentUser();
         const campusId = user?.selectedCampusId;
 
         if (!campusId)

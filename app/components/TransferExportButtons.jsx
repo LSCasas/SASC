@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import * as XLSX from "xlsx";
-import { getUserById } from "../api/user";
+import { getCurrentUser } from "../api/user";
 
 export default function TransferExportButtons({ data }) {
   const [campusName, setCampusName] = useState("");
@@ -10,7 +10,7 @@ export default function TransferExportButtons({ data }) {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        const user = await getUserById();
+        const user = await getCurrentUser();
         const userCampusId = user.selectedCampusId;
         const campus = user.campusId.find(
           (campus) => campus._id === userCampusId

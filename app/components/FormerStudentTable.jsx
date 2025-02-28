@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import FormerStudentFilters from "./FormerStudentFilters";
 import ExportButtons from "./FormerStudentExportButtons";
 import Link from "next/link";
-import { getUserById } from "../api/user";
+import { getCurrentUser } from "../api/user";
 import { getStudentsByCampusId } from "../api/student";
 
 export default function ExStudentTable() {
@@ -21,7 +21,7 @@ export default function ExStudentTable() {
     async function fetchStudents() {
       try {
         setLoading(true);
-        const user = await getUserById();
+        const user = await getCurrentUser();
         const campusId = user?.selectedCampusId;
 
         if (!campusId)

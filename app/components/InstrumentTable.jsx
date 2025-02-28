@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import InstrumentFilters from "./InstrumentFilters";
 import ExportButtons from "./InstrumentExportButtons";
 import Link from "next/link";
-import { getUserById } from "../api/user";
+import { getCurrentUser } from "../api/user";
 import { getInstrumentsByCampusId } from "../api/instrument";
 
 export default function InstrumentTable() {
@@ -18,7 +18,7 @@ export default function InstrumentTable() {
   useEffect(() => {
     async function fetchInstruments() {
       try {
-        const user = await getUserById();
+        const user = await getCurrentUser();
         const campusId = user.selectedCampusId;
 
         if (!campusId)
