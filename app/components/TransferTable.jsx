@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TransferFilters from "./TransferFilters";
-import ExportButtons from "./TeacherExportButtons";
+import ExportButtons from "./TransferExportButtons";
 import { getUserById } from "../api/user";
 import { getTransfersByCampusId } from "../api/transfer";
 
