@@ -30,7 +30,6 @@ const TransferForm = () => {
     async function fetchCampuses() {
       try {
         const campusesData = await getAllCampuses();
-        // Filtra los campus que tienen isAchive como false
         setCampuses(campusesData.filter((campus) => !campus.isAchive));
       } catch (err) {
         console.error("Error al obtener los campus:", err);
@@ -46,7 +45,6 @@ const TransferForm = () => {
         if (!campusId) return;
         setLoadingClasses(true);
         const classesData = await getClassesByCampusId(campusId);
-        // Filtra las clases que tienen isAchive como false
         setClasses(classesData.filter((classItem) => !classItem.isAchive));
       } catch (err) {
         setErrorClasses(err.message);
@@ -83,11 +81,11 @@ const TransferForm = () => {
   const onSubmit = async (data) => {
     try {
       const formattedData = {
-        studentId: id, // Assuming `id` is the student's ID
-        originLocationId: studentData?.campusId?._id, // Solo el id del campus de origen
+        studentId: id,
+        originLocationId: studentData?.campusId?._id,
         destinationLocationId: data.campusEnvio,
-        originClass: studentData?.ClassId?._id, // Solo el id de la clase de origen
-        destinationClass: selectedClass, // Enviar el id de la clase seleccionada
+        originClass: studentData?.ClassId?._id,
+        destinationClass: selectedClass,
       };
 
       await createTransfer(formattedData);
