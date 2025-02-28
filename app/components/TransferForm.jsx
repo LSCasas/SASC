@@ -90,7 +90,7 @@ const TransferForm = () => {
 
       await createTransfer(formattedData);
 
-      router.push("/alumnos");
+      router.push("/transferencias");
     } catch (error) {
       console.error("Error al realizar la transferencia:", error);
     }
