@@ -59,3 +59,26 @@ export async function getCampusById(campusId) {
     throw error;
   }
 }
+
+// UPDATE CAMPUS
+export async function updateCampus(campusId, campusData) {
+  try {
+    const response = await fetch(`${API_URL}/campus/${campusId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(campusData),
+    });
+
+    const data = await response.json();
+    if (!response.ok)
+      throw new Error(data.message || "Error al actualizar campus");
+
+    return data.data;
+  } catch (error) {
+    console.error("Error en updateCampus:", error);
+    throw error;
+  }
+}

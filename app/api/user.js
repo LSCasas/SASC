@@ -31,7 +31,7 @@ export async function getAllUsers() {
   return json.data;
 }
 
-// GET USER BY ID
+// GET CURRENT USER
 export async function getCurrentUser(userId = "me") {
   const res = await fetch(`${API_URL}/user/${userId}`, {
     method: "GET",
