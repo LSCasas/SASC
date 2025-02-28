@@ -3,7 +3,7 @@ const API_URL = "http://localhost:5000";
 // CREATE CAMPUS
 export async function createCampus(campusData) {
   try {
-    const response = await fetch(`${API_URL}/campuses`, {
+    const response = await fetch(`${API_URL}/campus`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +25,7 @@ export async function createCampus(campusData) {
 // GET ALL CAMPUSES
 export async function getAllCampuses() {
   try {
-    const response = await fetch(`${API_URL}/campuses`, {
+    const response = await fetch(`${API_URL}/campus`, {
       method: "GET",
       credentials: "include",
     });
@@ -44,7 +44,7 @@ export async function getAllCampuses() {
 // GET CAMPUS BY ID
 export async function getCampusById(campusId) {
   try {
-    const response = await fetch(`${API_URL}/campuses/${campusId}`, {
+    const response = await fetch(`${API_URL}/campus/${campusId}`, {
       method: "GET",
       credentials: "include",
     });

@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
-import { createStudent, updateStudent, getStudentById } from "../api/student";
+import { createTransfer } from "../api/transfer";
 import { getClassesByCampusId } from "../api/class";
-import { getUserById } from "../api/user";
+import { getAllCampuses } from "../api/campus";
+import { getStudentById } from "../api/student";
 
 const TransferForm = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [classes, setClasses] = useState([]);
+  const [campuses, setCampuses] = useState([]);
   const [loadingClasses, setLoadingClasses] = useState(true);
   const [errorClasses, setErrorClasses] = useState(null);
   const [studentData, setStudentData] = useState(null);
+  const [selectedCampus, setSelectedCampus] = useState("");
+  const [selectedClass, setSelectedClass] = useState("");
 
   const {
     register,
@@ -23,18 +27,27 @@ const TransferForm = () => {
   const { id } = router.query;
 
   useEffect(() => {
-    async function fetchClasses() {
+    async function fetchCampuses() {
       try {
-        const user = await getUserById();
-        const campusId = user.selectedCampusId;
+        const campusesData = await getAllCampuses();
+        // Filtra los campus que tienen isAchive como false
+        setCampuses(campusesData.filter((campus) => !campus.isAchive));
+      } catch (err) {
+        console.error("Error al obtener los campus:", err);
+      }
+    }
 
-        if (!campusId)
-          throw new Error("El usuario no tiene un campus seleccionado");
+    fetchCampuses();
+  }, []);
 
-        let classesData = await getClassesByCampusId(campusId);
-        classesData = classesData.sort((a, b) => a.name.localeCompare(b.name));
-
-        setClasses(classesData);
+  useEffect(() => {
+    async function fetchClasses(campusId) {
+      try {
+        if (!campusId) return;
+        setLoadingClasses(true);
+        const classesData = await getClassesByCampusId(campusId);
+        // Filtra las clases que tienen isAchive como false
+        setClasses(classesData.filter((classItem) => !classItem.isAchive));
       } catch (err) {
         setErrorClasses(err.message);
       } finally {
@@ -42,8 +55,10 @@ const TransferForm = () => {
       }
     }
 
-    fetchClasses();
-  }, []);
+    if (selectedCampus) {
+      fetchClasses(selectedCampus);
+    }
+  }, [selectedCampus]);
 
   useEffect(() => {
     if (id) {
@@ -55,6 +70,8 @@ const TransferForm = () => {
           setValue("nombreAlumno", studentData.firstName);
           setValue("apellidosAlumno", studentData.lastName);
           setValue("curso", studentData.ClassId || "none");
+          setSelectedCampus(studentData.campusId);
+          setSelectedClass(studentData.ClassId);
         } catch (err) {
           console.error("Error al obtener estudiante:", err);
         }
@@ -66,25 +83,18 @@ const TransferForm = () => {
   const onSubmit = async (data) => {
     try {
       const formattedData = {
-        firstName: data.nombreAlumno,
-        lastName: data.apellidosAlumno,
-        campusEnvio: data.campusEnvio,
-        claseEnvio: data.claseEnvio,
+        studentId: id, // Assuming `id` is the student's ID
+        originLocationId: studentData?.campusId?._id, // Solo el id del campus de origen
+        destinationLocationId: data.campusEnvio,
+        originClass: studentData?.ClassId?._id, // Solo el id de la clase de origen
+        destinationClass: selectedClass, // Enviar el id de la clase seleccionada
       };
 
-      if (data.curso !== "none") {
-        formattedData.ClassId = data.curso;
-      }
-
-      if (isEdit) {
-        await updateStudent(id, formattedData);
-      } else {
-        await createStudent(formattedData);
-      }
+      await createTransfer(formattedData);
 
       router.push("/alumnos");
     } catch (error) {
-      console.error("Error al guardar estudiante:", error);
+      console.error("Error al realizar la transferencia:", error);
     }
   };
 
@@ -111,7 +121,7 @@ const TransferForm = () => {
             </label>
             <input
               value={studentData.ClassId ? studentData.ClassId.name : ""}
-              className="w-full p-2 border rounded text-black bg-gray-50 "
+              className="w-full p-2 border rounded text-black bg-gray-50"
               readOnly
             />
           </div>
@@ -124,7 +134,7 @@ const TransferForm = () => {
             </label>
             <input
               value={studentData.campusId ? studentData.campusId.name : ""}
-              className="w-full p-2 border rounded text-black bg-gray-50 "
+              className="w-full p-2 border rounded text-black bg-gray-50"
               readOnly
             />
           </div>
@@ -134,24 +144,45 @@ const TransferForm = () => {
           <label className="block font-semibold text-black">
             Campus de Envío
           </label>
-          <input
+          <select
             {...register("campusEnvio", {
               required: "Este campo es obligatorio",
             })}
+            onChange={(e) => setSelectedCampus(e.target.value)}
             className="w-full p-2 border rounded text-black"
-          />
+          >
+            <option value="">Seleccionar Campus</option>
+            {campuses.map((campus) => (
+              <option key={campus._id} value={campus._id}>
+                {campus.name}
+              </option>
+            ))}
+          </select>
         </div>
-        <div>
-          <label className="block font-semibold text-black">
-            Clase de Envío
-          </label>
-          <input
-            {...register("claseEnvio", {
-              required: "Este campo es obligatorio",
-            })}
-            className="w-full p-2 border rounded text-black"
-          />
-        </div>
+
+        {selectedCampus && (
+          <div>
+            <label className="block font-semibold text-black">
+              Clase de Envío
+            </label>
+            <select
+              {...register("curso", {
+                required: "Este campo es obligatorio",
+              })}
+              className="w-full p-2 border rounded text-black"
+              disabled={loadingClasses}
+              onChange={(e) => setSelectedClass(e.target.value)} // Guardar el id de la clase seleccionada
+            >
+              <option value="">Seleccionar Clase</option>
+              {classes.map((classItem) => (
+                <option key={classItem._id} value={classItem._id}>
+                  {classItem.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
         <button
           type="submit"
           className="w-full sm:w-auto py-2 px-4 bg-gradient-to-r bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
