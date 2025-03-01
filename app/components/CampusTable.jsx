@@ -41,15 +41,21 @@ export default function CampusTable() {
                   key={campus._id}
                   className="cursor-pointer hover:bg-gray-100"
                 >
-                  <td className="p-3 border-b">{index + 1}</td>{" "}
+                  <td className="p-3 border-b">{index + 1}</td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeSedes">{campus.name}</Link>
+                    <Link href={`/formularioDeSedes?id=${campus._id}`}>
+                      {campus.name}
+                    </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeSedes">{campus.address}</Link>
+                    <Link href={`/formularioDeSedes?id=${campus._id}`}>
+                      {campus.address}
+                    </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeSedes">{campus.contactPhone}</Link>
+                    <Link href={`/formularioDeSedes?id=${campus._id}`}>
+                      {campus.contactPhone}
+                    </Link>
                   </td>
                 </tr>
               ))
