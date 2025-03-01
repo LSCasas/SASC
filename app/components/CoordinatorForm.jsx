@@ -62,20 +62,27 @@ const CoordinatorForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      // Si estamos editando un usuario, eliminamos la contraseña de los datos a menos que se haya proporcionado
       if (isEdit) {
         delete data.password;
-
-        // En el caso de edición, añadimos las sedes eliminadas con un '-' antes del ID
-        var finalcampusId = [
-          ...assignedCampuses.map((campus) => campus._id), // Sedes asignadas
-          ...removedCampuses.map((campusId) => `-${campusId}`), // Sedes eliminadas
-        ];
-      } else {
-        var finalcampusId = assignedCampuses.map((campus) => campus._id);
       }
 
-      const userData = { ...data, campusId: finalcampusId, role, isArchived };
+      var finalcampusId = isEdit
+        ? [
+            ...assignedCampuses.map((campus) => campus._id),
+            ...removedCampuses.map((campusId) => `-${campusId}`),
+          ]
+        : assignedCampuses.map((campus) => campus._id);
+
+      const userData = {
+        ...data,
+        campusId: finalcampusId,
+        role,
+        isArchived,
+      };
+
+      if (role === "admin") {
+        userData.adminType = "second";
+      }
 
       if (isEdit) {
         await updateUser(id, userData);

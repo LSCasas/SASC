@@ -13,12 +13,19 @@ export default function CoordinatorTable() {
     const fetchCoordinators = async () => {
       try {
         const data = await getAllUsers();
-        const activeCoordinators = data.filter(
-          (user) => user.role === "coordinator" && !user.isArchived
+        const filteredUsers = data.filter(
+          (user) =>
+            (user.role === "coordinator" && !user.isArchived) ||
+            (user.role === "admin" &&
+              user.adminType === "second" &&
+              !user.isArchived)
         );
-        setCoordinators(activeCoordinators);
+        setCoordinators(filteredUsers);
       } catch (error) {
-        console.error("Error al obtener los coordinadores:", error);
+        console.error(
+          "Error al obtener los coordinadores y administradores:",
+          error
+        );
       }
     };
 
