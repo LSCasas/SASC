@@ -49,7 +49,7 @@ export async function getCurrentUser(userId = "me") {
 // GET USER BY ID
 export async function getUserById(userId) {
   try {
-    const response = await fetch(`${API_URL}/users/${userId}`, {
+    const response = await fetch(`${API_URL}/user/${userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
