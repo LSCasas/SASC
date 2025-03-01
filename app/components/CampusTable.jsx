@@ -6,13 +6,14 @@ import Link from "next/link";
 
 export default function CampusTable() {
   const [campuses, setCampuses] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("active");
 
   useEffect(() => {
     const fetchCampuses = async () => {
       try {
         const data = await getAllCampuses();
-        const activeCampuses = data.filter((campus) => !campus.isAchive);
-        setCampuses(activeCampuses);
+        setCampuses(data);
       } catch (error) {
         console.error("Error al obtener los campus:", error);
       }
@@ -21,9 +22,24 @@ export default function CampusTable() {
     fetchCampuses();
   }, []);
 
+  // Filtrar los campus según el término de búsqueda y el estado seleccionado
+  const filteredCampuses = campuses.filter((campus) => {
+    const matchesSearch = campus.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const matchesStatus =
+      statusFilter === "active" ? !campus.isAchive : campus.isAchive;
+    return matchesSearch && matchesStatus;
+  });
+
   return (
     <div className="mt-6">
-      <CampusFilters />
+      <CampusFilters
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        statusFilter={statusFilter}
+        setStatusFilter={setStatusFilter}
+      />
       <div className="overflow-y-auto max-h-[400px]">
         <table className="min-w-full bg-white border border-gray-200 text-black">
           <thead>
@@ -35,8 +51,8 @@ export default function CampusTable() {
             </tr>
           </thead>
           <tbody>
-            {campuses.length > 0 ? (
-              campuses.map((campus, index) => (
+            {filteredCampuses.length > 0 ? (
+              filteredCampuses.map((campus, index) => (
                 <tr
                   key={campus._id}
                   className="cursor-pointer hover:bg-gray-100"
@@ -69,20 +85,9 @@ export default function CampusTable() {
           </tbody>
         </table>
       </div>
-      <div className="mt-4 p-4 bg-gray-100 rounded-lg flex items-center justify-between">
-        <button className="opacity-50 cursor-not-allowed">
-          <h1 className="text-black"> ◀︎ </h1>
-        </button>
-        <span className="text-gray-600">
-          {campuses.length} de {campuses.length}
-        </span>
-        <button className="opacity-50 cursor-not-allowed">
-          <h1 className="text-black"> ▶︎ </h1>
-        </button>
-      </div>
       <div className="mt-3 flex justify-center">
         <div className="w-full">
-          <ExportButtons data={campuses} />
+          <ExportButtons data={filteredCampuses} />
         </div>
       </div>
     </div>
