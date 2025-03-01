@@ -1,55 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getAllUsers } from "../api/user";
 import CoordinatorFilters from "./CoordinatorFilters";
 import ExportButtons from "./TeacherExportButtons";
 import Link from "next/link";
 
 export default function CoordinatorTable() {
-  const Sedes = [
-    {
-      id: 1,
-      Name: "Juan Carlos",
-      lastname: "Pérez Sánchez",
-      email: "sede@example.com",
-      phone: "123-456-7890",
-      campus: "Sede Norte",
-    },
-    {
-      id: 2,
-      Name: "Ana Sofía ",
-      lastname: "Pérez Sánchez",
-      email: "sede@example.com",
-      phone: "987-654-3210",
-      campus: "Sede Sur",
-    },
-    {
-      id: 3,
-      Name: "Carlos Eduardo ",
-      lastname: "Pérez Sánchez",
-      email: "sede@example.com",
-      phone: "456-789-0123",
-      campus: "Sede Este",
-    },
-    {
-      id: 4,
-      Name: "María José ",
-      lastname: "Pérez Sánchez",
-      email: "sede@example.com",
-      phone: "321-654-9870",
-      campus: "Sede Oeste",
-    },
-    {
-      id: 5,
-      Name: "Luis Fernando ",
-      lastname: "Pérez Sánchez",
-      email: "sede@example.com",
-      phone: "789-012-3456",
-      campus: "Sede Central",
-    },
-  ];
+  const [coordinators, setCoordinators] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("active");
+
+  useEffect(() => {
+    const fetchCoordinators = async () => {
+      try {
+        const data = await getAllUsers();
+        const activeCoordinators = data.filter(
+          (user) => user.role === "coordinator" && !user.isArchived
+        );
+        setCoordinators(activeCoordinators);
+      } catch (error) {
+        console.error("Error al obtener los coordinadores:", error);
+      }
+    };
+
+    fetchCoordinators();
+  }, []);
+
+  const filteredCoordinators = coordinators.filter((coordinator) => {
+    const matchesSearch =
+      coordinator.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      coordinator.lastName.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus =
+      statusFilter === "active"
+        ? !coordinator.isArchived
+        : coordinator.isArchived;
+    return matchesSearch && matchesStatus;
+  });
 
   return (
     <div className="mt-6">
-      <CoordinatorFilters />
+      <CoordinatorFilters
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        statusFilter={statusFilter}
+        setStatusFilter={setStatusFilter}
+      />
       <div className="overflow-y-auto max-h-[400px]">
         <table className="min-w-full bg-white border border-gray-200 text-black">
           <thead>
@@ -57,40 +51,55 @@ export default function CoordinatorTable() {
               <th className="p-3 border-b text-black">#</th>
               <th className="p-3 border-b text-black">Nombre</th>
               <th className="p-3 border-b text-black">Apellido</th>
-              <th className="p-3 border-b text-black">Email</th>
               <th className="p-3 border-b text-black">Teléfono de Contacto</th>
-              <th className="p-3 border-b text-black">Sede que coordina</th>
+              <th className="p-3 border-b text-black">Campus a Cargo</th>
             </tr>
           </thead>
           <tbody>
-            {Sedes.length > 0 ? (
-              Sedes.map((Sede) => (
-                <tr key={Sede.id} className="cursor-pointer hover:bg-gray-100">
+            {filteredCoordinators.length > 0 ? (
+              filteredCoordinators.map((coordinator, index) => (
+                <tr
+                  key={coordinator._id}
+                  className="cursor-pointer hover:bg-gray-100"
+                >
+                  <td className="p-3 border-b">{index + 1}</td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeCoordinadores">{Sede.id}</Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link href="/formularioDeCoordinadores">{Sede.Name}</Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link href="/formularioDeCoordinadores">
-                      {Sede.lastname}
+                    <Link
+                      href={`/formularioDeCoordinadores?id=${coordinator._id}`}
+                    >
+                      {coordinator.firstName}
                     </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeCoordinadores">{Sede.email}</Link>
+                    <Link
+                      href={`/formularioDeCoordinadores?id=${coordinator._id}`}
+                    >
+                      {coordinator.lastName}
+                    </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeCoordinadores">{Sede.phone}</Link>
+                    <Link
+                      href={`/formularioDeCoordinadores?id=${coordinator._id}`}
+                    >
+                      {coordinator.phone}
+                    </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href="/formularioDeCoordinadores">{Sede.campus}</Link>
+                    <Link
+                      href={`/formularioDeCoordinadores?id=${coordinator._id}`}
+                    >
+                      {coordinator.campusId
+                        .map((campus) =>
+                          campus.isAchive === false ? campus.name : ""
+                        )
+                        .join(", ")}
+                    </Link>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="p-3 text-center text-black">
+                <td colSpan="5" className="p-3 text-center text-black">
                   No hay registros disponibles
                 </td>
               </tr>
@@ -98,18 +107,9 @@ export default function CoordinatorTable() {
           </tbody>
         </table>
       </div>
-      <div className="mt-4 p-4 bg-gray-100 rounded-lg flex items-center justify-between">
-        <button className="opacity-50 cursor-not-allowed">
-          <h1 className="text-black"> ◀︎ </h1>
-        </button>
-        <span className="text-gray-600">0–5 de 5</span>
-        <button className="opacity-50 cursor-not-allowed">
-          <h1 className="text-black"> ▶︎ </h1>
-        </button>
-      </div>
       <div className="mt-3 flex justify-center">
         <div className="w-full">
-          <ExportButtons data={Sedes} />
+          <ExportButtons data={filteredCoordinators} />
         </div>
       </div>
     </div>

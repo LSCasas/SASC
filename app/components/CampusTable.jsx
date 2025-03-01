@@ -22,7 +22,6 @@ export default function CampusTable() {
     fetchCampuses();
   }, []);
 
-  // Filtrar los campus según el término de búsqueda y el estado seleccionado
   const filteredCampuses = campuses.filter((campus) => {
     const matchesSearch = campus.name
       .toLowerCase()
