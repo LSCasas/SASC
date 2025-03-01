@@ -12,6 +12,8 @@ const CoordinatorForm = () => {
   const [loadingCampuses, setLoadingCampuses] = useState(true);
   const [errorCampuses, setErrorCampuses] = useState(null);
   const [role, setRole] = useState("coordinator");
+  const [isArchived, setisArchived] = useState("activo");
+
   const {
     register,
     handleSubmit,
@@ -50,6 +52,7 @@ const CoordinatorForm = () => {
         setValue("phone", userData.phone);
         setAssignedCampuses(userData.campusId || []);
         setRole(userData.role);
+        setisArchived(userData.isArchived || "activo");
       } catch (err) {
         console.error("Error al obtener usuario:", err);
       }
@@ -69,11 +72,10 @@ const CoordinatorForm = () => {
           ...removedCampuses.map((campusId) => `-${campusId}`), // Sedes eliminadas
         ];
       } else {
-        // En la creación de un usuario solo mandamos las sedes asignadas
         var finalcampusId = assignedCampuses.map((campus) => campus._id);
       }
 
-      const userData = { ...data, campusId: finalcampusId, role }; // Añadir el rol a los datos del usuario
+      const userData = { ...data, campusId: finalcampusId, role, isArchived };
 
       if (isEdit) {
         await updateUser(id, userData);
@@ -183,6 +185,18 @@ const CoordinatorForm = () => {
           >
             <option value="coordinator">Coordinador</option>
             <option value="admin">Administrador</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block font-semibold text-black">Estatus</label>
+          <select
+            value={isArchived}
+            onChange={(e) => setisArchived(e.target.value)}
+            className="w-full p-2 border rounded text-black"
+          >
+            <option value="false">Activo</option>
+            <option value="true">Baja</option>
           </select>
         </div>
 
