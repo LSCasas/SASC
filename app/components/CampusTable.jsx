@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAllCampuses } from "../api/campus";
 import CampusFilters from "./CampusFilters";
-import ExportButtons from "./TeacherExportButtons";
+import ExportButtons from "./CampusExportButtons";
 import Link from "next/link";
 
 export default function CampusTable() {
