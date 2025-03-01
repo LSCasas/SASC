@@ -60,6 +60,7 @@ export default function CoordinatorTable() {
               <th className="p-3 border-b text-black">Apellido</th>
               <th className="p-3 border-b text-black">Teléfono de Contacto</th>
               <th className="p-3 border-b text-black">Campus a Cargo</th>
+              <th className="p-3 border-b text-black">Tipo</th>
             </tr>
           </thead>
           <tbody>
@@ -95,18 +96,23 @@ export default function CoordinatorTable() {
                     <Link
                       href={`/formularioDeCoordinadores?id=${coordinator._id}`}
                     >
-                      {coordinator.campusId
-                        .map((campus) =>
-                          campus.isAchive === false ? campus.name : ""
-                        )
-                        .join(", ")}
+                      {coordinator.role === "admin"
+                        ? "Con acceso a todas las sedes del programa"
+                        : coordinator.campusId
+                            .map((campus) =>
+                              campus.isAchive === false ? campus.name : ""
+                            )
+                            .join(", ")}
                     </Link>
+                  </td>
+                  <td className="p-3 border-b">
+                    {coordinator.role === "admin" ? "Admin" : "Coordinador"}
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5" className="p-3 text-center text-black">
+                <td colSpan="6" className="p-3 text-center text-black">
                   No hay registros disponibles
                 </td>
               </tr>
