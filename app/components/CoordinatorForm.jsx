@@ -195,23 +195,29 @@ const CoordinatorForm = () => {
           </select>
         </div>
 
-        <div>
-          <label className="block font-semibold text-black">Estatus</label>
-          <select
-            value={isArchived}
-            onChange={(e) => setisArchived(e.target.value)}
-            className="w-full p-2 border rounded text-black"
-          >
-            <option value="false">Activo</option>
-            <option value="true">Baja</option>
-          </select>
-        </div>
+        {isEdit && (
+          <div>
+            <label className="block font-semibold text-black">Estatus</label>
+            <select
+              value={isArchived}
+              onChange={(e) => setisArchived(e.target.value)}
+              className="w-full p-2 border rounded text-black"
+            >
+              <option value="false">Activo</option>
+              <option value="true">Baja</option>
+            </select>
+          </div>
+        )}
 
         <div>
           <label className="block font-semibold text-black">
             Sedes asignadas
           </label>
-          {loadingCampuses ? (
+          {role === "admin" ? (
+            <p className="text-gray-500">
+              Todas las sedes actuales y futuras serán asignadas a este perfil.
+            </p>
+          ) : loadingCampuses ? (
             <p className="text-gray-500">Cargando sedes...</p>
           ) : errorCampuses ? (
             <p className="text-red-500">{errorCampuses}</p>
