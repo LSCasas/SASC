@@ -8,6 +8,10 @@ export default function CoordinatorFilters() {
         placeholder="Buscar por nombre"
         className="flex-1 min-w-[150px] p-2 border rounded"
       />
+      <select className="p-2 border rounded">
+        <option value="active">Activo</option>
+        <option value="inactive">Dado de baja</option>
+      </select>
     </div>
   );
 }
