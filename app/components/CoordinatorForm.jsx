@@ -12,7 +12,7 @@ const CoordinatorForm = () => {
   const [loadingCampuses, setLoadingCampuses] = useState(true);
   const [errorCampuses, setErrorCampuses] = useState(null);
   const [role, setRole] = useState("coordinator");
-  const [isArchived, setisArchived] = useState("activo");
+  const [isArchived, setisArchived] = useState("false");
 
   const {
     register,
@@ -52,7 +52,7 @@ const CoordinatorForm = () => {
         setValue("phone", userData.phone);
         setAssignedCampuses(userData.campusId || []);
         setRole(userData.role);
-        setisArchived(userData.isArchived || "activo");
+        setisArchived(userData.isArchived || "false");
       } catch (err) {
         console.error("Error al obtener usuario:", err);
       }
