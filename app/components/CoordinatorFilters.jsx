@@ -9,6 +9,11 @@ export default function CoordinatorFilters() {
         className="flex-1 min-w-[150px] p-2 border rounded"
       />
       <select className="p-2 border rounded">
+        <option value="">Tipo</option>
+        <option value="coordinator">Coordinador</option>
+        <option value="administrator">Administrador</option>
+      </select>
+      <select className="p-2 border rounded">
         <option value="active">Activo</option>
         <option value="inactive">Dado de baja</option>
       </select>
