@@ -120,155 +120,166 @@ const CoordinatorForm = () => {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md max-w-lg mx-auto">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div>
-          <label className="block font-semibold text-black">Nombre</label>
-          <input
-            {...register("firstName", {
-              required: "Este campo es obligatorio",
-            })}
-            className="w-full p-2 border rounded text-black"
-          />
-          {errors.firstName && (
-            <p className="text-red-500 text-sm">{errors.firstName.message}</p>
-          )}
-        </div>
-
-        <div>
-          <label className="block font-semibold text-black">Apellido</label>
-          <input
-            {...register("lastName", { required: "Este campo es obligatorio" })}
-            className="w-full p-2 border rounded text-black"
-          />
-          {errors.lastName && (
-            <p className="text-red-500 text-sm">{errors.lastName.message}</p>
-          )}
-        </div>
-
-        <div>
-          <label className="block font-semibold text-black">Teléfono</label>
-          <input
-            {...register("phone", { required: "Este campo es obligatorio" })}
-            className="w-full p-2 border rounded text-black"
-          />
-          {errors.phone && (
-            <p className="text-red-500 text-sm">{errors.phone.message}</p>
-          )}
-        </div>
-
-        <div>
-          <label className="block font-semibold text-black">Email</label>
-          <input
-            {...register("email", { required: "Este campo es obligatorio" })}
-            className="w-full p-2 border rounded text-black"
-          />
-          {errors.email && (
-            <p className="text-red-500 text-sm">{errors.email.message}</p>
-          )}
-        </div>
-
-        {!isEdit && (
+      <div className="h-[75vh] overflow-y-auto p-2">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block font-semibold text-black">Contraseña</label>
+            <label className="block font-semibold text-black">Nombre</label>
             <input
-              type="password"
-              {...register("password", {
+              {...register("firstName", {
                 required: "Este campo es obligatorio",
               })}
               className="w-full p-2 border rounded text-black"
             />
-            {errors.password && (
-              <p className="text-red-500 text-sm">{errors.password.message}</p>
+            {errors.firstName && (
+              <p className="text-red-500 text-sm">{errors.firstName.message}</p>
             )}
           </div>
-        )}
 
-        <div>
-          <label className="block font-semibold text-black">Permisos</label>
-          <select
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            className="w-full p-2 border rounded text-black"
-          >
-            <option value="coordinator">Coordinador</option>
-            <option value="admin">Administrador</option>
-          </select>
-        </div>
-
-        {isEdit && (
           <div>
-            <label className="block font-semibold text-black">Estatus</label>
-            <select
-              value={isArchived}
-              onChange={(e) => setisArchived(e.target.value)}
+            <label className="block font-semibold text-black">Apellido</label>
+            <input
+              {...register("lastName", {
+                required: "Este campo es obligatorio",
+              })}
               className="w-full p-2 border rounded text-black"
-            >
-              <option value="false">Activo</option>
-              <option value="true">Baja</option>
-            </select>
+            />
+            {errors.lastName && (
+              <p className="text-red-500 text-sm">{errors.lastName.message}</p>
+            )}
           </div>
-        )}
 
-        <div>
-          <label className="block font-semibold text-black">
-            Sedes asignadas
-          </label>
-          {role === "admin" ? (
-            <p className="text-gray-500">
-              Todas las sedes actuales y futuras serán asignadas a este perfil.
-            </p>
-          ) : loadingCampuses ? (
-            <p className="text-gray-500">Cargando sedes...</p>
-          ) : errorCampuses ? (
-            <p className="text-red-500">{errorCampuses}</p>
-          ) : (
-            <div className="space-y-2">
-              {assignedCampuses.map((campus) => (
-                <div
-                  key={campus._id}
-                  className="flex justify-between items-center p-2 border rounded text-black"
-                >
-                  <span>{campus.name}</span>
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveCampus(campus._id)}
-                    className="text-red-600 hover:text-red-800"
-                  >
-                    Remover
-                  </button>
-                </div>
-              ))}
+          <div>
+            <label className="block font-semibold text-black">Teléfono</label>
+            <input
+              {...register("phone", { required: "Este campo es obligatorio" })}
+              className="w-full p-2 border rounded text-black"
+            />
+            {errors.phone && (
+              <p className="text-red-500 text-sm">{errors.phone.message}</p>
+            )}
+          </div>
+
+          <div>
+            <label className="block font-semibold text-black">Email</label>
+            <input
+              {...register("email", { required: "Este campo es obligatorio" })}
+              className="w-full p-2 border rounded text-black"
+            />
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email.message}</p>
+            )}
+          </div>
+
+          {!isEdit && (
+            <div>
+              <label className="block font-semibold text-black">
+                Contraseña
+              </label>
+              <input
+                type="password"
+                {...register("password", {
+                  required: "Este campo es obligatorio",
+                })}
+                className="w-full p-2 border rounded text-black"
+              />
+              {errors.password && (
+                <p className="text-red-500 text-sm">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
           )}
-        </div>
 
-        <div>
-          <label className="block font-semibold text-black">Asignar Sede</label>
-          <select
-            onChange={handleAddCampus}
-            className="w-full p-2 border rounded text-black"
+          <div>
+            <label className="block font-semibold text-black">Permisos</label>
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className="w-full p-2 border rounded text-black"
+            >
+              <option value="coordinator">Coordinador</option>
+              <option value="admin">Administrador</option>
+            </select>
+          </div>
+
+          {isEdit && (
+            <div>
+              <label className="block font-semibold text-black">Estatus</label>
+              <select
+                value={isArchived}
+                onChange={(e) => setisArchived(e.target.value)}
+                className="w-full p-2 border rounded text-black"
+              >
+                <option value="false">Activo</option>
+                <option value="true">Baja</option>
+              </select>
+            </div>
+          )}
+
+          <div>
+            <label className="block font-semibold text-black">
+              Sedes asignadas
+            </label>
+            {role === "admin" ? (
+              <p className="text-gray-500">
+                Todas las sedes actuales y futuras serán asignadas a este
+                perfil.
+              </p>
+            ) : loadingCampuses ? (
+              <p className="text-gray-500">Cargando sedes...</p>
+            ) : errorCampuses ? (
+              <p className="text-red-500">{errorCampuses}</p>
+            ) : (
+              <div className="space-y-2">
+                {assignedCampuses.map((campus) => (
+                  <div
+                    key={campus._id}
+                    className="flex justify-between items-center p-2 border rounded text-black"
+                  >
+                    <span>{campus.name}</span>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveCampus(campus._id)}
+                      className="text-red-600 hover:text-red-800"
+                    >
+                      Remover
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div>
+            <label className="block font-semibold text-black">
+              Asignar Sede
+            </label>
+            <select
+              onChange={handleAddCampus}
+              className="w-full p-2 border rounded text-black"
+            >
+              <option value="">Selecciona una sede</option>
+              {campuses
+                .filter(
+                  (campus) =>
+                    !assignedCampuses.some((ac) => ac._id === campus._id)
+                )
+                .map((campus) => (
+                  <option key={campus._id} value={campus._id}>
+                    {campus.name}
+                  </option>
+                ))}
+            </select>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full sm:w-auto py-2 px-4 bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
           >
-            <option value="">Selecciona una sede</option>
-            {campuses
-              .filter(
-                (campus) =>
-                  !assignedCampuses.some((ac) => ac._id === campus._id)
-              )
-              .map((campus) => (
-                <option key={campus._id} value={campus._id}>
-                  {campus.name}
-                </option>
-              ))}
-          </select>
-        </div>
-
-        <button
-          type="submit"
-          className="w-full sm:w-auto py-2 px-4 bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
-        >
-          {isEdit ? "Actualizar Usuario" : "Crear Usuario"}
-        </button>
-      </form>
+            {isEdit ? "Actualizar Usuario" : "Crear Usuario"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
