@@ -1,5 +1,5 @@
 const API_URL = "http://localhost:5000";
-
+import { toast } from "sonner";
 // CREATE A NEW USER
 export async function createUser(data) {
   const res = await fetch(`${API_URL}/user`, {
@@ -33,17 +33,30 @@ export async function getAllUsers() {
 
 // GET CURRENT USER
 export async function getCurrentUser(userId = "me") {
-  const res = await fetch(`${API_URL}/user/${userId}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-  });
+  try {
+    const res = await fetch(`${API_URL}/user/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
 
-  const json = await res.json();
-  if (!json.success) throw new Error(json.error || "Error obteniendo usuario");
-  return json.data;
+    const json = await res.json();
+
+    if (!json.success) {
+      if (json.error === "JWT is required") {
+        localStorage.setItem("loginError", json.error); // Guardar el error en localStorage
+        window.location.href = "/InicioDeSesion";
+        return;
+      }
+      throw new Error(json.error || "Error obteniendo usuario");
+    }
+
+    return json.data;
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function AuthUser(userId = "me") {
