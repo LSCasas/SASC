@@ -8,11 +8,13 @@ export default function CoordinatorTable() {
   const [coordinators, setCoordinators] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("active");
+  const [typeFilter, setTypeFilter] = useState(""); // Nuevo estado para el filtro de tipo
 
   useEffect(() => {
     const fetchCoordinators = async () => {
       try {
         const data = await getAllUsers();
+        // Aquí no filtramos por status aún, solo por rol
         const filteredUsers = data.filter(
           (user) =>
             (user.role === "coordinator" && !user.isArchived) ||
@@ -38,9 +40,11 @@ export default function CoordinatorTable() {
       coordinator.lastName.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus =
       statusFilter === "active"
-        ? !coordinator.isArchived
-        : coordinator.isArchived;
-    return matchesSearch && matchesStatus;
+        ? !coordinator.isArchived // Mostrar si no está archivado
+        : coordinator.isArchived; // Mostrar si está archivado
+    const matchesType = typeFilter === "" || coordinator.role === typeFilter;
+
+    return matchesSearch && matchesStatus && matchesType;
   });
 
   return (
@@ -50,6 +54,8 @@ export default function CoordinatorTable() {
         setSearchTerm={setSearchTerm}
         statusFilter={statusFilter}
         setStatusFilter={setStatusFilter}
+        typeFilter={typeFilter}
+        setTypeFilter={setTypeFilter}
       />
       <div className="overflow-y-auto max-h-[400px]">
         <table className="min-w-full bg-white border border-gray-200 text-black">
