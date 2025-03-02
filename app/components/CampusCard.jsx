@@ -8,7 +8,10 @@ export default function CampusCard() {
 
   useEffect(() => {
     const storedCampuses = JSON.parse(localStorage.getItem("campuses")) || [];
-    setCampuses(storedCampuses);
+    const activeCampuses = storedCampuses.filter(
+      (campus) => campus.isAchive === false
+    );
+    setCampuses(activeCampuses);
   }, []);
 
   const handleSelectCampus = async (campusId) => {
@@ -24,16 +27,22 @@ export default function CampusCard() {
   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-6">
-      {campuses.map((campus) => (
-        <div
-          key={campus._id}
-          className="cursor-pointer p-6 text-center bg-white shadow-lg rounded-2xl hover:shadow-xl transition border border-gray-200"
-          onClick={() => handleSelectCampus(campus._id)}
-        >
-          <h2 className="text-lg font-semibold text-gray-700">{campus.name}</h2>
+    <div className="mt-6">
+      <div className="overflow-y-auto h-[80vh]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-6">
+          {campuses.map((campus) => (
+            <div
+              key={campus._id}
+              className="cursor-pointer p-6 text-center bg-white shadow-lg rounded-2xl hover:shadow-xl transition border border-gray-200"
+              onClick={() => handleSelectCampus(campus._id)}
+            >
+              <h2 className="text-lg font-semibold text-gray-700">
+                {campus.name}
+              </h2>
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
     </div>
   );
 }
