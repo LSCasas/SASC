@@ -14,9 +14,11 @@ import {
   LogOut,
 } from "lucide-react";
 import { logout } from "../api/auth";
+import { getCurrentUser } from "../api/user";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [campusName, setCampusName] = useState("");
 
   useEffect(() => {
     if (isOpen) {
@@ -33,6 +35,24 @@ const Sidebar = () => {
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+        const user = await getCurrentUser();
+        const userCampusId = user.selectedCampusId;
+        const campus = user.campusId.find(
+          (campus) => campus._id === userCampusId
+        );
+        if (campus) {
+          setCampusName(campus.name);
+        }
+      } catch (error) {
+        console.error("Error al obtener los datos del usuario:", error);
+      }
+    }
+    fetchUserData();
+  }, []);
+
   return (
     <>
       <button
@@ -43,19 +63,17 @@ const Sidebar = () => {
         <Menu size={24} />
       </button>
 
-      {/* Menu sidebar visible on medium screens and larger */}
       <div className="hidden md:flex md:w-64 h-screen bg-gradient-to-r from-[#B0005E] to-[#6C0036] p-4 absolute md:relative">
-        <SidebarContent />
+        <SidebarContent campusName={campusName} />
       </div>
 
-      {/* Mobile menu visible on small screens */}
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 md:hidden z-50 flex items-start">
           <div
             id="mobile-menu"
             className="w-64 h-full bg-gradient-to-r from-[#B0005E] to-[#6C0036] p-4"
           >
-            <SidebarContent />
+            <SidebarContent campusName={campusName} />
           </div>
         </div>
       )}
@@ -63,10 +81,13 @@ const Sidebar = () => {
   );
 };
 
-const SidebarContent = () => {
+const SidebarContent = ({ campusName }) => {
   return (
     <nav className="flex flex-col gap-4">
       <div>
+        <h2 className="text-white text-xl font-semibold mb-4">
+          {campusName || "Cargando..."}
+        </h2>
         <SidebarItem
           href="/alumnos"
           icon={<GraduationCap size={25} />}
