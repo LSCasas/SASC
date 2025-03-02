@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAllUsers } from "../api/user";
 import CoordinatorFilters from "./CoordinatorFilters";
-import ExportButtons from "./TeacherExportButtons";
+import ExportButtons from "./CoordinatorExportButtons";
 import Link from "next/link";
 
 export default function CoordinatorTable() {
@@ -14,7 +14,6 @@ export default function CoordinatorTable() {
     const fetchCoordinators = async () => {
       try {
         const data = await getAllUsers();
-        // Ya no filtramos por isArchived aquí para permitir el filtro dinámico después
         const filteredUsers = data.filter(
           (user) =>
             user.role === "coordinator" ||
