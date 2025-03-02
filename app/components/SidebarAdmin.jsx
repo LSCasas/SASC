@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import {
   Menu,
@@ -8,11 +9,13 @@ import {
   Briefcase,
 } from "lucide-react";
 import { getCurrentUser } from "../api/user";
+import { logout } from "../api/auth";
 
 const SidebarAdmin = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [userRole, setUserRole] = useState(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -99,17 +102,37 @@ const SidebarAdminContent = () => {
       </div>
 
       <div className="mt-auto">
-        <SidebarAdminItem href="/" icon={<LogOut size={25} />} label="Salir" />
+        <SidebarAdminItem
+          href="/"
+          icon={<LogOut size={25} />}
+          label="Salir"
+          isLogout
+        />
       </div>
     </nav>
   );
 };
 
-const SidebarAdminItem = ({ href, icon, label }) => {
+const SidebarAdminItem = ({ href, icon, label, isLogout = false }) => {
+  const router = useRouter();
+
+  const handleClick = async (event) => {
+    if (isLogout) {
+      event.preventDefault();
+      try {
+        await logout();
+        router.push(href);
+      } catch (error) {
+        console.error("Error al cerrar sesión:", error);
+      }
+    }
+  };
+
   return (
     <Link
       href={href}
       className="flex items-center gap-3 text-white hover:bg-white hover:text-[#B0005E] p-3 rounded-lg transition-all"
+      onClick={handleClick}
     >
       {icon}
       <span>{label}</span>
