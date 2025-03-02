@@ -22,12 +22,11 @@ const TeacherForm = () => {
         try {
           const teacher = await getTeacherById(id);
           setTeacherData(teacher);
-          // Pre-llenar el formulario
           setValue("firstName", teacher.firstName);
           setValue("lastName", teacher.lastName);
           setValue("phone", teacher.phone);
           setValue("email", teacher.email);
-          setValue("isAchive", teacher.isAchive); // Pre-llenar el campo isAchive
+          setValue("isAchive", teacher.isAchive);
         } catch (err) {
           console.error("Error al obtener docente:", err);
         }

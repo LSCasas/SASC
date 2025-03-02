@@ -169,7 +169,7 @@ const TransferForm = () => {
               })}
               className="w-full p-2 border rounded text-black"
               disabled={loadingClasses}
-              onChange={(e) => setSelectedClass(e.target.value)} // Guardar el id de la clase seleccionada
+              onChange={(e) => setSelectedClass(e.target.value)}
             >
               <option value="">Seleccionar Clase</option>
               {classes.map((classItem) => (

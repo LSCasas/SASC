@@ -65,7 +65,7 @@ const ClassForm = () => {
           setValue("days", classData.days);
           setValue("startTime", classData.startTime);
           setValue("endTime", classData.endTime);
-          setValue("isAchive", classData.isAchive || false); // Cargar estado actual
+          setValue("isAchive", classData.isAchive || false);
         } catch (err) {
           console.error("Error al obtener clase:", err);
         }
@@ -138,7 +138,7 @@ const ClassForm = () => {
               className="w-full p-2 border rounded text-black"
             >
               {Array.from({ length: 11 }, (_, i) => {
-                const startYear = new Date().getFullYear() - 5 + i; // 5 años atrás hasta 5 años adelante
+                const startYear = new Date().getFullYear() - 5 + i;
                 return (
                   <option
                     key={startYear}
