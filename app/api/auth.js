@@ -1,19 +1,30 @@
+import { toast } from "sonner";
+
 const API_URL = "http://localhost:5000";
 
 // LOGIN
 export async function login(data) {
-  const res = await fetch(`${API_URL}/auth/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-    credentials: "include",
-  });
+  try {
+    const res = await fetch(`${API_URL}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+      credentials: "include",
+    });
 
-  const json = await res.json();
-  if (!json.success) throw new Error(json.message);
-  return json.data;
+    const json = await res.json();
+
+    if (!json.success) {
+      throw new Error(json.message);
+    }
+
+    return json.data;
+  } catch (error) {
+    toast.error(error.message || "Error al iniciar sesión");
+    throw error;
+  }
 }
 
 // SELECTED SEDE

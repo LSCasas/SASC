@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast, Toaster } from "sonner";
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import { login } from "@/api/auth";
+import { toast, Toaster } from "sonner";
 
 export default function LoginForm() {
   const {
@@ -24,13 +24,12 @@ export default function LoginForm() {
       localStorage.setItem("campuses", JSON.stringify(response.campuses));
       router.push("/enlacesDeSedes");
     } catch (error) {
-      toast.error("Error al iniciar sesión: " + error.message);
+      toast.error(error.message || "Error al iniciar sesión");
     }
   };
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-8 mt-24 w-full">
-      <Toaster />
       <h2 className="mb-4 text-center text-2xl font-bold text-[#B0005E]">
         Iniciar sesión
       </h2>
@@ -94,6 +93,7 @@ export default function LoginForm() {
           </button>
         </div>
       </form>
+      <Toaster />
     </div>
   );
 }
