@@ -59,12 +59,14 @@ export async function getCurrentUser(userId = "me") {
         window.location.href = "/InicioDeSesion";
         return;
       }
-      throw new Error(json.error || "Error obteniendo usuario");
+      toast.error(json.error || "Error obteniendo usuario");
+      return null;
     }
 
     return json.data;
   } catch (error) {
-    throw error;
+    toast.error(error.message || "Error obteniendo usuario");
+    return null;
   }
 }
 

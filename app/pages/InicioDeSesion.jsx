@@ -1,15 +1,23 @@
-import React, { useEffect } from "react";
-import { toast } from "sonner";
+import React, { useEffect, useState } from "react";
 import Login from "../components/LoginForm";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
+  const [error, setError] = useState(null);
+
   useEffect(() => {
-    const errorMessage = localStorage.getItem("loginError");
-    if (errorMessage) {
-      toast.error(errorMessage);
+    const loginError = localStorage.getItem("loginError");
+    if (loginError) {
+      setError(loginError);
       localStorage.removeItem("loginError");
     }
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
 
   return (
     <div className="flex h-screen overflow-hidden">
