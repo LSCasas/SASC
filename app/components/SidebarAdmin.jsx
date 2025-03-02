@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import useAuthToken from "@/hooks/useAuthToken";
 import {
   Menu,
   LogOut,
@@ -12,6 +13,7 @@ import { getCurrentUser } from "../api/user";
 import { logout } from "../api/auth";
 
 const SidebarAdmin = () => {
+  useAuthToken();
   const [isOpen, setIsOpen] = useState(false);
   const [userRole, setUserRole] = useState(null);
   const [loading, setLoading] = useState(true);

@@ -46,6 +46,41 @@ export async function getCurrentUser(userId = "me") {
   return json.data;
 }
 
+export async function AuthUser(userId = "me") {
+  try {
+    const res = await fetch(`${API_URL}/user/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      console.warn(`Error ${res.status}: ${res.statusText}`);
+      return null;
+    }
+
+    let json;
+    try {
+      json = await res.json();
+    } catch (error) {
+      console.error("Error al parsear JSON de la respuesta:", error);
+      return null;
+    }
+
+    if (!json.success) {
+      console.warn("Respuesta no exitosa:", json.error || "Error desconocido");
+      return null;
+    }
+
+    return json.data;
+  } catch (error) {
+    console.error("Error en AuthUser:", error.message);
+    return null;
+  }
+}
+
 // GET USER BY ID
 export async function getUserById(userId) {
   try {
