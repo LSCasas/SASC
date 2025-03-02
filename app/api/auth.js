@@ -1,4 +1,4 @@
-import { toast } from "sonner";
+import { toast } from "react-toastify";
 
 const API_URL = "http://localhost:5000";
 

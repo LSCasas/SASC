@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import { login } from "@/api/auth";
-import { toast, Toaster } from "sonner";
 
 export default function LoginForm() {
   const {
@@ -23,9 +22,7 @@ export default function LoginForm() {
       const response = await login(data);
       localStorage.setItem("campuses", JSON.stringify(response.campuses));
       router.push("/enlacesDeSedes");
-    } catch (error) {
-      toast.error(error.message || "Error al iniciar sesión");
-    }
+    } catch (error) {}
   };
 
   return (
@@ -93,7 +90,6 @@ export default function LoginForm() {
           </button>
         </div>
       </form>
-      <Toaster />
     </div>
   );
 }
