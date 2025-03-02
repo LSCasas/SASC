@@ -1,19 +1,28 @@
-const API_URL = "http://localhost:5000";
-import { toast } from "sonner";
-// CREATE A NEW USER
-export async function createUser(data) {
-  const res = await fetch(`${API_URL}/user`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-    credentials: "include",
-  });
+import { toast } from "react-toastify";
 
-  const json = await res.json();
-  if (!json.success) throw new Error(json.error || "Error creando usuario");
-  return json.data;
+const API_URL = "http://localhost:5000";
+
+export async function createUser(data) {
+  try {
+    const res = await fetch(`${API_URL}/user`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+      credentials: "include",
+    });
+
+    const json = await res.json();
+    if (!json.success) {
+      toast.error(json.error || "Error creando usuario");
+      return null;
+    }
+    return json.data;
+  } catch (error) {
+    toast.error(error.message || "Error creando usuario");
+    return null;
+  }
 }
 
 // GET ALL users
