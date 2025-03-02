@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import useAuthToken from "@/hooks/useAuthToken";
 import {
   Menu,
   LogOut,
@@ -13,7 +12,6 @@ import { getCurrentUser } from "../api/user";
 import { logout } from "../api/auth";
 
 const SidebarAdmin = () => {
-  useAuthToken();
   const [isOpen, setIsOpen] = useState(false);
   const [userRole, setUserRole] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -59,17 +57,19 @@ const SidebarAdmin = () => {
       <button
         id="menu-button"
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-4 left-4 sm:hidden text-white bg-[#B0005E] p-2 rounded-md z-50"
+        className="fixed top-4 left-4 md:hidden text-white bg-[#B0005E] p-2 rounded-md z-50"
       >
         <Menu size={24} />
       </button>
 
-      <div className="hidden sm:flex sm:w-64 h-screen bg-gradient-to-r from-[#B0005E] to-[#6C0036] p-4 absolute sm:relative">
+      {/* Menu sidebar visible on medium screens and larger */}
+      <div className="hidden md:flex md:w-64 h-screen bg-gradient-to-r from-[#B0005E] to-[#6C0036] p-4 absolute md:relative">
         <SidebarAdminContent />
       </div>
 
+      {/* Mobile menu visible on small screens */}
       {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 sm:hidden z-50 flex items-start">
+        <div className="fixed inset-0 bg-black bg-opacity-50 md:hidden z-50 flex items-start">
           <div
             id="mobile-menu"
             className="w-64 h-full bg-gradient-to-r from-[#B0005E] to-[#6C0036] p-4"

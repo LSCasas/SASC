@@ -46,7 +46,7 @@ export async function getCurrentUser(userId = "me") {
 
     if (!json.success) {
       if (json.error === "JWT is required") {
-        localStorage.setItem("loginError", json.error); // Guardar el error en localStorage
+        localStorage.setItem("loginError", json.error);
         window.location.href = "/InicioDeSesion";
         return;
       }
