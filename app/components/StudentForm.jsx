@@ -106,14 +106,6 @@ const StudentForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      let updatedPreviousClasses = [...previousClasses];
-
-      if (studentData?.ClassId && studentData.ClassId !== data.curso) {
-        if (!updatedPreviousClasses.includes(studentData.ClassId)) {
-          updatedPreviousClasses.push(studentData.ClassId);
-        }
-      }
-
       const formattedData = {
         firstName: data.nombreAlumno,
         lastName: data.apellidosAlumno,
@@ -126,12 +118,11 @@ const StudentForm = () => {
         tutorLastname: data.apellidosTutor,
         tutorCurp: data.curpTutor,
         tutorPhone: data.telefonoTutor,
-        previousClasses: updatedPreviousClasses,
         status: data.estatus,
         birthDate: data.birthDate,
       };
 
-      if (data.curso !== "none") {
+      if (data.curso && data.curso !== "none") {
         formattedData.ClassId = data.curso;
       }
 
@@ -302,7 +293,7 @@ const StudentForm = () => {
           {isEdit && (
             <div>
               <label className="block font-semibold text-black">
-                Curso Actual
+                Clase Actual
               </label>
               <input
                 value={studentData ? studentData.ClassId.name : ""}
@@ -313,10 +304,10 @@ const StudentForm = () => {
           )}
           <div>
             <label className="block font-semibold text-black">
-              Agregar o cambiar de curso
+              Agregar o cambiar de clase
             </label>
             {loadingClasses ? (
-              <p className="text-gray-500">Cargando cursos...</p>
+              <p className="text-gray-500">Cargando clases...</p>
             ) : errorClasses ? (
               <p className="text-red-500">{errorClasses}</p>
             ) : (
@@ -333,7 +324,7 @@ const StudentForm = () => {
                 })}
                 className="w-full p-2 border rounded text-black"
               >
-                <option value="none">Seleccionar curso</option>
+                <option value="none">Seleccionar clase</option>
                 {classes.map((course) => (
                   <option key={course._id} value={course._id}>
                     {course.name}
@@ -347,7 +338,7 @@ const StudentForm = () => {
           </div>
           <div>
             <label className="block font-semibold text-black">
-              Cursos Anteriores
+              Clases en las que ha estado inscrito
             </label>
             <div className="space-y-2">
               {previousClasses.length > 0 ? (
@@ -356,7 +347,7 @@ const StudentForm = () => {
                     key={cls._id}
                     className="flex justify-between items-center"
                   >
-                    <span className="text-gray-700 font-semibold">
+                    <span className="text-gray-600 font-semibold">
                       {cls.name}
                     </span>
                     <button

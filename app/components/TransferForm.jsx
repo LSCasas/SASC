@@ -115,7 +115,7 @@ const TransferForm = () => {
         {isEdit && studentData && (
           <div>
             <label className="block font-semibold text-black">
-              Curso Actual
+              Clase Actual
             </label>
             <input
               value={studentData.ClassId ? studentData.ClassId.name : ""}
