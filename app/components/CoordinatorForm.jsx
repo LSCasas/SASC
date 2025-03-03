@@ -167,6 +167,7 @@ const CoordinatorForm = () => {
             <input
               {...register("email", { required: "Este campo es obligatorio" })}
               className="w-full p-2 border rounded text-black"
+              defaultValue=""
             />
             {errors.email && (
               <p className="text-red-500 text-sm">{errors.email.message}</p>
@@ -174,23 +175,46 @@ const CoordinatorForm = () => {
           </div>
 
           {!isEdit && (
-            <div>
-              <label className="block font-semibold text-black">
-                Contraseña
-              </label>
-              <input
-                type="password"
-                {...register("password", {
-                  required: "Este campo es obligatorio",
-                })}
-                className="w-full p-2 border rounded text-black"
-              />
-              {errors.password && (
-                <p className="text-red-500 text-sm">
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
+            <>
+              <div>
+                <label className="block font-semibold text-black">
+                  Contraseña
+                </label>
+                <input
+                  type="password"
+                  {...register("password", {
+                    required: "Este campo es obligatorio",
+                  })}
+                  className="w-full p-2 border rounded text-black"
+                />
+                {errors.password && (
+                  <p className="text-red-500 text-sm">
+                    {errors.password.message}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label className="block font-semibold text-black">
+                  Confirmar Contraseña
+                </label>
+                <input
+                  type="password"
+                  {...register("confirmPassword", {
+                    required: "Este campo es obligatorio",
+                    validate: (value) =>
+                      value === watch("password") ||
+                      "Las contraseñas no coinciden",
+                  })}
+                  className="w-full p-2 border rounded text-black"
+                />
+                {errors.confirmPassword && (
+                  <p className="text-red-500 text-sm">
+                    {errors.confirmPassword.message}
+                  </p>
+                )}
+              </div>
+            </>
           )}
 
           <div>
