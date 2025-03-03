@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TutorFilters from "./TutorFilters";
 import ExportButtons from "./TutorExportButtons";
-import Link from "next/link";
 import { getCurrentUser } from "../api/user";
 import { getTutorsByCampusId } from "../api/tutor";
 
@@ -14,9 +13,6 @@ export default function TutorTable() {
   const [studentSearch, setStudentSearch] = useState("");
   const [classSearch, setClassSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("active");
-
-  const [currentPage, setCurrentPage] = useState(0);
-  const recordsPerPage = 20;
 
   useEffect(() => {
     async function fetchTutors() {
@@ -71,24 +67,6 @@ export default function TutorTable() {
     return matchesName && matchesStudent && matchesClass && matchesStatus;
   });
 
-  const totalRecords = filteredTutors.length;
-  const startIndex = currentPage * recordsPerPage;
-  const endIndex = Math.min(startIndex + recordsPerPage, totalRecords);
-
-  const displayedTutors = filteredTutors.slice(startIndex, endIndex);
-
-  const handleLoadNext = () => {
-    if ((currentPage + 1) * recordsPerPage < filteredTutors.length) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handleLoadPrev = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
   return (
     <div className="mt-6">
       <TutorFilters
@@ -121,8 +99,8 @@ export default function TutorTable() {
             </tr>
           </thead>
           <tbody>
-            {displayedTutors.length > 0 ? (
-              displayedTutors.map((tutor, index) => {
+            {filteredTutors.length > 0 ? (
+              filteredTutors.map((tutor, index) => {
                 const childrenNames = tutor.children
                   .map((child) => child.firstName + " " + child.lastName)
                   .join(", ");
@@ -135,21 +113,9 @@ export default function TutorTable() {
 
                 return (
                   <tr key={tutor._id}>
-                    <td className="p-3 border-b">
-                      <Link href={`/formularioDeTutores?id=${tutor._id}`}>
-                        {startIndex + index + 1}
-                      </Link>
-                    </td>
-                    <td className="p-3 border-b">
-                      <Link href={`/formularioDeTutores?id=${tutor._id}`}>
-                        {tutor.name}
-                      </Link>
-                    </td>
-                    <td className="p-3 border-b">
-                      <Link href={`/formularioDeTutores?id=${tutor._id}`}>
-                        {tutor.lastname}
-                      </Link>
-                    </td>
+                    <td className="p-3 border-b">{index + 1}</td>
+                    <td className="p-3 border-b">{tutor.name}</td>
+                    <td className="p-3 border-b">{tutor.lastname}</td>
                     <td className="p-3 border-b">
                       {childrenNames || "No disponible"}
                     </td>
@@ -175,7 +141,7 @@ export default function TutorTable() {
           </tbody>
         </table>
       </div>
-      <ExportButtons data={displayedTutors} allTutors={filteredTutors} />
+      <ExportButtons data={filteredTutors} />
     </div>
   );
 }
