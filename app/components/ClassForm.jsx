@@ -38,6 +38,9 @@ const ClassForm = () => {
           throw new Error("El usuario no tiene un campus seleccionado");
 
         let teachersData = await getTeachersByCampusId(campusId);
+        teachersData = teachersData.filter(
+          (teacher) => teacher.isAchive === false
+        );
         teachersData = teachersData.sort((a, b) =>
           a.lastName.localeCompare(b.lastName)
         );
