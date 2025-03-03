@@ -78,6 +78,10 @@ const ClassForm = () => {
 
   const onSubmit = async (data) => {
     try {
+      const classNameWithGeneration = `${data.name} ${data.generation}`;
+
+      data.name = classNameWithGeneration;
+
       if (data.teacherId === "none") {
         data.teacherId = null;
       }
