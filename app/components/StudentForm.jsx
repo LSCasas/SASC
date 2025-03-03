@@ -24,6 +24,7 @@ const StudentForm = () => {
   } = useForm({
     defaultValues: {
       curso: "none",
+      birthDate: "",
     },
   });
 
@@ -79,6 +80,11 @@ const StudentForm = () => {
             .split("T")[0];
           setValue("inscritoDesde", inscritoDesde);
 
+          const birthDate = studentData.birthDate
+            ? new Date(studentData.birthDate).toISOString().split("T")[0]
+            : "";
+          setValue("birthDate", birthDate);
+
           setValue("curso", studentData.ClassId || "none");
 
           const previousClassNames = studentData.previousClasses
@@ -122,6 +128,7 @@ const StudentForm = () => {
         tutorPhone: data.telefonoTutor,
         previousClasses: updatedPreviousClasses,
         status: data.estatus,
+        birthDate: data.birthDate,
       };
 
       if (data.curso !== "none") {
@@ -189,6 +196,16 @@ const StudentForm = () => {
             <label className="block font-semibold text-black">CURP</label>
             <input
               {...register("curp", { required: "Este campo es obligatorio" })}
+              className="w-full p-2 border rounded text-black"
+            />
+          </div>
+          <div>
+            <label className="block font-semibold text-black">
+              Fecha de Nacimiento
+            </label>
+            <input
+              type="date"
+              {...register("birthDate")}
               className="w-full p-2 border rounded text-black"
             />
           </div>
