@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 const API_URL = "http://localhost:5000";
 
 // CREATE STUDENT
@@ -13,15 +15,17 @@ export async function createStudent(data) {
     });
 
     const json = await res.json();
+
     if (!res.ok) {
-      throw new Error(
-        json.message || "Error desconocido al crear el estudiante"
+      toast.error(
+        json.message || json.error || "Error desconocido al crear el estudiante"
       );
+      return null;
     }
     return json.data;
   } catch (error) {
-    console.error("Error creando el estudiante:", error);
-    throw error;
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
   }
 }
 
@@ -35,14 +39,15 @@ export async function getAllStudents() {
 
     const json = await res.json();
     if (!res.ok) {
-      throw new Error(
+      toast.error(
         json.message || "Error desconocido al obtener los estudiantes"
       );
+      return null;
     }
     return json.data;
   } catch (error) {
-    console.error("Error obteniendo los estudiantes:", error);
-    throw error;
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
   }
 }
 
@@ -56,14 +61,13 @@ export async function getStudentById(studentId) {
 
     const json = await res.json();
     if (!res.ok) {
-      throw new Error(
-        json.message || "Error desconocido al obtener el estudiante"
-      );
+      toast.error(json.message || "Error desconocido al obtener el estudiante");
+      return null;
     }
     return json.data;
   } catch (error) {
-    console.error("Error obteniendo el estudiante:", error);
-    throw error;
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
   }
 }
 
@@ -76,23 +80,22 @@ export async function getStudentsByCampusId(campusId) {
     });
 
     const json = await res.json();
-
     if (!res.ok) {
       // Si no se encontraron estudiantes, no lanzamos un error 500, solo mostramos el mensaje
       if (json.error && json.error.includes("No students found")) {
-        return []; // Devuelve un array vacío si no se encuentran estudiantes
+        toast.info("No se encontraron estudiantes para este campus");
+        return [];
       }
-
-      throw new Error(
+      toast.error(
         json.message ||
           "Error desconocido al obtener los estudiantes del campus"
       );
+      return null;
     }
-
     return json.data;
   } catch (error) {
-    console.error("Error obteniendo estudiantes por campus:", error);
-    throw error;
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
   }
 }
 
@@ -109,35 +112,18 @@ export async function updateStudent(studentId, data) {
     });
 
     const json = await res.json();
+
     if (!res.ok) {
-      throw new Error(
-        json.message || "Error desconocido al actualizar el estudiante"
+      toast.error(
+        json.message ||
+          json.error ||
+          "Error desconocido al actualizar el estudiante"
       );
+      return null;
     }
     return json.data;
   } catch (error) {
-    console.error("Error actualizando el estudiante:", error);
-    throw error;
-  }
-}
-
-// DELETE STUDENT
-export async function deleteStudent(studentId) {
-  try {
-    const res = await fetch(`${API_URL}/student/${studentId}`, {
-      method: "DELETE",
-      credentials: "include",
-    });
-
-    const json = await res.json();
-    if (!res.ok) {
-      throw new Error(
-        json.message || "Error desconocido al eliminar el estudiante"
-      );
-    }
-    return json;
-  } catch (error) {
-    console.error("Error eliminando el estudiante:", error);
-    throw error;
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
   }
 }
