@@ -131,17 +131,24 @@ export async function getUserById(userId) {
 
 // UPDATE USER BY ID
 export async function updateUser(userId, data) {
-  const res = await fetch(`${API_URL}/user/${userId}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-    credentials: "include",
-  });
+  try {
+    const res = await fetch(`${API_URL}/user/${userId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+      credentials: "include",
+    });
 
-  const json = await res.json();
-  if (!json.success)
-    throw new Error(json.error || "Error actualizando usuario");
-  return json.data;
+    const json = await res.json();
+    if (!json.success) {
+      toast.error(json.error || "Error actualizando usuario");
+      return null;
+    }
+    return json.data;
+  } catch (error) {
+    toast.error(error.message || "Error actualizando usuario");
+    return null;
+  }
 }
