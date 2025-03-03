@@ -85,7 +85,10 @@ const StudentForm = () => {
             : "";
           setValue("birthDate", birthDate);
 
-          setValue("curso", studentData.ClassId || "none");
+          setValue(
+            "curso",
+            studentData.ClassId ? studentData.ClassId._id : "none"
+          );
 
           const previousClassNames = studentData.previousClasses
             ? studentData.previousClasses.map((cls) => cls.name).join(", ")
@@ -124,6 +127,8 @@ const StudentForm = () => {
 
       if (data.curso && data.curso !== "none") {
         formattedData.ClassId = data.curso;
+      } else if (studentData && studentData.ClassId) {
+        formattedData.ClassId = studentData.ClassId._id;
       }
 
       if (isEdit) {
@@ -315,10 +320,7 @@ const StudentForm = () => {
                 {...register("curso", {
                   required: isEdit
                     ? false
-                    : {
-                        value: true,
-                        message: "Este campo es obligatorio",
-                      },
+                    : { value: true, message: "Este campo es obligatorio" },
                   validate: (value) =>
                     value !== "none" || "Este campo es obligatorio",
                 })}
@@ -338,7 +340,7 @@ const StudentForm = () => {
           </div>
           <div>
             <label className="block font-semibold text-black">
-              Clases en las que ha estado inscrito
+              Clases anteriores
             </label>
             <div className="space-y-2">
               {previousClasses.length > 0 ? (
