@@ -44,7 +44,9 @@ const InstrumentForm = () => {
           throw new Error("El usuario no tiene un campus seleccionado");
 
         const studentsData = await getStudentsByCampusId(campusId);
-        setStudents(studentsData);
+        setStudents(
+          studentsData.filter((student) => student.status === "activo")
+        );
       } catch (err) {
         setErrorStudents(err.message);
       } finally {
