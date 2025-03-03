@@ -20,6 +20,8 @@ const ClassForm = () => {
     defaultValues: {
       generation: `${new Date().getFullYear()}-${new Date().getFullYear() + 1}`,
       teacherId: "none",
+      startTime: "16:00",
+      endTime: "19:00",
     },
   });
 
