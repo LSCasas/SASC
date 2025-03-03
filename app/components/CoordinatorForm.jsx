@@ -29,7 +29,10 @@ const CoordinatorForm = () => {
     async function fetchCampuses() {
       try {
         let campusesData = await getAllCampuses();
-        setCampuses(campusesData);
+        const activeCampuses = campusesData.filter(
+          (campus) => campus.isAchive === false
+        );
+        setCampuses(activeCampuses);
       } catch (err) {
         setErrorCampuses("Error al obtener las sedes");
       } finally {
