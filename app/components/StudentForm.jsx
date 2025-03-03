@@ -322,10 +322,12 @@ const StudentForm = () => {
             ) : (
               <select
                 {...register("curso", {
-                  required: {
-                    value: true,
-                    message: "Este campo es obligatorio",
-                  },
+                  required: isEdit
+                    ? false
+                    : {
+                        value: true,
+                        message: "Este campo es obligatorio",
+                      },
                   validate: (value) =>
                     value !== "none" || "Este campo es obligatorio",
                 })}
