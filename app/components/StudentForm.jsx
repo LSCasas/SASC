@@ -340,7 +340,7 @@ const StudentForm = () => {
           </div>
           <div>
             <label className="block font-semibold text-black">
-              Clases anteriores
+              Historial de sus clases
             </label>
             <div className="space-y-2">
               {previousClasses.length > 0 ? (
@@ -352,13 +352,6 @@ const StudentForm = () => {
                     <span className="text-gray-600 font-semibold">
                       {cls.name}
                     </span>
-                    <button
-                      type="button"
-                      onClick={() => handleRemovePreviousClass(cls._id)}
-                      className="text-red-500 hover:underline text-sm"
-                    >
-                      Eliminar
-                    </button>
                   </div>
                 ))
               ) : (
