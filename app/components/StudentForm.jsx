@@ -195,9 +195,14 @@ const StudentForm = () => {
           <div>
             <label className="block font-semibold text-black">CURP</label>
             <input
-              {...register("curp", { required: "Este campo es obligatorio" })}
+              {...register("curp", {
+                required: "Este campo es obligatorio",
+              })}
               className="w-full p-2 border rounded text-black"
             />
+            {errors.curp && (
+              <p className="text-red-500 text-sm">{errors.curp.message}</p>
+            )}
           </div>
           <div>
             <label className="block font-semibold text-black">
@@ -205,9 +210,14 @@ const StudentForm = () => {
             </label>
             <input
               type="date"
-              {...register("birthDate")}
+              {...register("birthDate", {
+                required: "Este campo es obligatorio",
+              })}
               className="w-full p-2 border rounded text-black"
             />
+            {errors.birthDate && (
+              <p className="text-red-500 text-sm">{errors.birthDate.message}</p>
+            )}
           </div>
           <div>
             <label className="block font-semibold text-black">
@@ -235,9 +245,9 @@ const StudentForm = () => {
               })}
               className="w-full p-2 border rounded text-black"
             />
-            {errors.nombreTutor && (
+            {errors.apellidosTutor && (
               <p className="text-red-500 text-sm">
-                {errors.nombreTutor.message}
+                {errors.apellidosTutor.message}
               </p>
             )}
           </div>
@@ -251,6 +261,9 @@ const StudentForm = () => {
               })}
               className="w-full p-2 border rounded text-black"
             />
+            {errors.curpTutor && (
+              <p className="text-red-500 text-sm">{errors.curpTutor.message}</p>
+            )}
           </div>
           <div>
             <label className="block font-semibold text-black">
@@ -262,6 +275,11 @@ const StudentForm = () => {
               })}
               className="w-full p-2 border rounded text-black"
             />
+            {errors.telefonoTutor && (
+              <p className="text-red-500 text-sm">
+                {errors.telefonoTutor.message}
+              </p>
+            )}
           </div>
           <div>
             <label className="block font-semibold text-black">
@@ -269,9 +287,16 @@ const StudentForm = () => {
             </label>
             <input
               type="date"
-              {...register("inscritoDesde")}
+              {...register("inscritoDesde", {
+                required: "Este campo es obligatorio",
+              })}
               className="w-full p-2 border rounded text-black"
             />
+            {errors.inscritoDesde && (
+              <p className="text-red-500 text-sm">
+                {errors.inscritoDesde.message}
+              </p>
+            )}
           </div>
 
           {isEdit && (
@@ -296,7 +321,14 @@ const StudentForm = () => {
               <p className="text-red-500">{errorClasses}</p>
             ) : (
               <select
-                {...register("curso")}
+                {...register("curso", {
+                  required: {
+                    value: true,
+                    message: "Este campo es obligatorio",
+                  },
+                  validate: (value) =>
+                    value !== "none" || "Este campo es obligatorio",
+                })}
                 className="w-full p-2 border rounded text-black"
               >
                 <option value="none">Seleccionar curso</option>
@@ -306,6 +338,9 @@ const StudentForm = () => {
                   </option>
                 ))}
               </select>
+            )}
+            {errors.curso && (
+              <p className="text-red-500 text-sm">{errors.curso.message}</p>
             )}
           </div>
           <div>
