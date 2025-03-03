@@ -40,7 +40,9 @@ export async function getAllStudents() {
     const json = await res.json();
     if (!res.ok) {
       toast.error(
-        json.message || "Error desconocido al obtener los estudiantes"
+        json.message ||
+          json.error ||
+          "Error desconocido al obtener los estudiantes"
       );
       return null;
     }
@@ -61,7 +63,11 @@ export async function getStudentById(studentId) {
 
     const json = await res.json();
     if (!res.ok) {
-      toast.error(json.message || "Error desconocido al obtener el estudiante");
+      toast.error(
+        json.message ||
+          json.error ||
+          "Error desconocido al obtener el estudiante"
+      );
       return null;
     }
     return json.data;
@@ -81,13 +87,13 @@ export async function getStudentsByCampusId(campusId) {
 
     const json = await res.json();
     if (!res.ok) {
-      // Si no se encontraron estudiantes, no lanzamos un error 500, solo mostramos el mensaje
       if (json.error && json.error.includes("No students found")) {
         toast.info("No se encontraron estudiantes para este campus");
         return [];
       }
       toast.error(
         json.message ||
+          json.error ||
           "Error desconocido al obtener los estudiantes del campus"
       );
       return null;

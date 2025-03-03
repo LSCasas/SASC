@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 const API_URL = "http://localhost:5000";
 
 // CREATE TRANSFER
@@ -15,13 +17,15 @@ export async function createTransfer(data) {
     const result = await response.json();
 
     if (!response.ok) {
-      throw new Error(result.message || "Error creando la transferencia");
+      toast.error(
+        result.message || result.error || "Error creando la transferencia"
+      );
+      return null;
     }
-
     return result.data;
   } catch (error) {
-    console.error("Error en crear transferencia:", error);
-    throw error;
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
   }
 }
 
@@ -36,13 +40,15 @@ export async function getAllTransfers() {
     const result = await response.json();
 
     if (!response.ok) {
-      throw new Error(result.message || "Error obteniendo las transferencias");
+      toast.error(
+        result.message || result.error || "Error obteniendo las transferencias"
+      );
+      return null;
     }
-
     return result.data;
   } catch (error) {
-    console.error("Error obteniendo todas las transferencias:", error);
-    throw error;
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
   }
 }
 
@@ -57,13 +63,15 @@ export async function getTransferById(id) {
     const result = await response.json();
 
     if (!response.ok) {
-      throw new Error(result.message || "Error obteniendo la transferencia");
+      toast.error(
+        result.message || result.error || "Error obteniendo la transferencia"
+      );
+      return null;
     }
-
     return result.data;
   } catch (error) {
-    console.error("Error obteniendo la transferencia por ID:", error);
-    throw error;
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
   }
 }
 
@@ -78,15 +86,17 @@ export async function getTransfersByCampusId(campusId) {
     const result = await response.json();
 
     if (!response.ok) {
-      throw new Error(
-        result.message || "Error obteniendo las transferencias por sede"
+      toast.error(
+        result.message ||
+          result.error ||
+          "Error obteniendo las transferencias por sede"
       );
+      return null;
     }
-
     return result.data;
   } catch (error) {
-    console.error("Error obteniendo transferencias por sede:", error);
-    throw error;
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
   }
 }
 
@@ -105,12 +115,14 @@ export async function updateTransfer(id, data) {
     const result = await response.json();
 
     if (!response.ok) {
-      throw new Error(result.message || "Error actualizando la transferencia");
+      toast.error(
+        result.message || result.error || "Error actualizando la transferencia"
+      );
+      return null;
     }
-
     return result.data;
   } catch (error) {
-    console.error("Error actualizando la transferencia:", error);
-    throw error;
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
   }
 }
