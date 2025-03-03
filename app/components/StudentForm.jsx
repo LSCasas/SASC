@@ -121,7 +121,7 @@ const StudentForm = () => {
         gender: data.genero,
         medicalConditions: data.condicionesMedicas || null,
         specialNeeds: data.necesidadesEspeciales || null,
-        requiredDocuments: data.documentosRequeridos || null,
+        requiredDocuments: null,
         tutorName: data.nombreTutor,
         tutorLastname: data.apellidosTutor,
         tutorCurp: data.curpTutor,
@@ -383,15 +383,6 @@ const StudentForm = () => {
             </label>
             <input
               {...register("necesidadesEspeciales")}
-              className="w-full p-2 border rounded text-black"
-            />
-          </div>
-          <div>
-            <label className="block font-semibold text-black">
-              Documentos Requeridos
-            </label>
-            <input
-              {...register("documentosRequeridos")}
               className="w-full p-2 border rounded text-black"
             />
           </div>
