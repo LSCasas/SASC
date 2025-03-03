@@ -17,6 +17,8 @@ export default function StudentTable() {
     gender: "",
     hasInstrument: "",
     generation: "",
+    minAge: "",
+    maxAge: "",
   });
 
   useEffect(() => {
@@ -57,6 +59,14 @@ export default function StudentTable() {
 
   useEffect(() => {
     let filtered = students.filter((student) => {
+      const age = calculateAge(student.birthDate);
+      const minAgeMatch = filters.minAge
+        ? age >= parseInt(filters.minAge)
+        : true;
+      const maxAgeMatch = filters.maxAge
+        ? age <= parseInt(filters.maxAge)
+        : true;
+
       const nameMatch =
         student.firstName.toLowerCase().includes(filters.name.toLowerCase()) ||
         student.lastName.toLowerCase().includes(filters.name.toLowerCase());
@@ -76,40 +86,15 @@ export default function StudentTable() {
           ? true
           : student.hasInstrument.toString() === filters.hasInstrument;
 
-      if (filters.generation) {
-        let matchingStudents = [];
-
-        if (
-          student.ClassId?.generation
-            ?.toLowerCase()
-            .includes(filters.generation.toLowerCase())
-        ) {
-          matchingStudents.push({
-            ...student,
-            matchedGeneration: student.ClassId?.generation,
-          });
-        }
-
-        student.previousClasses?.forEach((prevClass) => {
-          if (
-            prevClass.generation
-              ?.toLowerCase()
-              .includes(filters.generation.toLowerCase())
-          ) {
-            matchingStudents.push({
-              ...student,
-              matchedGeneration: prevClass.generation,
-            });
-          }
-        });
-
-        return matchingStudents.length > 0 ? matchingStudents : false;
-      }
-
-      return nameMatch && classMatch && genderMatch && instrumentMatch;
+      return (
+        nameMatch &&
+        classMatch &&
+        genderMatch &&
+        instrumentMatch &&
+        minAgeMatch &&
+        maxAgeMatch
+      );
     });
-
-    filtered = filtered.flat();
 
     setFilteredStudents(filtered);
   }, [filters, students]);
@@ -132,9 +117,8 @@ export default function StudentTable() {
               <th className="p-3 border-b text-black">#</th>
               <th className="p-3 border-b text-black">Nombre</th>
               <th className="p-3 border-b text-black">Apellidos</th>
-              <th className="p-3 border-b text-black">Clase</th>
-              {/* Nueva columna de Edad */}
               <th className="p-3 border-b text-black">Edad</th>
+              <th className="p-3 border-b text-black">Clase</th>
             </tr>
           </thead>
           <tbody>
@@ -161,13 +145,13 @@ export default function StudentTable() {
                   </td>
                   <td className="p-3 border-b">
                     <Link href={`/formularioDeAlumnos?id=${student._id}`}>
-                      {student.ClassId?.name || "Sin clase"}
+                      {calculateAge(student.birthDate)}
                     </Link>
                   </td>
-                  {/* Nueva columna de Edad */}
+
                   <td className="p-3 border-b">
                     <Link href={`/formularioDeAlumnos?id=${student._id}`}>
-                      {calculateAge(student.birthDate)}
+                      {student.ClassId?.name || "Sin clase"}
                     </Link>
                   </td>
                 </tr>

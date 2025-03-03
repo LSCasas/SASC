@@ -39,14 +39,22 @@ export default function Filters({ filters, onFilterChange }) {
         <option value="true">Sí</option>
         <option value="false">No</option>
       </select>
-      {/* <input
-        type="text"
-        name="generation"
-        value={filters.generation}
+      <input
+        type="number"
+        name="minAge"
+        value={filters.minAge}
         onChange={onFilterChange}
-        placeholder="Buscar por generación"
-        className="flex-1 min-w-[150px] p-2 border rounded"
-      /> */}
+        placeholder="Edad mínima"
+        className="flex-1 min-w-[100px] p-2 border rounded"
+      />
+      <input
+        type="number"
+        name="maxAge"
+        value={filters.maxAge}
+        onChange={onFilterChange}
+        placeholder="Edad máxima"
+        className="flex-1 min-w-[100px] p-2 border rounded"
+      />
     </div>
   );
 }
