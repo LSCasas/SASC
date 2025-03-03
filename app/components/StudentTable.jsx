@@ -4,6 +4,7 @@ import ExportButtons from "./StudentExportButtons";
 import Link from "next/link";
 import { getCurrentUser } from "../api/user";
 import { getStudentsByCampusId } from "../api/student";
+import calculateAge from "./calculateAge";
 
 export default function StudentTable() {
   const [students, setStudents] = useState([]);
@@ -132,7 +133,8 @@ export default function StudentTable() {
               <th className="p-3 border-b text-black">Nombre</th>
               <th className="p-3 border-b text-black">Apellidos</th>
               <th className="p-3 border-b text-black">Clase</th>
-              {/* <th className="p-3 border-b text-black">Generación</th> */}
+              {/* Nueva columna de Edad */}
+              <th className="p-3 border-b text-black">Edad</th>
             </tr>
           </thead>
           <tbody>
@@ -162,13 +164,12 @@ export default function StudentTable() {
                       {student.ClassId?.name || "Sin clase"}
                     </Link>
                   </td>
-                  {/* <td className="p-3 border-b">
+                  {/* Nueva columna de Edad */}
+                  <td className="p-3 border-b">
                     <Link href={`/formularioDeAlumnos?id=${student._id}`}>
-                      {student.matchedGeneration ||
-                        student.ClassId?.generation ||
-                        "Sin generación"}
+                      {calculateAge(student.birthDate)}
                     </Link>
-                  </td> */}
+                  </td>
                 </tr>
               ))
             ) : (
