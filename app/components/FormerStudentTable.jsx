@@ -127,22 +127,22 @@ export default function ExStudentTable() {
                 <tr key={student._id}>
                   <td className="p-3 border-b">{index + 1}</td>
                   <td className="p-3 border-b">
-                    <Link href={`/formularioDeExAlumnos?id=${student._id}`}>
+                    <Link href={`//formularioDeAlumnos?id=${student._id}`}>
                       {student.firstName}
                     </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href={`/formularioDeExAlumnos?id=${student._id}`}>
+                    <Link href={`//formularioDeAlumnos?id=${student._id}`}>
                       {student.lastName}
                     </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href={`/formularioDeExAlumnos?id=${student._id}`}>
+                    <Link href={`//formularioDeAlumnos?id=${student._id}`}>
                       {student.ClassId?.name || "Sin clase"}
                     </Link>
                   </td>
                   <td className="p-3 border-b">
-                    <Link href={`/formularioDeExAlumnos?id=${student._id}`}>
+                    <Link href={`//formularioDeAlumnos?id=${student._id}`}>
                       {student.status}
                     </Link>
                   </td>
