@@ -96,11 +96,10 @@ const TeacherForm = () => {
 
           <div>
             <label className="block font-semibold text-black">
-              Correo Electrónico
+              Correo Electrónico (Opcional)
             </label>
             <input
               {...register("email", {
-                required: "Este campo es obligatorio",
                 pattern: {
                   value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                   message: "Por favor ingresa un correo electrónico válido",
@@ -112,6 +111,7 @@ const TeacherForm = () => {
               <p className="text-red-500 text-sm">{errors.email.message}</p>
             )}
           </div>
+
           {isEdit && (
             <div>
               <label className="block font-semibold text-black">
