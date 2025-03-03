@@ -3,6 +3,7 @@ import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import * as XLSX from "xlsx";
 import { getCurrentUser } from "../api/user";
+import calculateAge from "./calculateAge";
 
 export default function StudentExportButtons({ data }) {
   const [campusName, setCampusName] = useState("");
@@ -55,11 +56,12 @@ export default function StudentExportButtons({ data }) {
 
       doc.autoTable({
         startY: 20,
-        head: [["#", "Nombre", "Apellidos", "Clase"]],
+        head: [["#", "Nombre", "Apellidos", "Edad", "Clase"]],
         body: chunk.map((student, index) => [
           i + index + 1,
           student.firstName || "Sin nombre",
           student.lastName || "Sin apellido",
+          calculateAge(student.birthDate) || "Sin edad",
           student.ClassId?.name || "Sin clase",
         ]),
         styles: {
@@ -93,6 +95,7 @@ export default function StudentExportButtons({ data }) {
         "#": index + 1,
         Nombre: student.firstName || "Sin nombre",
         Apellidos: student.lastName || "Sin apellido",
+        Edad: calculateAge(student.birthDate) || "Sin edad",
         Clase: student.ClassId?.name || "Sin clase",
       }))
     );
