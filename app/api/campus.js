@@ -1,7 +1,6 @@
-const API_URL = "http://localhost:5000";
+import { toast } from "react-toastify";
 
-// DEVELOPMENT:  //http://localhost:5000
-// TESTING: //https://sasc-api-2.onrender.com
+const API_URL = "http://localhost:5000";
 
 // CREATE CAMPUS
 export async function createCampus(campusData) {
@@ -16,12 +15,15 @@ export async function createCampus(campusData) {
     });
 
     const data = await response.json();
-    if (!response.ok) throw new Error(data.message || "Error al crear campus");
+    if (!data.success) {
+      toast.error(data.message || json.error || "Error al crear campus");
+      return null;
+    }
 
     return data.data;
   } catch (error) {
-    console.error("Error en createCampus:", error);
-    throw error;
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
   }
 }
 
@@ -34,13 +36,15 @@ export async function getAllCampuses() {
     });
 
     const data = await response.json();
-    if (!response.ok)
-      throw new Error(data.message || "Error al obtener campuses");
+    if (!data.success) {
+      toast.error(data.message || json.error || "Error al obtener campuses");
+      return null;
+    }
 
     return data.data;
   } catch (error) {
-    console.error("Error en getAllCampuses:", error);
-    throw error;
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
   }
 }
 
@@ -53,13 +57,15 @@ export async function getCampusById(campusId) {
     });
 
     const data = await response.json();
-    if (!response.ok)
-      throw new Error(data.message || "Error al obtener campus");
+    if (!data.success) {
+      toast.error(data.message || json.error || "Error al obtener campus");
+      return null;
+    }
 
     return data.data;
   } catch (error) {
-    console.error("Error en getCampusById:", error);
-    throw error;
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
   }
 }
 
@@ -76,12 +82,14 @@ export async function updateCampus(campusId, campusData) {
     });
 
     const data = await response.json();
-    if (!response.ok)
-      throw new Error(data.message || "Error al actualizar campus");
+    if (!data.success) {
+      toast.error(data.message || json.error || "Error al actualizar campus");
+      return null;
+    }
 
     return data.data;
   } catch (error) {
-    console.error("Error en updateCampus:", error);
-    throw error;
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
   }
 }

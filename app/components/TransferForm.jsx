@@ -183,10 +183,8 @@ const TransferForm = () => {
 
         <div className="mt-4 text-sm text-gray-600">
           <p>
-            Nota: Ignore el mensaje de error que aparece en la consola, ya que
-            no afecta el funcionamiento de la transferencia. Recuerda antes de
-            hacer una transferencia comunicarte con la Sede de Envío para estar
-            coordinados"
+            Nota: Antes de realizar una transferencia, recuerda comunicarte con
+            la Sede de Envío para coordinar el proceso.
           </p>
         </div>
         <button
