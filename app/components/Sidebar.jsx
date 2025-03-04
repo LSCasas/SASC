@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import useAuthToken from "@/hooks/useAuthToken";
 import {
   Menu,
   GraduationCap,
@@ -17,6 +18,7 @@ import { logout } from "../api/auth";
 import { getCurrentUser } from "../api/user";
 
 const Sidebar = () => {
+  useAuthToken();
   const [isOpen, setIsOpen] = useState(false);
   const [campusName, setCampusName] = useState("");
 

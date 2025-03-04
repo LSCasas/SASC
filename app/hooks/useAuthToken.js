@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { AuthUser } from "../api/user";
 
-export default function useAuth() {
+export default function useAuthToken() {
   const router = useRouter();
   const [user, setUser] = useState(null);
 
