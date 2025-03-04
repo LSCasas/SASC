@@ -4,6 +4,7 @@ import ExportButtons from "./TeacherExportButtons";
 import Link from "next/link";
 import { getCurrentUser } from "../api/user";
 import { getTeachersByCampusId } from "../api/teacher";
+import { useRouter } from "next/router";
 
 export default function TeacherTable() {
   const [teachers, setTeachers] = useState([]);
@@ -11,6 +12,7 @@ export default function TeacherTable() {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("active");
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchTeachers() {
@@ -79,32 +81,15 @@ export default function TeacherTable() {
                 <tr
                   key={teacher._id}
                   className="cursor-pointer hover:bg-gray-100"
+                  onClick={() =>
+                    router.push(`/formularioDeDocentes?id=${teacher._id}`)
+                  }
                 >
-                  <td className="p-3 border-b">
-                    <Link href={`/formularioDeDocentes?id=${teacher._id}`}>
-                      {index + 1}
-                    </Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link href={`/formularioDeDocentes?id=${teacher._id}`}>
-                      {teacher.firstName}
-                    </Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link href={`/formularioDeDocentes?id=${teacher._id}`}>
-                      {teacher.lastName}
-                    </Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link href={`/formularioDeDocentes?id=${teacher._id}`}>
-                      {teacher.phone}
-                    </Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link href={`/formularioDeDocentes?id=${teacher._id}`}>
-                      {teacher.email}
-                    </Link>
-                  </td>
+                  <td className="p-3 border-b">{index + 1}</td>
+                  <td className="p-3 border-b">{teacher.firstName}</td>
+                  <td className="p-3 border-b">{teacher.lastName}</td>
+                  <td className="p-3 border-b">{teacher.phone}</td>
+                  <td className="p-3 border-b">{teacher.email}</td>
                 </tr>
               ))
             ) : (
