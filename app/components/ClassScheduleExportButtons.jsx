@@ -51,7 +51,7 @@ export default function ClassScheduleExportButtons({ data }) {
       Martes: classItem.days.includes("Martes")
         ? `${classItem.startTime} - ${classItem.endTime}`
         : "",
-      Miércoles: classItem.days.includes("Miércoles")
+      Miercoles: classItem.days.includes("Miercoles")
         ? `${classItem.startTime} - ${classItem.endTime}`
         : "",
       Jueves: classItem.days.includes("Jueves")
@@ -70,7 +70,7 @@ export default function ClassScheduleExportButtons({ data }) {
           "Instructor",
           "Lunes",
           "Martes",
-          "Miércoles",
+          "Miercoles",
           "Jueves",
           "Viernes",
         ],
@@ -80,7 +80,7 @@ export default function ClassScheduleExportButtons({ data }) {
         row.Instructor,
         row.Lunes,
         row.Martes,
-        row.Miércoles,
+        row.Miercoles,
         row.Jueves,
         row.Viernes,
       ]),
@@ -122,7 +122,7 @@ export default function ClassScheduleExportButtons({ data }) {
         Martes: classItem.days.includes("Martes")
           ? `${classItem.startTime} - ${classItem.endTime}`
           : "",
-        Miércoles: classItem.days.includes("Miércoles")
+        Miercoles: classItem.days.includes("Miercoles")
           ? `${classItem.startTime} - ${classItem.endTime}`
           : "",
         Jueves: classItem.days.includes("Jueves")
