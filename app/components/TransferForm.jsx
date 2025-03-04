@@ -128,7 +128,7 @@ const TransferForm = () => {
         {isEdit && studentData && (
           <div>
             <label className="block font-semibold text-black">
-              Campus Actual
+              Sede Actual
             </label>
             <input
               value={studentData.campusId ? studentData.campusId.name : ""}
@@ -140,7 +140,7 @@ const TransferForm = () => {
 
         <div>
           <label className="block font-semibold text-black">
-            Campus de Envío
+            Sede de Envío
           </label>
           <select
             {...register("campusEnvio", {
@@ -181,6 +181,14 @@ const TransferForm = () => {
           </div>
         )}
 
+        <div className="mt-4 text-sm text-gray-600">
+          <p>
+            Nota: Ignore el mensaje de error que aparece en la consola, ya que
+            no afecta el funcionamiento de la transferencia. Recuerda antes de
+            hacer una transferencia comunicarte con la Sede de Envío para estar
+            coordinados"
+          </p>
+        </div>
         <button
           type="submit"
           className="w-full sm:w-auto py-2 px-4 bg-gradient-to-r bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
