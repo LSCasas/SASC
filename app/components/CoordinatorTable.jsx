@@ -56,7 +56,7 @@ export default function CoordinatorTable() {
         typeFilter={typeFilter}
         setTypeFilter={setTypeFilter}
       />
-      <div className="overflow-y-auto max-h-[400px]">
+      <div className="overflow-y-auto h-[55vh]">
         <table className="min-w-full bg-white border border-gray-200 text-black">
           <thead>
             <tr className="bg-gray-100 text-left">
