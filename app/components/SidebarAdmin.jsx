@@ -62,12 +62,10 @@ const SidebarAdmin = () => {
         <Menu size={24} />
       </button>
 
-      {/* Menu sidebar visible on medium screens and larger */}
       <div className="hidden md:flex md:w-64 h-screen bg-gradient-to-r from-[#B0005E] to-[#6C0036] p-4 absolute md:relative">
         <SidebarAdminContent />
       </div>
 
-      {/* Mobile menu visible on small screens */}
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 md:hidden z-50 flex items-start">
           <div

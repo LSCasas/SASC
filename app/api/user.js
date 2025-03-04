@@ -1,6 +1,9 @@
 import { toast } from "react-toastify";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://sasc-api-2.onrender.com";
+
+// DEVELOPMENT:  //http://localhost:5000
+// TESTING: //https://sasc-api-2.onrender.com
 
 export async function createUser(data) {
   try {
