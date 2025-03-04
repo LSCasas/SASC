@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import InstrumentFilters from "./InstrumentFilters";
 import ExportButtons from "./InstrumentExportButtons";
 import Link from "next/link";
+import { useRouter } from "next/router"; // Importa useRouter
 import { getCurrentUser } from "../api/user";
 import { getInstrumentsByCampusId } from "../api/instrument";
 
@@ -14,6 +15,7 @@ export default function InstrumentTable() {
   const [internalIdSearchTerm, setInternalIdSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("active");
   const [ownerFilter, setOwnerFilter] = useState("");
+  const router = useRouter(); // Usamos el hook de router
 
   useEffect(() => {
     async function fetchInstruments() {
@@ -110,47 +112,27 @@ export default function InstrumentTable() {
           <tbody>
             {filteredInstruments.length > 0 ? (
               filteredInstruments.map((instrument, index) => (
-                <tr key={instrument._id}>
+                <tr
+                  key={instrument._id}
+                  className="cursor-pointer hover:bg-gray-100"
+                  onClick={() =>
+                    router.push(
+                      `/formularioDeInstrumentos?id=${instrument._id}`
+                    )
+                  } // Redirige al hacer clic en la fila
+                >
+                  <td className="p-3 border-b">{index + 1}</td>
+                  <td className="p-3 border-b">{instrument.name}</td>
+                  <td className="p-3 border-b">{instrument.internalId}</td>
                   <td className="p-3 border-b">
-                    <Link
-                      href={`/formularioDeInstrumentos?id=${instrument._id}`}
-                    >
-                      {index + 1}
-                    </Link>
+                    {instrument.studentId && instrument.studentId.firstName
+                      ? `${instrument.studentId.firstName} ${instrument.studentId.lastName}`
+                      : "Sin Asignar"}
                   </td>
                   <td className="p-3 border-b">
-                    <Link
-                      href={`/formularioDeInstrumentos?id=${instrument._id}`}
-                    >
-                      {instrument.name}
-                    </Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link
-                      href={`/formularioDeInstrumentos?id=${instrument._id}`}
-                    >
-                      {instrument.internalId}
-                    </Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link
-                      href={`/formularioDeInstrumentos?id=${instrument._id}`}
-                    >
-                      {instrument.studentId && instrument.studentId.firstName
-                        ? `${instrument.studentId.firstName} ${instrument.studentId.lastName}`
-                        : "Sin Asignar"}
-                    </Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link
-                      href={`/formularioDeInstrumentos?id=${instrument._id}`}
-                    >
-                      {instrument.assignmentDate
-                        ? new Date(
-                            instrument.assignmentDate
-                          ).toLocaleDateString()
-                        : "Sin Asignar"}
-                    </Link>
+                    {instrument.assignmentDate
+                      ? new Date(instrument.assignmentDate).toLocaleDateString()
+                      : "Sin Asignar"}
                   </td>
                 </tr>
               ))
