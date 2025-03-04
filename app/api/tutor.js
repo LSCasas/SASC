@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 const API_URL = "http://localhost:5000";
 
 // DEVELOPMENT:  //http://localhost:5000
@@ -5,92 +7,119 @@ const API_URL = "http://localhost:5000";
 
 // CREATE TUTOR
 export async function createTutor(data) {
-  const res = await fetch(`${API_URL}/tutor`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-    credentials: "include",
-  });
+  try {
+    const res = await fetch(`${API_URL}/tutor`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+      credentials: "include",
+    });
 
-  const json = await res.json();
-  if (!json.success) throw new Error(json.message);
-  return json.data;
+    const json = await res.json();
+    if (!json.success) {
+      toast.error(json.message || json.error || "Error al crear tutor");
+      return null;
+    }
+    return json.data;
+  } catch (error) {
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
+  }
 }
 
 // GET ALL TUTORS
 export async function getAllTutors() {
-  const res = await fetch(`${API_URL}/tutor`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-  });
+  try {
+    const res = await fetch(`${API_URL}/tutor`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
 
-  const json = await res.json();
-  if (!json.success) throw new Error(json.message);
-  return json.data;
+    const json = await res.json();
+    if (!json.success) {
+      toast.error(json.message || json.error || "Error al obtener tutores");
+      return null;
+    }
+    return json.data;
+  } catch (error) {
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
+  }
 }
 
 // GET TUTOR BY ID
 export async function getTutorById(tutorId) {
-  const res = await fetch(`${API_URL}/tutor/${tutorId}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-  });
+  try {
+    const res = await fetch(`${API_URL}/tutor/${tutorId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
 
-  const json = await res.json();
-  if (!json.success) throw new Error(json.message);
-  return json.data;
+    const json = await res.json();
+    if (!json.success) {
+      toast.error(json.message || json.error || "Error al obtener tutor");
+      return null;
+    }
+    return json.data;
+  } catch (error) {
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
+  }
 }
 
 // GET TUTORS BY CAMPUS ID
 export async function getTutorsByCampusId(campusId) {
-  const res = await fetch(`${API_URL}/tutor/campus/${campusId}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-  });
+  try {
+    const res = await fetch(`${API_URL}/tutor/campus/${campusId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
 
-  const json = await res.json();
-  if (!json.success) throw new Error(json.message);
-  return json.data;
+    const json = await res.json();
+    if (!json.success) {
+      toast.error(
+        json.message || json.error || "Error al obtener tutores por sede"
+      );
+      return null;
+    }
+    return json.data;
+  } catch (error) {
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
+  }
 }
 
 // UPDATE TUTOR
 export async function updateTutor(tutorId, data) {
-  const res = await fetch(`${API_URL}/tutor/${tutorId}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-    credentials: "include",
-  });
+  try {
+    const res = await fetch(`${API_URL}/tutor/${tutorId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+      credentials: "include",
+    });
 
-  const json = await res.json();
-  if (!json.success) throw new Error(json.message);
-  return json.data;
-}
-
-// DELETE TUTOR
-export async function deleteTutor(tutorId) {
-  const res = await fetch(`${API_URL}/tutor/${tutorId}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-  });
-
-  const json = await res.json();
-  if (!json.success) throw new Error(json.message);
-  return json.message;
+    const json = await res.json();
+    if (!json.success) {
+      toast.error(json.message || json.error || "Error al actualizar tutor");
+      return null;
+    }
+    return json.data;
+  } catch (error) {
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
+  }
 }

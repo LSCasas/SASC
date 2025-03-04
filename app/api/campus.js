@@ -2,6 +2,9 @@ import { toast } from "react-toastify";
 
 const API_URL = "http://localhost:5000";
 
+// DEVELOPMENT:  //http://localhost:5000
+// TESTING: //https://sasc-api-2.onrender.com
+
 // CREATE CAMPUS
 export async function createCampus(campusData) {
   try {
