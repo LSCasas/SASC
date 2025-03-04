@@ -22,7 +22,6 @@ export async function createClass(data) {
       toast.error(json.error || json.error || "Error creando clase");
       return null;
     }
-    toast.success("Clase creada correctamente");
     return json.data;
   } catch (error) {
     toast.error(error.message || "Error al procesar la solicitud");

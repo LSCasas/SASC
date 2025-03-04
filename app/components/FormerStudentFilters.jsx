@@ -47,7 +47,7 @@ export default function FormerStudentFilters({
         <option value="baja temporal">Baja Temporal</option>
         <option value="baja total">Baja Total</option>
         <option value="abandono voluntario">Abandono Voluntario</option>
-        <option value="finalización de estudios">
+        <option value="finalizacion de estudios">
           Finalización de Estudios
         </option>
       </select>
