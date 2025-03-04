@@ -68,7 +68,7 @@ const TransferForm = () => {
           setValue("nombreAlumno", studentData.firstName);
           setValue("apellidosAlumno", studentData.lastName);
           setValue("curso", studentData.ClassId || "none");
-          setSelectedCampus(studentData.campusId);
+          setSelectedCampus(studentData.campusId?._id || "");
           setSelectedClass(studentData.ClassId);
         } catch (err) {
           console.error("Error al obtener estudiante:", err);

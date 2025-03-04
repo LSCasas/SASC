@@ -1,4 +1,4 @@
-const API_URL = "https://sasc-api-2.onrender.com";
+const API_URL = "http://localhost:5000";
 
 // DEVELOPMENT:  //http://localhost:5000
 // TESTING: //http://localhost:5000
