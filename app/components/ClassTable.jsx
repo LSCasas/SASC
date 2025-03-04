@@ -4,6 +4,7 @@ import ClassFilters from "./ClassFilters";
 import Link from "next/link";
 import { getCurrentUser } from "../api/user";
 import { getClassesByCampusId } from "../api/class";
+import { useRouter } from "next/router";
 
 export default function ClassTable() {
   const [classes, setClasses] = useState([]);
@@ -13,6 +14,8 @@ export default function ClassTable() {
   const [searchTerm, setSearchTerm] = useState("");
   const [generationFilter, setGenerationFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("active");
+
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchClasses() {
@@ -54,6 +57,10 @@ export default function ClassTable() {
     return matchesName && matchesGeneration && matchesStatus;
   });
 
+  const handleRowClick = (classId) => {
+    router.push(`/formularioDeClases?id=${classId}`);
+  };
+
   return (
     <div className="mt-6">
       <ClassFilters
@@ -77,29 +84,19 @@ export default function ClassTable() {
           <tbody>
             {filteredClasses.length > 0 ? (
               filteredClasses.map((classItem, index) => (
-                <tr key={classItem._id}>
+                <tr
+                  key={classItem._id}
+                  className="cursor-pointer hover:bg-gray-100"
+                  onClick={() => handleRowClick(classItem._id)}
+                >
+                  <td className="p-3 border-b">{index + 1}</td>
+                  <td className="p-3 border-b">{classItem.name}</td>
                   <td className="p-3 border-b">
-                    <Link href={`/formularioDeClases?id=${classItem._id}`}>
-                      {index + 1}
-                    </Link>
+                    {classItem.teacherId
+                      ? `${classItem.teacherId.firstName} ${classItem.teacherId.lastName}`
+                      : "Sin asignar"}
                   </td>
-                  <td className="p-3 border-b">
-                    <Link href={`/formularioDeClases?id=${classItem._id}`}>
-                      {classItem.name}
-                    </Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link href={`/formularioDeClases?id=${classItem._id}`}>
-                      {classItem.teacherId
-                        ? `${classItem.teacherId.firstName} ${classItem.teacherId.lastName}`
-                        : "Sin asignar"}
-                    </Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link href={`/formularioDeClases?id=${classItem._id}`}>
-                      {classItem.generation}
-                    </Link>
-                  </td>
+                  <td className="p-3 border-b">{classItem.generation}</td>
                 </tr>
               ))
             ) : (
