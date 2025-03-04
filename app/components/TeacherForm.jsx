@@ -51,7 +51,7 @@ const TeacherForm = () => {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md max-w-lg mx-auto">
-      <div className="h-[80vh] overflow-y-auto p-2">
+      <div className="h-[70vh] overflow-y-auto p-2">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label className="block font-semibold text-black">Nombre</label>

@@ -1,12 +1,10 @@
-const API_URL = "https://sasc-api-2.onrender.com";
+import { toast } from "react-toastify";
 
-// DEVELOPMENT:  //http://localhost:5000
-// TESTING: //http://localhost:5000
+const API_URL = "https://sasc-api-2.onrender.com";
 
 // CREATE TEACHER
 export async function createTeacher(data) {
   try {
-    const { selectedCampusId, userId } = data;
     const res = await fetch(`${API_URL}/teacher`, {
       method: "POST",
       headers: {
@@ -17,11 +15,14 @@ export async function createTeacher(data) {
     });
 
     const json = await res.json();
-    if (!json.success) throw new Error(json.message);
+    if (!json.success) {
+      toast.error(json.error || json.error || "Error creando docente");
+      return null;
+    }
     return json.data;
   } catch (error) {
-    console.error("Error creando docente:", error);
-    throw error;
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
   }
 }
 
@@ -37,11 +38,14 @@ export async function getAllTeachers() {
     });
 
     const json = await res.json();
-    if (!json.success) throw new Error(json.message);
+    if (!json.success) {
+      toast.error(json.error || json.error || "Error obteniendo los docentes");
+      return null;
+    }
     return json.data;
   } catch (error) {
-    console.error("Error obteniendo todos los docentes:", error);
-    throw error;
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
   }
 }
 
@@ -57,11 +61,16 @@ export async function getTeacherById(id) {
     });
 
     const json = await res.json();
-    if (!json.success) throw new Error(json.message);
+    if (!json.success) {
+      toast.error(
+        json.error || json.error || "Error obteniendo docente por ID"
+      );
+      return null;
+    }
     return json.data;
   } catch (error) {
-    console.error("Error obteniendo docente por ID:", error);
-    throw error;
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
   }
 }
 
@@ -77,11 +86,16 @@ export async function getTeachersByCampusId(campusId) {
     });
 
     const json = await res.json();
-    if (!json.success) throw new Error(json.message);
+    if (!json.success) {
+      toast.error(
+        json.error || json.error || "Error obteniendo docentes por campus ID"
+      );
+      return null;
+    }
     return json.data;
   } catch (error) {
-    console.error("Error obteniendo docentes por campus ID:", error);
-    throw error;
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
   }
 }
 
@@ -98,10 +112,13 @@ export async function updateTeacher(id, data) {
     });
 
     const json = await res.json();
-    if (!json.success) throw new Error(json.message);
+    if (!json.success) {
+      toast.error(json.error || json.error || "Error actualizando docente");
+      return null;
+    }
     return json.data;
   } catch (error) {
-    console.error("Error actualizando docente:", error);
-    throw error;
+    toast.error(error.message || "Error al procesar la solicitud");
+    return null;
   }
 }
