@@ -25,9 +25,14 @@ export default function TransferTable() {
           throw new Error("El usuario no tiene un campus seleccionado");
 
         const transferData = await getTransfersByCampusId(campusId);
-        setTransfers(transferData);
+        if (transferData) {
+          setTransfers(transferData);
+        } else {
+          setTransfers([]); // Si no hay datos, establece un arreglo vacío
+        }
       } catch (err) {
         setError(err.message);
+        setTransfers([]); // En caso de error, establece un arreglo vacío
       } finally {
         setLoading(false);
       }
@@ -36,9 +41,8 @@ export default function TransferTable() {
   }, []);
 
   if (loading) return <p className="text-center text-black">Cargando...</p>;
-  if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
-  const filteredTransfers = transfers.filter((transfer) => {
+  const filteredTransfers = (transfers || []).filter((transfer) => {
     const matchesName =
       transfer.studentId?.firstName
         .toLowerCase()
@@ -128,7 +132,7 @@ export default function TransferTable() {
             ) : (
               <tr>
                 <td colSpan="8" className="p-3 text-center text-black">
-                  No hay transferencias disponibles
+                  No hay registros disponibles
                 </td>
               </tr>
             )}

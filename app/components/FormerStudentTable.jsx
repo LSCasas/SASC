@@ -99,7 +99,6 @@ export default function ExStudentTable() {
   ]);
 
   if (loading) return <p className="text-center text-black">Cargando...</p>;
-  if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
     <div className="mt-6">

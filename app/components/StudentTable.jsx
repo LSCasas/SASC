@@ -33,9 +33,10 @@ export default function StudentTable() {
 
         const studentData = await getStudentsByCampusId(campusId);
 
-        if (studentData.length === 0) {
+        // Verificamos que los estudiantes existan
+        if (studentData && studentData.length === 0) {
           setError("No se encontraron estudiantes para este campus.");
-        } else {
+        } else if (studentData) {
           const activeStudents = studentData.filter(
             (student) => student.status === "activo"
           );
@@ -46,6 +47,8 @@ export default function StudentTable() {
 
           setStudents(sortedStudents);
           setFilteredStudents(sortedStudents);
+        } else {
+          setError("Hubo un problema al cargar los estudiantes.");
         }
       } catch (err) {
         setError(err.message || "Hubo un problema al cargar los estudiantes.");
@@ -105,7 +108,6 @@ export default function StudentTable() {
   };
 
   if (loading) return <p className="text-center text-black">Cargando...</p>;
-  if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
     <div className="mt-6">
