@@ -39,8 +39,8 @@ export default function ExStudentTable() {
             (student) => student.status !== "activo"
           );
 
-          const sortedStudents = formerStudents.sort((a, b) =>
-            a.lastName.localeCompare(b.lastName)
+          const sortedStudents = formerStudents.sort(
+            (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
           );
 
           setStudents(sortedStudents);

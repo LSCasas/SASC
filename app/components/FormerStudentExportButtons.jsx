@@ -25,6 +25,11 @@ export default function FormerStudentExportButtons({ data }) {
     fetchUserData();
   }, []);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+  };
+
   const handleExport = (type) => {
     if (type === "PDF") {
       exportToPDF();
@@ -44,13 +49,23 @@ export default function FormerStudentExportButtons({ data }) {
 
     doc.autoTable({
       startY: 20,
-      head: [["#", "Nombre", "Apellido", "Última Clase", "Estado"]],
+      head: [
+        [
+          "#",
+          "Nombre",
+          "Apellido",
+          "Última Clase",
+          "Estado",
+          "Fecha de Abandono",
+        ],
+      ],
       body: data.map((student, index) => [
         index + 1,
         student.firstName || "Sin nombre",
         student.lastName || "Sin apellido",
         student.ClassId?.name || "Sin clase",
         student.status || "Desconocido",
+        student.updatedAt ? formatDate(student.updatedAt) : "No disponible",
       ]),
       styles: {
         fontSize: 10,
@@ -84,6 +99,9 @@ export default function FormerStudentExportButtons({ data }) {
         Apellido: student.lastName || "Sin apellido",
         "Última Clase": student.ClassId?.name || "Sin clase",
         Estado: student.status || "Desconocido",
+        "Fecha de Abandono": student.updatedAt
+          ? formatDate(student.updatedAt)
+          : "No disponible",
       }))
     );
 
