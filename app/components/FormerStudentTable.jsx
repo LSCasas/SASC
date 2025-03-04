@@ -105,6 +105,16 @@ export default function ExStudentTable() {
     router.push(`/formularioDeAlumnos?id=${studentId}`);
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
+  };
+
   if (loading) return <p className="text-center text-black">Cargando...</p>;
 
   return (
@@ -125,6 +135,9 @@ export default function ExStudentTable() {
               <th className="p-3 border-b text-black">Apellido</th>
               <th className="p-3 border-b text-black">Última Clase Tomada</th>
               <th className="p-3 border-b text-black">Estado</th>
+              <th className="p-3 border-b text-black">
+                Fecha de Abandono
+              </th>{" "}
             </tr>
           </thead>
           <tbody>
@@ -142,11 +155,14 @@ export default function ExStudentTable() {
                     {student.ClassId?.name || "Sin clase"}
                   </td>
                   <td className="p-3 border-b">{student.status}</td>
+                  <td className="p-3 border-b">
+                    {formatDate(student.updatedAt)}
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5" className="p-3 text-center text-black">
+                <td colSpan="6" className="p-3 text-center text-black">
                   No hay registros disponibles
                 </td>
               </tr>
