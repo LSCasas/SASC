@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import FormerStudentFilters from "./FormerStudentFilters";
 import ExportButtons from "./FormerStudentExportButtons";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { getCurrentUser } from "../api/user";
 import { getStudentsByCampusId } from "../api/student";
 
@@ -16,6 +17,8 @@ export default function ExStudentTable() {
   const [selectedGender, setSelectedGender] = useState("");
   const [instrumentStatus, setInstrumentStatus] = useState("");
   const [studentStatus, setStudentStatus] = useState("");
+
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchStudents() {
@@ -98,6 +101,10 @@ export default function ExStudentTable() {
     students,
   ]);
 
+  const handleRowClick = (studentId) => {
+    router.push(`/formularioDeAlumnos?id=${studentId}`);
+  };
+
   if (loading) return <p className="text-center text-black">Cargando...</p>;
 
   return (
@@ -123,28 +130,18 @@ export default function ExStudentTable() {
           <tbody>
             {filteredStudents.length > 0 ? (
               filteredStudents.map((student, index) => (
-                <tr key={student._id}>
+                <tr
+                  key={student._id}
+                  className="cursor-pointer hover:bg-gray-100"
+                  onClick={() => handleRowClick(student._id)}
+                >
                   <td className="p-3 border-b">{index + 1}</td>
+                  <td className="p-3 border-b">{student.firstName}</td>
+                  <td className="p-3 border-b">{student.lastName}</td>
                   <td className="p-3 border-b">
-                    <Link href={`//formularioDeAlumnos?id=${student._id}`}>
-                      {student.firstName}
-                    </Link>
+                    {student.ClassId?.name || "Sin clase"}
                   </td>
-                  <td className="p-3 border-b">
-                    <Link href={`//formularioDeAlumnos?id=${student._id}`}>
-                      {student.lastName}
-                    </Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link href={`//formularioDeAlumnos?id=${student._id}`}>
-                      {student.ClassId?.name || "Sin clase"}
-                    </Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link href={`//formularioDeAlumnos?id=${student._id}`}>
-                      {student.status}
-                    </Link>
-                  </td>
+                  <td className="p-3 border-b">{student.status}</td>
                 </tr>
               ))
             ) : (
