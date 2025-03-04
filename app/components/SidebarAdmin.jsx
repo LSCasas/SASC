@@ -7,6 +7,7 @@ import {
   Link as LinkIcon,
   Building,
   Briefcase,
+  BarChart,
 } from "lucide-react";
 import { getCurrentUser } from "../api/user";
 import { logout } from "../api/auth";
@@ -98,6 +99,11 @@ const SidebarAdminContent = () => {
           href="/coordinadores"
           icon={<Briefcase size={25} />}
           label="Control de Coordinadores"
+        />
+        <SidebarAdminItem
+          href="/datosDelPrograma"
+          icon={<BarChart size={25} />}
+          label="Estadísticas"
         />
       </div>
 

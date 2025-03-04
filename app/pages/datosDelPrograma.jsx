@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "@/components/Sidebar";
+import SidebarAdmin from "@/components/SidebarAdmin";
 import DashboardCard from "@/components/DashboardCard";
 import { getAllStudents } from "@/api/student";
 import { getAllTeachers } from "@/api/teacher";
@@ -98,7 +98,7 @@ const Dashboard = () => {
 
   return (
     <div className="flex flex-col lg:flex-row">
-      <Sidebar />
+      <SidebarAdmin />
       <div className="flex-1 bg-gray-50 min-h-screen">
         <div className="flex-1 p-6 bg-white">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
