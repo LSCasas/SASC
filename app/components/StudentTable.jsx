@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Filters from "./StudentFilters";
 import ExportButtons from "./StudentExportButtons";
-import Link from "next/link";
 import { getCurrentUser } from "../api/user";
 import { getStudentsByCampusId } from "../api/student";
 import calculateAge from "./calculateAge";
@@ -21,6 +21,8 @@ export default function StudentTable() {
     maxAge: "",
   });
 
+  const router = useRouter();
+
   useEffect(() => {
     async function fetchStudents() {
       try {
@@ -33,7 +35,6 @@ export default function StudentTable() {
 
         const studentData = await getStudentsByCampusId(campusId);
 
-        // Verificamos que los estudiantes existan
         if (studentData && studentData.length === 0) {
           setError("No se encontraron estudiantes para este campus.");
         } else if (studentData) {
@@ -129,32 +130,18 @@ export default function StudentTable() {
                 <tr
                   key={`${student._id}-${index}`}
                   className="cursor-pointer hover:bg-gray-100"
+                  onClick={() =>
+                    router.push(`/formularioDeAlumnos?id=${student._id}`)
+                  }
                 >
+                  <td className="p-3 border-b">{index + 1}</td>
+                  <td className="p-3 border-b">{student.firstName}</td>
+                  <td className="p-3 border-b">{student.lastName}</td>
                   <td className="p-3 border-b">
-                    <Link href={`/formularioDeAlumnos?id=${student._id}`}>
-                      {index + 1}
-                    </Link>
+                    {calculateAge(student.birthDate)}
                   </td>
                   <td className="p-3 border-b">
-                    <Link href={`/formularioDeAlumnos?id=${student._id}`}>
-                      {student.firstName}
-                    </Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link href={`/formularioDeAlumnos?id=${student._id}`}>
-                      {student.lastName}
-                    </Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link href={`/formularioDeAlumnos?id=${student._id}`}>
-                      {calculateAge(student.birthDate)}
-                    </Link>
-                  </td>
-
-                  <td className="p-3 border-b">
-                    <Link href={`/formularioDeAlumnos?id=${student._id}`}>
-                      {student.ClassId?.name || "Sin clase"}
-                    </Link>
+                    {student.ClassId?.name || "Sin clase"}
                   </td>
                 </tr>
               ))
