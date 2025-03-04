@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { getAllCampuses } from "../api/campus";
 import CampusFilters from "./CampusFilters";
 import ExportButtons from "./CampusExportButtons";
-import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function CampusTable() {
   const [campuses, setCampuses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("active");
+  const router = useRouter();
 
   useEffect(() => {
     const fetchCampuses = async () => {
@@ -55,23 +56,14 @@ export default function CampusTable() {
                 <tr
                   key={campus._id}
                   className="cursor-pointer hover:bg-gray-100"
+                  onClick={() =>
+                    router.push(`/formularioDeSedes?id=${campus._id}`)
+                  }
                 >
                   <td className="p-3 border-b">{index + 1}</td>
-                  <td className="p-3 border-b">
-                    <Link href={`/formularioDeSedes?id=${campus._id}`}>
-                      {campus.name}
-                    </Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link href={`/formularioDeSedes?id=${campus._id}`}>
-                      {campus.address}
-                    </Link>
-                  </td>
-                  <td className="p-3 border-b">
-                    <Link href={`/formularioDeSedes?id=${campus._id}`}>
-                      {campus.contactPhone}
-                    </Link>
-                  </td>
+                  <td className="p-3 border-b">{campus.name}</td>
+                  <td className="p-3 border-b">{campus.address}</td>
+                  <td className="p-3 border-b">{campus.contactPhone}</td>
                 </tr>
               ))
             ) : (
