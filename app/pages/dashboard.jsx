@@ -1,12 +1,36 @@
+import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import DashboardCard from "@/components/DashboardCard";
+import { getAllStudents } from "@/api/student";
 
 const Dashboard = () => {
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      const data = await getAllStudents();
+      if (data) {
+        setStudents(data);
+      }
+      setLoading(false);
+    };
+
+    fetchStudents();
+  }, []);
+
+  const totalStudents = students.length;
+  const activeStudents = students.filter(
+    (student) => student.status === "activo"
+  ).length;
+
   const cardsData = [
     {
       title: "Estudiantes",
-      count: 3,
-      description: "Total students",
+      count: loading
+        ? "Cargando..."
+        : `${totalStudents} (Activos: ${activeStudents})`,
+      description: "Total de estudiantes",
       gradient: "bg-gradient-to-r from-[#FF4D6D] to-[#FF6B8D]",
     },
     {
