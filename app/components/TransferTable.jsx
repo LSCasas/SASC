@@ -28,11 +28,11 @@ export default function TransferTable() {
         if (transferData) {
           setTransfers(transferData);
         } else {
-          setTransfers([]); // Si no hay datos, establece un arreglo vacío
+          setTransfers([]);
         }
       } catch (err) {
         setError(err.message);
-        setTransfers([]); // En caso de error, establece un arreglo vacío
+        setTransfers([]);
       } finally {
         setLoading(false);
       }
@@ -73,6 +73,10 @@ export default function TransferTable() {
     return matchesName && matchesClass && matchesGender && matchesLocation;
   });
 
+  const sortedTransfers = [...filteredTransfers].sort(
+    (a, b) => new Date(b.transferDate) - new Date(a.transferDate)
+  );
+
   return (
     <div className="mt-6">
       <TransferFilters
@@ -102,8 +106,8 @@ export default function TransferTable() {
             </tr>
           </thead>
           <tbody>
-            {filteredTransfers.length > 0 ? (
-              filteredTransfers.map((transfer, index) => (
+            {sortedTransfers.length > 0 ? (
+              sortedTransfers.map((transfer, index) => (
                 <tr key={transfer._id}>
                   <td className="p-3 border-b">{index + 1}</td>
                   <td className="p-3 border-b">
@@ -141,7 +145,7 @@ export default function TransferTable() {
       </div>
       <div className="mt-3 flex justify-center">
         <div className="w-full">
-          <ExportButtons data={filteredTransfers} />
+          <ExportButtons data={sortedTransfers} />
         </div>
       </div>
     </div>
