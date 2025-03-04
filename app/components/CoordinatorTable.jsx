@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { getAllUsers } from "../api/user";
 import CoordinatorFilters from "./CoordinatorFilters";
 import ExportButtons from "./CoordinatorExportButtons";
-import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function CoordinatorTable() {
   const [coordinators, setCoordinators] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("active");
   const [typeFilter, setTypeFilter] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     const fetchCoordinators = async () => {
@@ -74,15 +75,14 @@ export default function CoordinatorTable() {
                 <tr
                   key={coordinator._id}
                   className="cursor-pointer hover:bg-gray-100"
+                  onClick={() =>
+                    router.push(
+                      `/formularioDeCoordinadores?id=${coordinator._id}`
+                    )
+                  }
                 >
                   <td className="p-3 border-b">{index + 1}</td>
-                  <td className="p-3 border-b">
-                    <Link
-                      href={`/formularioDeCoordinadores?id=${coordinator._id}`}
-                    >
-                      {coordinator.firstName}
-                    </Link>
-                  </td>
+                  <td className="p-3 border-b">{coordinator.firstName}</td>
                   <td className="p-3 border-b">{coordinator.lastName}</td>
                   <td className="p-3 border-b">{coordinator.phone}</td>
                   <td className="p-3 border-b">
