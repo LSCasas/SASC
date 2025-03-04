@@ -2,26 +2,39 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import DashboardCard from "@/components/DashboardCard";
 import { getAllStudents } from "@/api/student";
+import { getAllTeachers } from "@/api/teacher";
 
 const Dashboard = () => {
   const [students, setStudents] = useState([]);
+  const [teachers, setTeachers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchStudents = async () => {
-      const data = await getAllStudents();
-      if (data) {
-        setStudents(data);
+    const fetchStudentsAndTeachers = async () => {
+      const studentsData = await getAllStudents();
+      if (studentsData) {
+        setStudents(studentsData);
       }
+
+      const teachersData = await getAllTeachers();
+      if (teachersData) {
+        setTeachers(teachersData);
+      }
+
       setLoading(false);
     };
 
-    fetchStudents();
+    fetchStudentsAndTeachers();
   }, []);
 
   const totalStudents = students.length;
   const activeStudents = students.filter(
     (student) => student.status === "activo"
+  ).length;
+
+  const totalTeachers = teachers.length;
+  const activeTeachers = teachers.filter(
+    (teacher) => teacher.isAchive === false
   ).length;
 
   const cardsData = [
@@ -30,31 +43,33 @@ const Dashboard = () => {
       count: loading
         ? "Cargando..."
         : `${totalStudents} (Activos: ${activeStudents})`,
-      description: "Total de estudiantes",
+      description: "Total estudiantes",
       gradient: "bg-gradient-to-r from-[#FF4D6D] to-[#FF6B8D]",
     },
     {
       title: "Profesores",
-      count: 3,
-      description: "Total teachers",
+      count: loading
+        ? "Cargando..."
+        : `${totalTeachers} (Activos: ${activeTeachers})`, // Mostrar número de profesores y activos
+      description: "Total profesores",
       gradient: "bg-gradient-to-r from-[#4D9EFF] to-[#6BBFFF]",
     },
     {
       title: "Padres",
       count: 2,
-      description: "Total parents",
+      description: "Total padres",
       gradient: "bg-gradient-to-r from-[#4DFF88] to-[#6BFFAA]",
     },
     {
       title: "Bibliotecario",
       count: 2,
-      description: "Total librarians",
+      description: "Total bibliotecarios",
       gradient: "bg-gradient-to-r from-[#FFAC4D] to-[#FFC26B]",
     },
     {
       title: "Asistencia",
       count: 0,
-      description: "Total present students today",
+      description: "Total estudiantes presentes hoy",
       gradient: "bg-gradient-to-r from-[#9B4DFF] to-[#B96BFF]",
     },
   ];
