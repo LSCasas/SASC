@@ -71,7 +71,6 @@ const StudentForm = () => {
           if (studentData.tutorId) {
             setValue("nombreTutor", studentData.tutorId.name || "");
             setValue("apellidosTutor", studentData.tutorId.lastname || "");
-            setValue("curpTutor", studentData.tutorId.curp || "");
             setValue("telefonoTutor", studentData.tutorId.phone || "");
           }
 
@@ -119,7 +118,6 @@ const StudentForm = () => {
         requiredDocuments: null,
         tutorName: data.nombreTutor,
         tutorLastname: data.apellidosTutor,
-        tutorCurp: data.curpTutor,
         tutorPhone: data.telefonoTutor,
         status: data.estatus,
         birthDate: data.birthDate,
@@ -245,20 +243,6 @@ const StudentForm = () => {
               <p className="text-red-500 text-sm">
                 {errors.apellidosTutor.message}
               </p>
-            )}
-          </div>
-          <div>
-            <label className="block font-semibold text-black">
-              CURP del Tutor
-            </label>
-            <input
-              {...register("curpTutor", {
-                required: "Este campo es obligatorio",
-              })}
-              className="w-full p-2 border rounded text-black"
-            />
-            {errors.curpTutor && (
-              <p className="text-red-500 text-sm">{errors.curpTutor.message}</p>
             )}
           </div>
           <div>
