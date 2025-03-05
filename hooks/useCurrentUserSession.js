@@ -19,7 +19,7 @@ export default function useCurrentUser() {
 
       if (currentUser.selectedCampusId) {
         toast.info(
-          "Debes salir de la sesión primero, y volver a entrar para ir al enlace de sedes."
+          "Recuerda cerrar sesión y volver a ingresar si desea cambiar de sede."
         );
         router.push("/alumnos");
       }
