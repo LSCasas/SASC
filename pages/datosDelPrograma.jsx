@@ -5,12 +5,14 @@ import { getAllStudents } from "@/api/student";
 import { getAllTeachers } from "@/api/teacher";
 import { getAllTutors } from "@/api/tutor";
 import { getAllInstruments } from "@/api/instrument";
+import { getAllUsers } from "@/api/user";
 
 const Dashboard = () => {
   const [students, setStudents] = useState([]);
   const [teachers, setTeachers] = useState([]);
   const [tutors, setTutors] = useState([]);
   const [instruments, setInstruments] = useState([]);
+  const [coordinators, setCoordinators] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -33,6 +35,14 @@ const Dashboard = () => {
       const instrumentsData = await getAllInstruments();
       if (instrumentsData) {
         setInstruments(instrumentsData);
+      }
+
+      const usersData = await getAllUsers();
+      if (usersData) {
+        const coordinatorsData = usersData.filter(
+          (user) => user.role === "coordinator"
+        );
+        setCoordinators(coordinatorsData);
       }
 
       setLoading(false);
@@ -59,6 +69,11 @@ const Dashboard = () => {
   const totalInstruments = instruments.length;
   const activeInstruments = instruments.filter(
     (instrument) => instrument.isAchive === false
+  ).length;
+
+  const totalCoordinators = coordinators.length;
+  const activeCoordinators = coordinators.filter(
+    (coordinator) => coordinator.isArchived === false
   ).length;
 
   const cardsData = [
@@ -93,6 +108,14 @@ const Dashboard = () => {
         : `${totalInstruments} (Activos: ${activeInstruments})`,
       description: "Total instrumentos",
       gradient: "bg-gradient-to-r from-[#8A2BE2] to-[#7B68EE]",
+    },
+    {
+      title: "Coordinadores",
+      count: loading
+        ? "Cargando..."
+        : `${totalCoordinators} (Activos: ${activeCoordinators})`,
+      description: "Total coordinadores",
+      gradient: "bg-gradient-to-r from-[#00B894] to-[#55EFC4]",
     },
   ];
 
