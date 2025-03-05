@@ -1,7 +1,8 @@
 import SidebarAdmin from "@/components/SidebarAdmin";
 import CampusCard from "@/components/CampusCard";
-
+import useCurrentUserSession from "@/hooks/useCurrentUserSession";
 export default function Admin() {
+  useCurrentUserSession();
   return (
     <div className="flex flex-col lg:flex-row">
       <SidebarAdmin />
