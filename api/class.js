@@ -117,7 +117,6 @@ export async function updateClass(classId, data) {
       toast.error(json.error || json.error || "Error actualizando clase");
       return null;
     }
-    toast.success("Clase actualizada correctamente");
     return json.data;
   } catch (error) {
     toast.error(error.message || "Error al procesar la solicitud");

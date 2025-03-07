@@ -8,8 +8,8 @@ export default function Autor() {
           PROYECTO DE COOPERACIÓN
         </h1>
         <p className="text-black">
-          <strong>NOMBRE DEL PROYECTO:</strong> Software para el programa
-          Jóvenes por Tultepec
+          <strong>NOMBRE DEL PROYECTO:</strong> Sistema de Administración para
+          Sedes Culturales (SASC)
         </p>
         <p className="text-black">
           <strong>NOMBRE DE ESTUDIANTE:</strong> Casas González Luis Salvador
