@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TeacherFilters from "./TeacherFilters";
 import ExportButtons from "./TeacherExportButtons";
+import TeacherAttendanceList from "./TeacherAttendanceList";
 import Link from "next/link";
 import { getCurrentUser } from "../api/user";
 import { getTeachersByCampusId } from "../api/teacher";
@@ -25,8 +26,10 @@ export default function TeacherTable() {
 
         let teachersData = await getTeachersByCampusId(campusId);
 
-        teachersData = teachersData.sort((a, b) =>
-          a.lastName.localeCompare(b.lastName)
+        teachersData = teachersData.sort(
+          (a, b) =>
+            a.lastName.localeCompare(b.lastName) ||
+            a.firstName.localeCompare(b.firstName)
         );
 
         setTeachers(teachersData);
@@ -105,6 +108,11 @@ export default function TeacherTable() {
       <div className="mt-3 flex justify-center">
         <div className="w-full">
           <ExportButtons data={filteredTeachers} />
+        </div>
+      </div>
+      <div>
+        <div className="w-full">
+          <TeacherAttendanceList data={filteredTeachers} />
         </div>
       </div>
     </div>
