@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Filters from "./StudentFilters";
 import ExportButtons from "./StudentExportButtons";
+import StudentAttendanceList from "./StudentAttendanceList";
 import { getCurrentUser } from "../api/user";
 import { getStudentsByCampusId } from "../api/student";
 import calculateAge from "./calculateAge";
@@ -113,7 +114,7 @@ export default function StudentTable() {
   return (
     <div className="mt-6">
       <Filters filters={filters} onFilterChange={handleFilterChange} />
-      <div className="overflow-y-auto h-[50vh]">
+      <div className="overflow-y-auto h-[47vh]">
         <table className="min-w-full bg-white border border-gray-200 text-black">
           <thead>
             <tr className="bg-gray-100 text-left">
@@ -158,6 +159,11 @@ export default function StudentTable() {
       <div className="mt-3 flex justify-center">
         <div className="w-full">
           <ExportButtons data={filteredStudents} />
+        </div>
+      </div>
+      <div>
+        <div className="w-full">
+          <StudentAttendanceList data={filteredStudents} />
         </div>
       </div>
     </div>
