@@ -86,8 +86,8 @@ export default function InstrumentAttendanceList() {
         index + 1,
         instrument.name || "Sin nombre",
         instrument.internalId || "Sin ID",
-        instrument.student
-          ? `${instrument.student.firstName} ${instrument.student.lastName}`
+        instrument.studentId
+          ? `${instrument.studentId.firstName} ${instrument.studentId.lastName}`
           : "Sin estudiante",
         ...weekDates.map(() => ({
           content: "",
