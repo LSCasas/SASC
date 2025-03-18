@@ -106,7 +106,9 @@ const Dashboard = () => {
       <SidebarAdmin />
       <div className="flex-1 bg-gray-50 min-h-screen p-6 overflow-y-auto md:h-[50vh]">
         <div className="bg-white p-6 rounded-xl shadow-md ">
-          <h2 className="text-xl font-bold mb-4">Resumen Estadístico</h2>
+          <h2 className="text-xl font-bold mb-4 text-gray-800">
+            Resumen Estadístico
+          </h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart
               data={data}
@@ -122,7 +124,7 @@ const Dashboard = () => {
           </ResponsiveContainer>
         </div>
         <div className="bg-white p-6 rounded-xl shadow-md mt-6">
-          <h2 className="text-xl font-bold mb-4">
+          <h2 className="text-xl font-bold mb-4 text-gray-800">
             Distribución de Estudiantes por Sede
           </h2>
           <ResponsiveContainer width="100%" height={300}>
