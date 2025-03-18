@@ -29,7 +29,7 @@ export default function StaffExportButtons({ data }) {
     if (!Array.isArray(data) || data.length === 0) return;
 
     const doc = new jsPDF("p", "mm", "a4");
-    doc.text(`Reporte de Docentes - ${campusName}`, 10, 10);
+    doc.text(`Reporte de Personal - ${campusName}`, 10, 10);
 
     doc.autoTable({
       startY: 20,
@@ -46,7 +46,7 @@ export default function StaffExportButtons({ data }) {
       margin: { top: 20 },
     });
 
-    doc.save(`Reporte_de_Docentes_${campusName}.pdf`);
+    doc.save(`Reporte_de_Personal_${campusName}.pdf`);
   };
 
   const exportToExcel = () => {
@@ -66,9 +66,9 @@ export default function StaffExportButtons({ data }) {
     XLSX.utils.book_append_sheet(
       workbook,
       worksheet,
-      `Docentes - ${campusName}`
+      `Personal - ${campusName}`
     );
-    XLSX.writeFile(workbook, `Docentes_${campusName}.xlsx`);
+    XLSX.writeFile(workbook, `Personal_${campusName}.xlsx`);
   };
 
   return (

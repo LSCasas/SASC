@@ -54,7 +54,7 @@ export default function StaffAttendanceList() {
           user.campusId.find((campus) => campus._id === campusId)?.name || ""
         );
       } catch (error) {
-        console.error("Error al obtener los datos de los docentes:", error);
+        console.error("Error al obtener los datos de los personales:", error);
       }
     }
 
@@ -75,7 +75,7 @@ export default function StaffAttendanceList() {
 
     doc.setFont("helvetica", "bold");
     doc.setFontSize(16);
-    const text = `Lista de Asistencia - Docentes`;
+    const text = `Lista de Asistencia - Personal`;
     const textWidth = doc.getTextWidth(text);
     doc.text(text, (doc.internal.pageSize.width - textWidth) / 2, 10);
 
@@ -99,13 +99,13 @@ export default function StaffAttendanceList() {
       theme: "grid",
     });
 
-    doc.save(`Lista_de_Asistencia_Docentes_${campusName}.pdf`);
+    doc.save(`Lista_de_Asistencia_Personal_${campusName}.pdf`);
   };
 
   const exportToExcel = () => {
     if (!Array.isArray(staffs)) return;
 
-    const sheetName = `Lista Docentes - ${campusName}`.slice(0, 31);
+    const sheetName = `Lista Personal - ${campusName}`.slice(0, 31);
     const worksheet = XLSX.utils.json_to_sheet(
       staffs.map((staff, index) => ({
         "#": index + 1,
@@ -117,7 +117,7 @@ export default function StaffAttendanceList() {
 
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
-    XLSX.writeFile(workbook, `Lista_de_Asistencia_Docentes_${campusName}.xlsx`);
+    XLSX.writeFile(workbook, `Lista_de_Asistencia_Personal_${campusName}.xlsx`);
   };
 
   return (
