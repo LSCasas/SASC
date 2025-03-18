@@ -13,6 +13,8 @@ import {
   RefreshCw,
   UserX,
   LogOut,
+  User,
+  ContactRound,
 } from "lucide-react";
 import { logout } from "../api/auth";
 import { getCurrentUser } from "../api/user";
@@ -129,6 +131,12 @@ const SidebarContent = ({ campusName }) => {
           href="/exAlumnos"
           icon={<UserX size={25} />}
           label="Ex-Alumnos"
+        />
+
+        <SidebarItem
+          href="/personal"
+          icon={<ContactRound size={25} />}
+          label="Personal"
         />
       </div>
 
