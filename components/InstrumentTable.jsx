@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import InstrumentFilters from "./InstrumentFilters";
 import ExportButtons from "./InstrumentExportButtons";
+import InstrumentAttendanceList from "./InstrumentAttendanceList";
 import Link from "next/link";
-import { useRouter } from "next/router"; // Importa useRouter
+import { useRouter } from "next/router";
 import { getCurrentUser } from "../api/user";
 import { getInstrumentsByCampusId } from "../api/instrument";
 
@@ -15,7 +16,7 @@ export default function InstrumentTable() {
   const [internalIdSearchTerm, setInternalIdSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("active");
   const [ownerFilter, setOwnerFilter] = useState("");
-  const router = useRouter(); // Usamos el hook de router
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchInstruments() {
@@ -119,7 +120,7 @@ export default function InstrumentTable() {
                     router.push(
                       `/formularioDeInstrumentos?id=${instrument._id}`
                     )
-                  } // Redirige al hacer clic en la fila
+                  }
                 >
                   <td className="p-3 border-b">{index + 1}</td>
                   <td className="p-3 border-b">{instrument.name}</td>
@@ -149,6 +150,11 @@ export default function InstrumentTable() {
       <div className="mt-3 flex justify-center">
         <div className="w-full">
           <ExportButtons data={filteredInstruments} />
+        </div>
+      </div>
+      <div>
+        <div className="w-full">
+          <InstrumentAttendanceList data={filteredInstruments} />
         </div>
       </div>
     </div>
