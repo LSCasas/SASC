@@ -7,7 +7,7 @@ export default function StaffPage() {
   const router = useRouter();
 
   const handleCreateStudent = () => {
-    router.push("/formularioDeDocentes");
+    router.push("/formularioDePersonal");
   };
 
   return (
@@ -24,7 +24,7 @@ export default function StaffPage() {
               onClick={handleCreateStudent}
               className="w-full sm:w-auto py-2 px-4 bg-gradient-to-r bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
             >
-              Agregar docente
+              Agregar personal
             </button>
           </div>
 

@@ -85,7 +85,7 @@ export default function StaffTable() {
                   key={staff._id}
                   className="cursor-pointer hover:bg-gray-100"
                   onClick={() =>
-                    router.push(`/formularioDeDocentes?id=${staff._id}`)
+                    router.push(`/formularioDePersonal?id=${staff._id}`)
                   }
                 >
                   <td className="p-3 border-b">{index + 1}</td>
