@@ -114,10 +114,10 @@ const Dashboard = () => {
               data={data}
               margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
             >
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
+              <XAxis dataKey="name" tick={{ fill: "black" }} />
+              <YAxis tick={{ fill: "black" }} />
+              <Tooltip contentStyle={{ color: "black" }} />
+              <Legend wrapperStyle={{ color: "black" }} />
               <Bar dataKey="total" fill="#8884d8" name="Total" />
               <Bar dataKey="activos" fill="#82ca9d" name="Activos" />
             </BarChart>
