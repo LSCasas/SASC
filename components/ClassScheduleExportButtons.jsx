@@ -60,6 +60,12 @@ export default function ClassScheduleExportButtons({ data }) {
       Viernes: classItem.days.includes("Viernes")
         ? `${classItem.startTime} - ${classItem.endTime}`
         : "",
+      Sabado: classItem.days.includes("Sabado")
+        ? `${classItem.startTime} - ${classItem.endTime}`
+        : "",
+      Domingo: classItem.days.includes("Domingo")
+        ? `${classItem.startTime} - ${classItem.endTime}`
+        : "",
     }));
 
     doc.autoTable({
@@ -73,6 +79,8 @@ export default function ClassScheduleExportButtons({ data }) {
           "Miercoles",
           "Jueves",
           "Viernes",
+          "Sabado",
+          "Domingo",
         ],
       ],
       body: tableData.map((row) => [
@@ -83,6 +91,8 @@ export default function ClassScheduleExportButtons({ data }) {
         row.Miercoles,
         row.Jueves,
         row.Viernes,
+        row.Sabado,
+        row.Domingo,
       ]),
       styles: {
         fontSize: 10,
@@ -129,6 +139,12 @@ export default function ClassScheduleExportButtons({ data }) {
           ? `${classItem.startTime} - ${classItem.endTime}`
           : "",
         Viernes: classItem.days.includes("Viernes")
+          ? `${classItem.startTime} - ${classItem.endTime}`
+          : "",
+        Sabado: classItem.days.includes("Sabado")
+          ? `${classItem.startTime} - ${classItem.endTime}`
+          : "",
+        Domingo: classItem.days.includes("Domingo")
           ? `${classItem.startTime} - ${classItem.endTime}`
           : "",
       }))

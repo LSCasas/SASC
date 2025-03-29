@@ -2,7 +2,15 @@ import React, { useEffect, useState } from "react";
 import { getCurrentUser } from "../api/user";
 import { getClassesByCampusId } from "../api/class";
 
-const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"];
+const days = [
+  "Lunes",
+  "Martes",
+  "Miercoles",
+  "Jueves",
+  "Viernes",
+  "Sabado",
+  "Domingo",
+];
 
 export default function ClassSchedule() {
   const [classes, setClasses] = useState([]);

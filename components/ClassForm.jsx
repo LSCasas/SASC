@@ -165,19 +165,25 @@ const ClassForm = () => {
               Días de clase
             </label>
             <div className="grid grid-cols-2 gap-2 text-black">
-              {["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"].map(
-                (dia) => (
-                  <label key={dia} className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      {...register("days")}
-                      value={dia}
-                      className="w-5 h-5"
-                    />
-                    <span>{dia}</span>
-                  </label>
-                )
-              )}
+              {[
+                "Lunes",
+                "Martes",
+                "Miercoles",
+                "Jueves",
+                "Viernes",
+                "Sabado",
+                "Domingo",
+              ].map((dia) => (
+                <label key={dia} className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    {...register("days")}
+                    value={dia}
+                    className="w-5 h-5"
+                  />
+                  <span>{dia}</span>
+                </label>
+              ))}
             </div>
           </div>
 
