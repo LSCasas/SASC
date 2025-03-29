@@ -77,13 +77,13 @@ export default function TeacherExportButtons({ data }) {
         onClick={exportToPDF}
         className="w-full py-2 px-4 bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
       >
-        Exportar a PDF
+        Reporte. PDF
       </button>
       <button
         onClick={exportToExcel}
         className="w-full py-2 px-4 bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
       >
-        Exportar a Excel
+        Reporte. EXEL
       </button>
     </div>
   );

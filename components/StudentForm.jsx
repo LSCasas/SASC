@@ -263,10 +263,11 @@ const StudentForm = () => {
           </div>
           <div>
             <label className="block font-semibold text-black">
-              Inscrito Desde
+              Registrado en el Sistema desde
             </label>
             <input
               type="date"
+              readOnly
               {...register("inscritoDesde", {
                 required: "Este campo es obligatorio",
               })}
