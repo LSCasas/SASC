@@ -66,6 +66,7 @@ const StudentForm = () => {
 
           setValue("nombreAlumno", studentData.firstName);
           setValue("apellidosAlumno", studentData.lastName);
+          setValue("direccion", studentData.address);
           setValue("curp", studentData.curp);
           setValue("estatus", studentData.status || "activo");
           if (studentData.tutorId) {
@@ -111,6 +112,7 @@ const StudentForm = () => {
       const formattedData = {
         firstName: data.nombreAlumno,
         lastName: data.apellidosAlumno,
+        address: data.address,
         curp: data.curp,
         gender: data.genero,
         medicalConditions: data.condicionesMedicas || null,
@@ -184,6 +186,18 @@ const StudentForm = () => {
               <p className="text-red-500 text-sm">
                 {errors.apellidosAlumno.message}
               </p>
+            )}
+          </div>
+          <div>
+            <label className="block font-semibold text-black">Domicilio</label>
+            <input
+              {...register("address", {
+                required: "Este campo es obligatorio",
+              })}
+              className="w-full p-2 border rounded text-black"
+            />
+            {errors.direccion && (
+              <p className="text-red-500 text-sm">{errors.direccion.message}</p>
             )}
           </div>
           <div>
@@ -267,7 +281,6 @@ const StudentForm = () => {
             </label>
             <input
               type="date"
-              readOnly
               {...register("inscritoDesde", {
                 required: "Este campo es obligatorio",
               })}
