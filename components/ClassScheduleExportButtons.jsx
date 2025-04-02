@@ -45,26 +45,26 @@ export default function ClassScheduleExportButtons({ data }) {
       Instructor: classItem.teacherId
         ? `${classItem.teacherId.firstName} ${classItem.teacherId.lastName}`
         : "Sin asignar",
-      Lunes: classItem.days.includes("Lunes")
-        ? `${classItem.startTime} - ${classItem.endTime}`
+      Lunes: classItem.schedule?.Lunes
+        ? `${classItem.schedule.Lunes.startTime} - ${classItem.schedule.Lunes.endTime}`
         : "",
-      Martes: classItem.days.includes("Martes")
-        ? `${classItem.startTime} - ${classItem.endTime}`
+      Martes: classItem.schedule?.Martes
+        ? `${classItem.schedule.Martes.startTime} - ${classItem.schedule.Martes.endTime}`
         : "",
-      Miercoles: classItem.days.includes("Miercoles")
-        ? `${classItem.startTime} - ${classItem.endTime}`
+      Miercoles: classItem.schedule?.Miercoles
+        ? `${classItem.schedule.Miercoles.startTime} - ${classItem.schedule.Miercoles.endTime}`
         : "",
-      Jueves: classItem.days.includes("Jueves")
-        ? `${classItem.startTime} - ${classItem.endTime}`
+      Jueves: classItem.schedule?.Jueves
+        ? `${classItem.schedule.Jueves.startTime} - ${classItem.schedule.Jueves.endTime}`
         : "",
-      Viernes: classItem.days.includes("Viernes")
-        ? `${classItem.startTime} - ${classItem.endTime}`
+      Viernes: classItem.schedule?.Viernes
+        ? `${classItem.schedule.Viernes.startTime} - ${classItem.schedule.Viernes.endTime}`
         : "",
-      Sabado: classItem.days.includes("Sabado")
-        ? `${classItem.startTime} - ${classItem.endTime}`
+      Sabado: classItem.schedule?.Sabado
+        ? `${classItem.schedule.Sabado.startTime} - ${classItem.schedule.Sabado.endTime}`
         : "",
-      Domingo: classItem.days.includes("Domingo")
-        ? `${classItem.startTime} - ${classItem.endTime}`
+      Domingo: classItem.schedule?.Domingo
+        ? `${classItem.schedule.Domingo.startTime} - ${classItem.schedule.Domingo.endTime}`
         : "",
     }));
 
@@ -126,26 +126,26 @@ export default function ClassScheduleExportButtons({ data }) {
         Profesor: classItem.teacherId
           ? `${classItem.teacherId.firstName} ${classItem.teacherId.lastName}`
           : "Sin asignar",
-        Lunes: classItem.days.includes("Lunes")
-          ? `${classItem.startTime} - ${classItem.endTime}`
+        Lunes: classItem.schedule?.Lunes
+          ? `${classItem.schedule.Lunes.startTime} - ${classItem.schedule.Lunes.endTime}`
           : "",
-        Martes: classItem.days.includes("Martes")
-          ? `${classItem.startTime} - ${classItem.endTime}`
+        Martes: classItem.schedule?.Martes
+          ? `${classItem.schedule.Martes.startTime} - ${classItem.schedule.Martes.endTime}`
           : "",
-        Miercoles: classItem.days.includes("Miercoles")
-          ? `${classItem.startTime} - ${classItem.endTime}`
+        Miercoles: classItem.schedule?.Miercoles
+          ? `${classItem.schedule.Miercoles.startTime} - ${classItem.schedule.Miercoles.endTime}`
           : "",
-        Jueves: classItem.days.includes("Jueves")
-          ? `${classItem.startTime} - ${classItem.endTime}`
+        Jueves: classItem.schedule?.Jueves
+          ? `${classItem.schedule.Jueves.startTime} - ${classItem.schedule.Jueves.endTime}`
           : "",
-        Viernes: classItem.days.includes("Viernes")
-          ? `${classItem.startTime} - ${classItem.endTime}`
+        Viernes: classItem.schedule?.Viernes
+          ? `${classItem.schedule.Viernes.startTime} - ${classItem.schedule.Viernes.endTime}`
           : "",
-        Sabado: classItem.days.includes("Sabado")
-          ? `${classItem.startTime} - ${classItem.endTime}`
+        Sabado: classItem.schedule?.Sabado
+          ? `${classItem.schedule.Sabado.startTime} - ${classItem.schedule.Sabado.endTime}`
           : "",
-        Domingo: classItem.days.includes("Domingo")
-          ? `${classItem.startTime} - ${classItem.endTime}`
+        Domingo: classItem.schedule?.Domingo
+          ? `${classItem.schedule.Domingo.startTime} - ${classItem.schedule.Domingo.endTime}`
           : "",
       }))
     );
@@ -171,7 +171,7 @@ export default function ClassScheduleExportButtons({ data }) {
         onClick={() => handleExport("Excel")}
         className="py-2 px-4 bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
       >
-        Reporte. EXEL
+        Reporte. EXCEL
       </button>
     </div>
   );

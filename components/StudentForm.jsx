@@ -66,7 +66,7 @@ const StudentForm = () => {
 
           setValue("nombreAlumno", studentData.firstName);
           setValue("apellidosAlumno", studentData.lastName);
-          setValue("direccion", studentData.address);
+          setValue("domicilio", studentData.address);
           setValue("curp", studentData.curp);
           setValue("estatus", studentData.status || "activo");
           if (studentData.tutorId) {
@@ -112,7 +112,7 @@ const StudentForm = () => {
       const formattedData = {
         firstName: data.nombreAlumno,
         lastName: data.apellidosAlumno,
-        address: data.address,
+        address: data.domicilio,
         curp: data.curp,
         gender: data.genero,
         medicalConditions: data.condicionesMedicas || null,
@@ -188,18 +188,20 @@ const StudentForm = () => {
               </p>
             )}
           </div>
+
           <div>
             <label className="block font-semibold text-black">Domicilio</label>
             <input
-              {...register("address", {
+              {...register("domicilio", {
                 required: "Este campo es obligatorio",
               })}
               className="w-full p-2 border rounded text-black"
             />
-            {errors.direccion && (
-              <p className="text-red-500 text-sm">{errors.direccion.message}</p>
+            {errors.domicilio && (
+              <p className="text-red-500 text-sm">{errors.domicilio.message}</p>
             )}
           </div>
+
           <div>
             <label className="block font-semibold text-black">CURP</label>
             <input
@@ -391,7 +393,7 @@ const StudentForm = () => {
           </div>
           <div>
             <label className="block font-semibold text-black">
-              Condiciones Médicas
+              Condiciones Médicas (Opcional)
             </label>
             <input
               {...register("condicionesMedicas")}
@@ -400,7 +402,7 @@ const StudentForm = () => {
           </div>
           <div>
             <label className="block font-semibold text-black">
-              Necesidades Especiales
+              Necesidades Especiales (Opcional)
             </label>
             <input
               {...register("necesidadesEspeciales")}

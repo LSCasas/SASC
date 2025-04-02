@@ -10,6 +10,7 @@ const ClassForm = () => {
   const [teachers, setTeachers] = useState([]);
   const [loadingTeachers, setLoadingTeachers] = useState(true);
   const [errorTeachers, setErrorTeachers] = useState(null);
+  const [schedule, setSchedule] = useState({});
 
   const {
     register,
@@ -20,8 +21,7 @@ const ClassForm = () => {
     defaultValues: {
       generation: `${new Date().getFullYear()}-${new Date().getFullYear() + 1}`,
       teacherId: "none",
-      startTime: "16:00",
-      endTime: "19:00",
+      schedule: {},
     },
   });
 
@@ -33,7 +33,6 @@ const ClassForm = () => {
       try {
         const user = await getCurrentUser();
         const campusId = user.selectedCampusId;
-
         if (!campusId)
           throw new Error("El usuario no tiene un campus seleccionado");
 
@@ -64,13 +63,10 @@ const ClassForm = () => {
           const classData = await getClassById(id);
           setValue("name", classData.name);
           setValue("teacherId", classData.teacherId?._id || "none");
-          if (classData.generation) {
-            setValue("generation", classData.generation);
-          }
-          setValue("days", classData.days);
-          setValue("startTime", classData.startTime);
-          setValue("endTime", classData.endTime);
+          setValue("generation", classData.generation);
+          setValue("schedule", classData.schedule || {});
           setValue("isAchive", classData.isAchive || false);
+          setSchedule(classData.schedule || {});
         } catch (err) {
           console.error("Error al obtener clase:", err);
         }
@@ -79,14 +75,22 @@ const ClassForm = () => {
     }
   }, [id, setValue]);
 
+  const handleScheduleChange = (day, field, value) => {
+    setSchedule((prev) => ({
+      ...prev,
+      [day]: {
+        ...prev[day],
+        [field]: value,
+      },
+    }));
+  };
+
   const onSubmit = async (data) => {
     try {
-      const classNameWithGeneration = `${data.name} ${data.generation}`;
+      data.schedule = schedule;
 
-      data.name = classNameWithGeneration;
-
-      if (data.teacherId === "none") {
-        data.teacherId = null;
+      if (!isEdit) {
+        data.name = `${data.name} ${data.generation}`;
       }
 
       if (isEdit) {
@@ -162,7 +166,7 @@ const ClassForm = () => {
 
           <div>
             <label className="block font-semibold text-black">
-              Días de clase
+              Horario por día
             </label>
             <div className="grid grid-cols-2 gap-2 text-black">
               {[
@@ -174,65 +178,57 @@ const ClassForm = () => {
                 "Sabado",
                 "Domingo",
               ].map((dia) => (
-                <label key={dia} className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    {...register("days")}
-                    value={dia}
-                    className="w-5 h-5"
-                  />
-                  <span>{dia}</span>
-                </label>
+                <div key={dia} className="border p-2 rounded-lg">
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSchedule((prev) => ({
+                            ...prev,
+                            [dia]: { startTime: "16:00", endTime: "19:00" },
+                          }));
+                        } else {
+                          setSchedule((prev) => {
+                            const newSchedule = { ...prev };
+                            delete newSchedule[dia];
+                            return newSchedule;
+                          });
+                        }
+                      }}
+                      checked={!!schedule[dia]}
+                      className="w-5 h-5"
+                    />
+                    <span>{dia}</span>
+                  </label>
+                  {schedule[dia] && (
+                    <div className="mt-2">
+                      <label className="block text-sm">Hora de inicio</label>
+                      <input
+                        type="time"
+                        value={schedule[dia]?.startTime || ""}
+                        onChange={(e) =>
+                          handleScheduleChange(dia, "startTime", e.target.value)
+                        }
+                        className="w-full p-2 border rounded text-black"
+                      />
+                      <label className="block text-sm mt-2">
+                        Hora de finalización
+                      </label>
+                      <input
+                        type="time"
+                        value={schedule[dia]?.endTime || ""}
+                        onChange={(e) =>
+                          handleScheduleChange(dia, "endTime", e.target.value)
+                        }
+                        className="w-full p-2 border rounded text-black"
+                      />
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           </div>
-
-          <div>
-            <label className="block font-semibold text-black">
-              Hora de inicio
-            </label>
-            <input
-              type="time"
-              {...register("startTime", {
-                required: "Este campo es obligatorio",
-              })}
-              className="w-full p-2 border rounded text-black"
-            />
-            {errors.startTime && (
-              <p className="text-red-500 text-sm">{errors.startTime.message}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block font-semibold text-black">
-              Hora de finalización
-            </label>
-            <input
-              type="time"
-              {...register("endTime", {
-                required: "Este campo es obligatorio",
-              })}
-              className="w-full p-2 border rounded text-black"
-            />
-            {errors.endTime && (
-              <p className="text-red-500 text-sm">{errors.endTime.message}</p>
-            )}
-          </div>
-
-          {isEdit && (
-            <div>
-              <label className="block font-semibold text-black">
-                Estatus (Activo/Baja)
-              </label>
-              <select
-                {...register("isAchive")}
-                className="w-full p-2 border rounded text-black"
-              >
-                <option value={false}>Activo</option>
-                <option value={true}>Baja</option>
-              </select>
-            </div>
-          )}
 
           <button
             type="submit"

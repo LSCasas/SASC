@@ -76,9 +76,9 @@ export default function ClassSchedule() {
                     key={i}
                     className="border border-gray-300 px-4 py-4 text-center"
                   >
-                    {classData.days.includes(day)
-                      ? `${classData.startTime} - ${classData.endTime}`
-                      : ""}
+                    {classData.schedule?.[day]
+                      ? `${classData.schedule[day].startTime} - ${classData.schedule[day].endTime}`
+                      : "—"}
                   </td>
                 ))}
               </tr>
