@@ -67,6 +67,17 @@ export default function TutorTable() {
     return matchesName && matchesStudent && matchesClass && matchesStatus;
   });
 
+  const sortedTutors = filteredTutors.sort((a, b) => {
+    const firstChildA = a.children[0] || {};
+    const firstChildB = b.children[0] || {};
+
+    const classComparison =
+      firstChildA.ClassId?.name?.localeCompare(firstChildB.ClassId?.name) || 0;
+    if (classComparison !== 0) return classComparison;
+
+    return firstChildA.lastName?.localeCompare(firstChildB.lastName) || 0;
+  });
+
   return (
     <div className="mt-6">
       <TutorFilters
@@ -95,8 +106,8 @@ export default function TutorTable() {
             </tr>
           </thead>
           <tbody>
-            {filteredTutors.length > 0 ? (
-              filteredTutors.map((tutor, index) => {
+            {sortedTutors.length > 0 ? (
+              sortedTutors.map((tutor, index) => {
                 const childrenNames = tutor.children
                   .map((child) => child.firstName)
                   .join(", ");
@@ -137,7 +148,7 @@ export default function TutorTable() {
           </tbody>
         </table>
       </div>
-      <ExportButtons data={filteredTutors} />
+      <ExportButtons data={sortedTutors} />
     </div>
   );
 }
