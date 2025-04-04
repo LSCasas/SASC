@@ -84,16 +84,12 @@ export default function TutorTable() {
           <thead>
             <tr className="bg-gray-100 text-left">
               <th className="p-3 border-b text-black">#</th>
-              <th className="p-3 border-b text-black">Nombre</th>
-              <th className="p-3 border-b text-black">Apellidos</th>
+              <th className="p-3 border-b text-black">Nombre Tutor</th>
+              <th className="p-3 border-b text-black">Apellidos Tutor</th>
+              <th className="p-3 border-b text-black">Nombre estudiante</th>
+              <th className="p-3 border-b text-black">Apellidos estudiante</th>
               <th className="p-3 border-b text-black">
-                Nombre de los estudiantes
-              </th>
-              <th className="p-3 border-b text-black">
-                Apellidos de los estudiantes
-              </th>
-              <th className="p-3 border-b text-black">
-                Clase(s) de los estudiantes
+                Clase(s) del estudiante
               </th>
               <th className="p-3 border-b text-black">Contacto</th>
             </tr>
@@ -102,7 +98,7 @@ export default function TutorTable() {
             {filteredTutors.length > 0 ? (
               filteredTutors.map((tutor, index) => {
                 const childrenNames = tutor.children
-                  .map((child) => child.firstName + " " + child.lastName)
+                  .map((child) => child.firstName)
                   .join(", ");
                 const childrenLastNames = tutor.children
                   .map((child) => child.lastName)
