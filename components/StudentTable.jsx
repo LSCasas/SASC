@@ -43,9 +43,13 @@ export default function StudentTable() {
             (student) => student.status === "activo"
           );
 
-          const sortedStudents = activeStudents.sort((a, b) =>
-            a.lastName.localeCompare(b.lastName)
-          );
+          const sortedStudents = activeStudents.sort((a, b) => {
+            const classComparison = a.ClassId?.name.localeCompare(
+              b.ClassId?.name
+            );
+            if (classComparison !== 0) return classComparison;
+            return a.lastName.localeCompare(b.lastName);
+          });
 
           setStudents(sortedStudents);
           setFilteredStudents(sortedStudents);
