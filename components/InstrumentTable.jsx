@@ -132,7 +132,7 @@ export default function InstrumentTable() {
                   </td>
                   <td className="p-3 border-b">
                     {instrument.assignmentDate
-                      ? new Date(instrument.assignmentDate).toLocaleDateString()
+                      ? instrument.assignmentDate.slice(0, 10)
                       : "Sin Asignar"}
                   </td>
                 </tr>

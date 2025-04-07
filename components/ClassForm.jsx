@@ -93,6 +93,10 @@ const ClassForm = () => {
         data.name = `${data.name} ${data.generation}`;
       }
 
+      if (Object.keys(schedule).length === 0) {
+        return alert("Debes seleccionar al menos un día");
+      }
+
       if (isEdit) {
         await updateClass(id, data);
       } else {
@@ -123,24 +127,33 @@ const ClassForm = () => {
 
           <div>
             <label className="block font-semibold text-black">
-              Profesor que imparte la clase
+              Selecciona al profesor que imparte la clase.
             </label>
             {loadingTeachers ? (
               <p className="text-gray-500">Cargando profesores...</p>
             ) : errorTeachers ? (
               <p className="text-red-500">{errorTeachers}</p>
             ) : (
-              <select
-                {...register("teacherId")}
-                className="w-full p-2 border rounded text-black"
-              >
-                <option value="none">Sin asignar</option>
-                {teachers.map((teacher) => (
-                  <option key={teacher._id} value={teacher._id}>
-                    {teacher.firstName} {teacher.lastName}
-                  </option>
-                ))}
-              </select>
+              <>
+                <select
+                  {...register("teacherId", {
+                    required: "Este campo es obligatorio",
+                  })}
+                  className="w-full p-2 border rounded text-black"
+                  defaultValue=""
+                >
+                  {teachers.map((teacher) => (
+                    <option key={teacher._id} value={teacher._id}>
+                      {teacher.firstName} {teacher.lastName}
+                    </option>
+                  ))}
+                </select>
+                {errors.teacherId && (
+                  <p className="text-red-500 text-sm">
+                    {errors.teacherId.message}
+                  </p>
+                )}
+              </>
             )}
           </div>
 

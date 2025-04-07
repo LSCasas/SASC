@@ -165,13 +165,13 @@ export default function ClassScheduleExportButtons({ data }) {
         onClick={() => handleExport("PDF")}
         className="py-2 px-4 bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
       >
-        Reporte. PDF
+        Exportar Horario. PDF
       </button>
       <button
         onClick={() => handleExport("Excel")}
         className="py-2 px-4 bg-[#B0005E] text-white rounded-md hover:bg-[#6C0036]"
       >
-        Reporte. EXCEL
+        Exportar Horario. EXCEL
       </button>
     </div>
   );

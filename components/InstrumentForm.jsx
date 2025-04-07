@@ -191,7 +191,7 @@ const InstrumentForm = () => {
                 className="md:w-[30vh] w-[20vh]  py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-800"
                 onClick={() => setShowDatePicker(!showDatePicker)}
               >
-                Agregar o Modificar Fecha de Asignación
+                Agregar Fecha de Asignación
               </button>
               {showDatePicker && (
                 <div className="mt-2">
@@ -209,7 +209,7 @@ const InstrumentForm = () => {
           )}
 
           <div>
-            <label className="block font-semibold text-black">Id Interno</label>
+            <label className="block font-semibold text-black">Folio</label>
             <input
               type="text"
               {...register("internalId", {
@@ -236,6 +236,15 @@ const InstrumentForm = () => {
               </select>
             </div>
           )}
+
+          <div className="mt-4 text-sm text-gray-600">
+            <p>
+              Nota: Si este instrumento aún no ha sido asignado a ningún
+              estudiante, deja la fecha de asignación por default. Cada vez que
+              asignes este instrumento a un estudiante, agrega la fecha de
+              asignación correspodiente.
+            </p>
+          </div>
 
           <button
             type="submit"
